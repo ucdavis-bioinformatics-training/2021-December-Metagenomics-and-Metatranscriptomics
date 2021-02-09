@@ -53,14 +53,7 @@ We ask for a little more patience as this process is also new to us, but we are 
 
 ### Workshop Goals
 
-* End to End understanding of the basics of single cell RNAseq experiments
-  * Lectures/Discussions
-  * Technologies use
-  * Experimental design
-  * Cost estimation
-  * Workflow
-  * Data reduction
-  * Data analysis
+* End to end understanding metagenomic and metatranscriptomic experiment
 
 * To work through a complete experiment, starting from raw data to completion, including making a few figures.
 
@@ -83,7 +76,7 @@ Workshop materials are all posted on github, and publicly available
 
 * This Intro to scRNAseq Workshop
 
-   [https://ucdavis-bioinformatics-training.github.io/2020-August-intro-scRNAseq/](https://ucdavis-bioinformatics-training.github.io/2020-August-intro-scRNAseq/)
+   [https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/](https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/)
 
 ### Computing Cluster
 
