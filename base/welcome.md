@@ -88,11 +88,3 @@ Everyone should get an account.
 Request an account -> sponsor is "Bioinformatics Core Workshop"
 
 If you already have, or have had in the past, an account on our systems, then please tell us your username, or email, and we will add you to the workshop. **Do not create a new account**
-
-Cluster usage will be under the slurm reservation  ‘intro_scrna_workshop’
-
-<!--
-Reservation will last 1 full week after the workshop and allow you to practice or run analyze your own data.
-
-**workshop       ACTIVE  2019-08-19T00:00:00  2019-08-31T00:00:00  12-00:00:00  rafter-[0,2,8,14,18]**
--->

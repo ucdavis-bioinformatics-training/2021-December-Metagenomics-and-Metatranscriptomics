@@ -39,4 +39,4 @@ If you have any questions, please don’t hesitate to contact us at [training.bi
 
 ### Register
 
-Register for the August 2020 online [course](https://registration.genomecenter.ucdavis.edu/events/intro_scRNASeq_aug_2020_online/)
+Register for the [course](https://registration.genomecenter.ucdavis.edu/events/metagenomics_december_2021/)
