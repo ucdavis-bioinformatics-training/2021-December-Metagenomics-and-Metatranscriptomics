@@ -10,7 +10,7 @@ Contact - UC Davis Bioinformatics Core, [training.bioinformatics@ucdavis.edu](ma
 
 Description TBA
 
-A basic understanding of the command line and R is a prerequisite for success in this course. We recommend beginners enroll in our introductory courses in CLI and R. After a brief review on the first day of the course,  we will not be providing instruction in basic CLI or R.
+To get the most out of this course, please complete the prerequisite material in [command line](base/cli_prerequisites) and [R](base/r_prerequisites) before the course, and contact us with any questions.
 
 This workshop will be held online from 9:00 am to 5:00 pm each day.
 
@@ -20,7 +20,7 @@ Participants must supply their own laptop with a reliable connection to the inte
 
 **Who should attend?** … Prior course participants have included faculty, post docs, grad students, staff, and industry researchers.
 
-**What are the prerequisites?** … A basic understanding of the command line and R is a prerequisite for success in this course. We recommend beginners enroll in our introductory courses in CLI and R. After a brief review on the first day of the course,  we will not be providing instruction in basic CLI or R.
+**What are the prerequisites?** … To get the most out of this course, please complete the prerequisite material in [command line](base/cli_prerequisites) and [R](base/r_prerequisites) before the course, and contact us with any questions.
 
 **What do I need to bring?** … You will need to bring laptop with a reliable connection to the internet, current versions of [R version 4.0](https://cloud.r-project.org/) and [Rstudio](https://rstudio.com/products/rstudio/download/#download) installed, and an application that allows you to ssh into a server (e.g. Bash for Windows, or Terminal for Apple). Computational exercises will be performed on a remote server. If your department does not allow you to install software on the laptop you’ll be bringing, please contact us ahead of time.
 
