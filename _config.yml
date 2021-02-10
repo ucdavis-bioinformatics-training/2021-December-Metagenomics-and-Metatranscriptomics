@@ -28,9 +28,9 @@ navigation:
 
   - heading: Prerequisites
   - title: CLI
-    url: prerequisites/cli/logging-in
+    url: base/cli_prerequisites
   - title: R
-    url: prerequisites/cli/command-line-intro
+    url: base/r_prerequisites
 
   - heading: ETC
   - title: Closing thoughts
