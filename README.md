@@ -8,7 +8,7 @@ Dec. 13, 2021 - Dec. 17, 2021, 9 a.m. - 4:30 p.m daily. **On-Site and Online lea
 
 Contact - UC Davis Bioinformatics Core, [training.bioinformatics@ucdavis.edu](mailto:training.bioinformatics@ucdavis.edu)
 
-Description TBA
+Explore metagenomics and metatranscriptomics with the UC Davis Bioinformatics Core and an exciting slate of guest speakers!
 
 To get the most out of this course, please complete the prerequisite material in [command line](base/cli_prerequisites) and [R](base/r_prerequisites) before the course, and contact us with any questions.
 
