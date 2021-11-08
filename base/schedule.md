@@ -22,19 +22,19 @@ All posted times are **Pacific** time zone. At least one break will be provided 
 |:----------- |:------------------- |
 | **9:00 am**  | Metagenomics (overview lecture) |
 | **10:00 am**  | Break                      |
-| **10:15 am**  | Metagenomics (data reduction)|
+| **10:15 am**  | Adapter and quality trimming  |
 | **11:30 am**  | Sponsor talk / questions (TBA)  |
 | **12:00 pm** | Lunch                                     |
-| **1:00 pm**  | Metagenomics (data reduction) |
+| **1:00 pm**  | Community profiling with Kraken  |
 | **3:00 pm**  | Break                          |
-| **3:15 pm**  | Metagenomics (data reduction) |
+| **3:15 pm**  | Host DNA removal  |
 
 ### Wednesday, December 15
 
 |:----------- |:------------------- |
-| **9:00 am**  | Metagenomics (data analysis) |
+| **9:00 am**  | Community profiling using assembly |
 | **10:00 am**  | Break                      |
-| **10:15 am**  | Metagenomics (data analysis) |
+| **10:15 am**  | Community profiling using assembly, continued |
 | **11:30 am**  | Sponsor talk / questions (TBA)  |
 | **12:00 pm** | Lunch                                     |
 | **1:00 pm**  | Metagenomics (data analysis) |
@@ -64,4 +64,4 @@ All posted times are **Pacific** time zone. At least one break will be provided 
 | **1:00 pm**  | Metatranscriptomics (data analysis) |
 | **3:00 pm**  | Break                          |
 | **3:15 pm**  | Metatranscriptomics (data analysis) |
-| **4:00 pm**  | Closing  |
+| **4:00 pm**  | Closing |
