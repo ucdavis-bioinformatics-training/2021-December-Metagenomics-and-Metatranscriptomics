@@ -46,22 +46,22 @@ All posted times are **Pacific** time zone. At least one break will be provided 
 |:----------- |:------------------- |
 | **9:00 am**  | Metatranscriptomics (overview lecture) |
 | **10:00 am**  | Break                      |
-| **10:15 am**  | Metatranscriptomics (data reduction)|
+| **10:15 am**  | Adapter and quality trimming, rRNA removal |
 | **11:30 am**  | Sponsor talk / questions (TBA)  |
 | **12:00 pm** | Lunch                                     |
-| **1:00 pm**  | Metatranscriptomics (data reduction) |
+| **1:00 pm**  | Metatranscriptomics assembly |
 | **3:00 pm**  | Break                          |
-| **3:15 pm**  | Metatranscriptomics (data reduction) |
+| **3:15 pm**  | Metatranscriptomics assembly, continued |
 
 ### Friday, December 17
 
 |:----------- |:------------------- |
-| **9:00 am**  | Metatranscriptomics (data analysis) |
+| **9:00 am**  | Functional annotation of the transcriptome |
 | **10:00 am**  | Break                      |
-| **10:15 am**  | Metatranscriptomics (data analysis) |
+| **10:15 am**  | Functional annotation of the transcriptome, continued |
 | **11:30 am**  | Sponsor talk / questions (TBA)  |
 | **12:00 pm** | Lunch                                     |
-| **1:00 pm**  | Metatranscriptomics (data analysis) |
+| **1:00 pm**  | Integration of metagenomic and metatranscriptomic data |
 | **3:00 pm**  | Break                          |
-| **3:15 pm**  | Metatranscriptomics (data analysis) |
+| **3:15 pm**  | Integration of metagenomic and metatranscriptomic data, continued |
 | **4:00 pm**  | Closing |
