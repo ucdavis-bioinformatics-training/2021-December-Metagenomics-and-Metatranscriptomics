@@ -32,14 +32,14 @@ All posted times are **Pacific** time zone. At least one break will be provided 
 ### Wednesday, December 15
 
 |:----------- |:------------------- |
-| **9:00 am**  | Community profiling using assembly |
+| **9:00 am**  | Community profiling using assembly  |
 | **10:00 am**  | Break                      |
-| **10:15 am**  | Community profiling using assembly, continued |
+| **10:15 am**  | Guest lecture  |
 | **11:30 am**  | Sponsor talk / questions (TBA)  |
 | **12:00 pm** | Lunch                                     |
-| **1:00 pm**  | Metagenomics (data analysis) |
+| **1:00 pm**  | Community profiling using assembly, continued |
 | **3:00 pm**  | Break                          |
-| **3:15 pm**  | Metagenomics (data analysis) |
+| **3:15 pm**  | Metagenomics downstream analysis |
 
 ### Thursday, December 16
 
