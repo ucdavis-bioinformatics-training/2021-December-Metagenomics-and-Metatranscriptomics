@@ -2,7 +2,7 @@
 
 __The mission of the Bioinformatics Core facility is to facilitate outstanding omics-scale research through these activities:__
 
- <img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/misc/welcome_figure1.png" alt="welcome_figure1" width="800px"/>
+ <img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2021-December-Metagenomics-and-Metatranscriptomics/master/base/welcome_figure1.png" alt="welcome_figure1" width="800px"/>
 
 ## Staff and Students
 Our team offers custom bioinformatics services to academic and private organizations. We have a strong academic background with a focus on cutting edge, open source software. We replicate standard analysis pipelines (best practices) when appropriate, and/or develop novel applications and pipelines when needed, however we always emphasize biological interpretation of the data.
