@@ -26,13 +26,13 @@ Our team offers custom bioinformatics services to academic and private organizat
 
 ## Structure of the Virtual Workshops
 
-Given the current Covid19 pandemic, and stay in place orders around the world, we've decided to take our popular bioinformatic workshops virtual. Our intent is to offer as close to an experience we can to our in-person workshops. We will hold the same goals and strive for a similar lecture/hand-on ratio. We will be using multiple technologies in order to help facilitate a maximum amount of interaction.
+Given the current Covid19 pandemic, we've decided to provide a hybrid format to our workshop. Our intent is to offer as much opportunity as possible to everyone who are interested in our workshop. We will hold the same goals and strive for a similar lecture/hand-on ratio. We will be using multiple technologies in order to help facilitate a maximum amount of interaction.
 
 #### Zoom
 
 Course lecture, discussions, and one-on-one help/troubleshooting will be conducted using a zoom meeting.
 
-  * Each participant will be provided a personal break out room that will allow one-on-one troubleshooting by our staff, screen sharing and even remote control.
+  * Participants will be provided one-on-one troubleshooting by our staff, screen sharing and even remote control when necessary.
   * The Chat features of Zoom will **not** be our primary mode of text communication as its history is not reliable.
   * We will stick to a schedule to allow people to plan their day and know when they need to be back at their computers for lecture.
   * Video recordings of lectures will be made available to participants.
@@ -74,7 +74,7 @@ Workshop materials are all posted on github, and publicly available
    [https://ucdavis-bioinformatics-training.github.io/](https://ucdavis-bioinformatics-training.github.io/)
 
 
-* This Intro to scRNAseq Workshop
+* This metagenomics and metatranscriptomics Workshop
 
    [https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/](https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/)
 
