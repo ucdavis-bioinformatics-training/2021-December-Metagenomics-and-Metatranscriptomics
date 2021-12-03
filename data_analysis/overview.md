@@ -38,6 +38,13 @@ Shotgun-base metagenomics approach has the advantage of producing not only the c
 Quince, C., etc., 2017, Nat. Biotechnol.
 </p>
 
+For each of the steps along the metagenomics data analysis using shotgun sequencing, many tools have been developed or adapted from regular genomics data analysis.
+
+
+<p align = "center">
+<img src="overview_figures/P3.png" alt="micribial" width="60%"/>
+</p>
+
 ---
 
 
