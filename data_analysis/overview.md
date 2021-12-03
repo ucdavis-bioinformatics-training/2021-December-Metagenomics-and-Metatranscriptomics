@@ -27,6 +27,17 @@ The field of metagenomics is to study the composition of the microbial communiti
   * metagenomic assembly and binning
 
 
+Shotgun-base metagenomics approach has the advantage of producing not only the composition of the community, but also provide information on potential functions from all organisms present in a given complex sample. It allows the discovery of previously unknow species even when they could not be classified to known taxa.
+
+
+<p align = "center">
+<img src="overview_figures/P2.webp" alt="micribial" width="60%"/>
+</p>
+
+<p align = "right" style="font-family:Times;font-size:12px;">
+Quince, C., etc., 2017, Nat. Biotechnol.
+</p>
+
 ---
 
 
