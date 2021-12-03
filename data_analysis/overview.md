@@ -2,7 +2,7 @@
 -------------------------------------------------------
 
 <p align = "center">
-<img src="overview_figures/P1.png" alt="micribial" width="60%"/>
+<img src="overview_figures/P1.jpg" alt="micribial" width="60%"/>
 </p>
 
 <p align = "right" style="font-family:Times;font-size:12px;">
