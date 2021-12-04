@@ -50,17 +50,15 @@ For each of the steps along the metagenomics data analysis using shotgun sequenc
 
 ----------------------------------------
 
-### Mark duplicates
+## Metatranscriptomics
 
-This step is optional if you have done deduplication in read preprocessing step, as we have done using hts_SuperDeduper. The steps below serves as a helper if you need it in your own data analysis, where you do not do deduplication in the data preprocessing step. 
+Metatranscriptomics is to use RNASeq technology to profile expressed genes in a microbial community. It allows for the profiling of the composition of the community as well as the activities of the community from gene expression point of view. By mapping the expressed genes to metabolic pathways, it presents a picture of the functional aspect of the microbial community. It distinguishes an active member from a non-active member. It also offers a tool to study the responses that the microbial community has to their changing environmental conditions.
+
+
+<p align = "center">
+<img src="overview_figures/P4.png" alt="micribial" width="60%"/>
+</p>
 
 
 ---
-
-### Base quality score recalibration (BQSR)
-
-<br>
-
-##### <font color='red'> Stop Group Exercise 1: </font>
-
 
