@@ -9,7 +9,10 @@
 Vanwonterghem, etc., 2014, Curr. Opin. Biotechnol.
 </p>
 
-Microbiomes are ubiquitous in the environment and play essential roles in every aspects of nature and life. In recent years, more effort has been put in studying these microorganisms, facilitated by advances in technology, especially the sequencing technologies, and the significant decrease in the cost. There are five major areas in microbiom study, metagenomes, metatranscriptomes, metaproteome, microbial metabolomes, and image based cell activity studies. Each of these areas focuses on one aspect of the microbiome community and provides insights into the nature of the microbial communities. In this workshop, we are going to focus on only two areas: metagenomics and metatranscriptomics.
+Microbiomes are ubiquitous in the environment and play essential roles in every aspects of nature and life. Despite its importance, the research on the mcirobial community was severely limited because of the difficulty in cell culturing and separation. In recent years, more effort has been put in studying these microorganisms, facilitated by advances in technology, especially the sequencing technologies, and the significant decrease in the cost.
+
+There are five major areas in microbiom study, metagenomes, metatranscriptomes, metaproteome, microbial metabolomes, and image based cell activity studies. Each of these areas focuses on one aspect of the microbiome community and provides insights into the nature of the microbial communities. In this workshop, we are going to focus on only two areas: metagenomics and metatranscriptomics.
+
 
 ---
 
