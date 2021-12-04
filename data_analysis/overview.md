@@ -57,6 +57,17 @@ Metatranscriptomics is to use RNASeq technology to profile expressed genes in a 
 <img src="overview_figures/P4.png" alt="micribial" width="60%"/>
 </p>
 
+<p align = "right" style="font-family:Times;font-size:12px;">
+modified from: Quince, C., etc., 2017, Nat. Biotechnol.
+</p>
+
+
+The analysis of metatranscriptomics borrow some tools from the analysis of metagenomics. For example, for assemblying the metatranscriptome, the assembly tools first designed for metagenomics tools have been used. It also borrows some tools from the regular transcriptomic assembly, such as Trinity, which has been shown to improve the number of annotated genes from the assembled transcripts. There are a few tools designed specifically for metatranscriptomes and take into account the unique features of both transcripts and the complex nature of microbial communities, such as IDBA-MT, TAG.
+
+
+<p align = "center">
+<img src="overview_figures/P5.png" alt="micribial" width="60%"/>
+</p>
 
 ---
 
