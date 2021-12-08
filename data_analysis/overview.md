@@ -83,13 +83,13 @@ The analysis of metatranscriptomics borrow some tools from the analysis of metag
 <img src="overview_figures/P7.png" alt="micribial" width="40%"/>
 </p>
 
-<div class="image67">
+<div class="image12">
     <div style="float:left:margin-right:5px;">
-        <img src="overview_figures/P6.png" height="400" width="400" />
+        <img src="overview_figures/P6.png" height="300" width="400" />
         <p style="text-align:left;">Metagenomics</p>
     </div>
     <div style="float:right;margin-left:5px;">
-        <img src="overview_figures/P7.png" height="400" width="400" />
+        <img src="overview_figures/P7.png" height="300" width="400" />
         <p style="text-align:right;">Metatranscriptomics</p>
     </div>
 </div>
