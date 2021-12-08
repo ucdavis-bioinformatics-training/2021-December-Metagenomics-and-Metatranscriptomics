@@ -7,7 +7,7 @@ Fuyong Li, et al. ["Comparative metagenomic and metatranscriptomic analyses reve
 
 The project on the NCBI Sequence Read Archive (SRA), [PRJNA448333](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA448333).
 
-Relevant RNA sections of the paper
+Relevant sections of the paper
 
 ## Bovine models
 Forty-eight steers were selected from a herd of 738 beef cattle that were born in 2014 and raised at the Roy Berg Kinsella Research Ranch, University of Alberta, according to their breeds and residual feed intake (RFI) ranking. These 48 steers belong to three breeds and two RFI groups (high RFI [H-RFI, inefficient] and low RFI [L-RFI, efficient]), including two purebreds (Angus [ANG]; H-RFI, n = 8; L-RFI, n = 8) and Charolais [CHAR]; H-RFI, n = 8; L-RFI, n = 8), and one crossbred (Kinsella composite hybrid [HYB]; H-RFI, n = 8; L-RFI, n = 8).
