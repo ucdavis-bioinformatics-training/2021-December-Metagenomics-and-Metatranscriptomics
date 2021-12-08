@@ -78,9 +78,11 @@ The analysis of metatranscriptomics borrow some tools from the analysis of metag
 
 ## Data Analysis Workflows
 
-<p align = "center">
-<img src="overview_figures/P8.png" alt="micribial" width="60%"/>
-</p>
+<div class="image">
+  <div style="fload:center">
+    <img src="overview_figures/P8.png" alt="micribial" width="100%"/>
+  </div>
+</div>
 
 ---
 
