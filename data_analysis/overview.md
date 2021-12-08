@@ -95,5 +95,30 @@ The analysis of metatranscriptomics borrow some tools from the analysis of metag
 </div>
 
 
+<div class="row">
+    <div class="column">
+        <img src="overview_figures/P6.png" alt="P6" style="width:100%">
+        <p style="text-align:left;">Metagenomics</p>
+    </div>
+    <div class="column">
+        <img src="overview_figures/P7.png" alt="P7" sytle="width:100%">
+        <p style="text-align:right;">Metatranscriptomics</p>
+    </div>
+</div>
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+  float: left;
+  width: 50%;
+  padding: 5px;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
 ---
 
