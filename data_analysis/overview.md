@@ -78,17 +78,9 @@ The analysis of metatranscriptomics borrow some tools from the analysis of metag
 
 ## Data Analysis Workflows
 
-<div class="image12">
-    <div style="float:left:margin-right:5px;">
-        <img src="overview_figures/P6.png" height="300" width="400" />
-        <p style="text-align:left;">Metagenomics</p>
-    </div>
-    <div style="float:right;margin-left:5px;">
-        <img src="overview_figures/P7.png" height="270" width="400" />
-        <p style="text-align:right;">Metatranscriptomics</p>
-    </div>
-</div>
-
+<p align = "center">
+<img src="overview_figures/P8.png" alt="micribial" width="60%"/>
+</p>
 
 ---
 
