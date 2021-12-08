@@ -13,8 +13,6 @@ We have found that aggressively “cleaning” and preprocessing of reads can ma
   * Removing bases of unwanted sequence (Ex. vectors, adapter, primer sequence, polyA tails).
   * Merge/join short overlapping paired-end reads.
   * Remove low quality bases or N characters.
-  * Remove reads originating from PCR duplication.
-  * Remove reads that are not of primary interest (contamination).
   * Remove too short reads.
 
 Preprocessing also produces a number of statistics about the samples. These can be used to evaluate sample-to-sample consistency.
