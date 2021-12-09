@@ -410,7 +410,7 @@ Note the patterns:
 We can now run the preprocessing routine across all samples on the real data using a SLURM script, [hts_preproc.slurm](../software_scripts/scripts/hts_preproc.slurm), that we should take a look at now.
 
 ```bash
-cd /share/workshop/meta_workshop/$USER/meta_example  # We'll run this from the main directory
+cd /share/workshop/meta_workshop/$USER/meta_example/scripts  # We'll run this from the main directory
 wget https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/software_scripts/scripts/hts_preproc.slurm
 less hts_preproc.slurm
 ```
@@ -442,7 +442,7 @@ TYPE=$1
 
 echo $SAMPLE
 echo $TYPE
-export outdir=$baseP/01-Cleaned/$TYPE
+export outdir=$baseP/01-HTS_Preproc/$TYPE
 
 if [ ! -e $outdir ]; then
     mkdir -p $outdir
