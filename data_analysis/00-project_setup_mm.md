@@ -67,7 +67,7 @@ mkdir -p /share/workshop/meta_workshop/$USER/meta_example
 
     ```bash
     cd 00-RawData
-    ls *_DNA_1.fastq |awk '{FS="_DNA"}{print $1}' - > ../scripts/allsamples.txt
+    ls *_DNA_1.*fastq.gz |awk '{FS="_DNA"}{print $1}' - > ../scripts/allsamples.txt
     cat ../scripts/samples.txt
     ```
 
@@ -95,7 +95,7 @@ mkdir -p /share/workshop/meta_workshop/$USER/meta_example
 
     ```bash
     cd 00-RawData
-    zless ANG_301_DNA_1.fastq.gz
+    zless ANG_301_DNA_1.subset.fastq.gz
     ```
 
     Make sure you can identify which lines correspond to a read and which lines are the header, sequence, and quality values. Press 'q' to exit this screen.
@@ -103,7 +103,7 @@ mkdir -p /share/workshop/meta_workshop/$USER/meta_example
 1. Then, let's figure out the number of reads in this file. A simple way to do that is to count the number of lines and divide by 4 (because the record of each read uses 4 lines). In order to do this use cat to output the uncompressed file and pipe that to "wc" to count the number of lines:
 
     ```bash
-    zcat ANG_301_DNA_1.fastq.gz | wc -l
+    zcat ANG_301_DNA_1.subset.fastq.gz | wc -l
     ```
 
     Divide this number by 4 and you have the number of reads in this file.
@@ -111,7 +111,7 @@ mkdir -p /share/workshop/meta_workshop/$USER/meta_example
 1. One more thing to try is to figure out the length of the reads without counting each nucleotide. First get the first 4 lines of the file (i.e. the first record):
 
     ```bash
-    zcat ANG_301_DNA_1.fastq.gz  | head -2 | tail -1
+    zcat ANG_301_DNA_1.subset.fastq.gz  | head -2 | tail -1
     ```
 
     Note the header lines (1st and 3rd line) and sequence and quality lines (2nd and 4th) in each 4-line fastq block.
@@ -125,7 +125,7 @@ mkdir -p /share/workshop/meta_workshop/$USER/meta_example
     This will give you the length of the read. Also can do the bash one liner:
 
     ```bash
-    echo -n $(zcat ANG_301_DNA_1.fastq.gz  | head -2 | tail -1) | wc -c
+    echo -n $(zcat ANG_301_DNA_1.subset.fastq.gz  | head -2 | tail -1) | wc -c
     ```
 
 ## Prepare our experiment folder for analysis
