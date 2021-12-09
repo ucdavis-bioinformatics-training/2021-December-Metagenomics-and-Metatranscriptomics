@@ -676,7 +676,7 @@ Or in case of emergency, download the report we have generated: [HTSMultiQC-clea
     ```bash
     mkdir ~/meta_workshop
     cd ~/meta_workshop
-    scp your_username@tadpole.genomecenter.ucdavis.edu:/share/workshop/your_username/meta_example/summary_hts.txt .
+    scp your_username@tadpole.genomecenter.ucdavis.edu:/share/workshop/your_username/meta_example/summary_hts*.txt .
     ```
 
     Open in excel (or excel like application), you may have to move the header column 1 cell to the right, and lets review.
