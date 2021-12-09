@@ -34,46 +34,17 @@ PCA/MDS plots of the preprocessing summary are a great way to look for technical
 <img src="preproc_mm_figures/preproc_flowchart.png" alt="preproc_flowchart" width="80%"/>
 
 
-In order to better understand and preprocess an RNA-seq data set (and to determine the types of problems we might encounter), it is a good idea to learn what type of library prep kit was used, and how it works.
-
-For this data set, [Selimoglu-Buet et al.](https://www.nature.com/articles/s41467-018-07801-x) report the following:
-
-> *SureSelect Automated Strand Specific RNA Library Preparation Kit* was used according to the manufacturer’s instructions with the Bravo Platform. Briefly, 100 ng of total RNA sample was used for poly-A mRNA selection using oligo(dT) beads and subjected to thermal mRNA fragmentation. The fragmented mRNA samples were subjected to cDNA synthesis and were further converted into double-stranded DNA using the reagents supplied in the kit, and the resulting double-stranded DNA was used for library preparation. The final libraries were sequenced on an Hiseq 2000 for human samples and on [NovaSeq 6000](https://www.illumina.com/content/dam/illumina-marketing/documents/products/appnotes/novaseq-hiseq-q30-app-note-770-2017-010.pdf) for mice samples (Illumina) in paired-end 100 bp mode in order to reach at least 30 millions reads per sample at Gustave Roussy.
-
-Unfortunately the methods don't provide much information about the strandedness of the library. We can learn more by looking up the [user manual](https://www.agilent.com/cs/library/usermanuals/Public/G9691-90010.pdf). Often times manufacturer web sites and user manuals will contain some hints regarding analysis.
-
-> Sequence analysis guidelines
-
-> The SureSelect RNA sequencing library preparation method preserves RNA strandedness using dUTP second- strand marking. The sequence of read 1, which starts at the P5 end, matches the reverse complement of the poly- A RNA transcript strand. Read 2, which starts at the P7 end, matches the poly-A RNA transcript strand. When running analysis of this data to determine strandedness, it is important to include this information. For example, when using the Picard tools (https://broadinstitute.github.io/picard) to calculate RNA sequencing metrics, it is important to include the parameter STRAND_SPECIFICITY= SECOND_READ_TRANSCRIPTION_STRAND to correctly calculate the strand specificity metrics.
-
-Agilent has also produced a [poster](https://www.agilent.com/cs/library/posters/Public/ASHG-poster-SureSelect-strand-specific%20RNA%20library-prep-kit-fast-streamlined-workflow-for-libraries-from-total-RNA.pdf) with additional details about the qualities of this library. The figures below provide additional detail about the library and what to expect.
-
-<img src="preproc_mm_figures/SureSelectLibraryPrep.png" alt="libraryPrep" width="80%"/>
-
-<img src="preproc_mm_figures/SureSelectLibraryCoverage.png" alt="libraryPrep" width="80%"/>
+The amount of attention required in preprocessing highly depends on the study goal. For example, if one is aiming to create a high quality metagenome assembled genomes, then the minimum base quality should not be less than 10 or even 20, at the same time the minimum length of the reads should not be too short. If one is aiming to produce taxonomy profiling, then these criteria could be relaxed.
 
 
-Based on the information above we can conclude that R1 should probably always be in reverse complement orientation with respect to the transcript, and that few reads should have poly-(A/T) signals.  
-
-To double check, we could map reads to a "housekeeping gene" like beta actin (NM_007393.5 Mus musculus actin, beta (Actb), mRNA
-). Examining the reads can help us confirm our conclusions about the library, and inform decisions about how to clean in.
-
-
-<img src="preproc_mm_figures/Geneious_read_orientation_check.png" alt="libraryPrep" width="100%"/>
-
-
-### An RNAseq Preprocessing Workflow
+### Preprocessing Workflow
 
 1. Remove contaminants (at least PhiX).
-1. Remove PCR duplicates.
-1. Count rRNA proportion.
-1. Join and potentially extend, overlapping paired end reads
-1. If reads completely overlap they will contain adapter, remove adapters
-1. Identify and remove any adapter dimers present
+1. Identify and remove any adapter present
+1. Join and potentially extend, overlapping paired end reads (RNA reads only)
 1. Trim sequences (5’ and 3’) by quality score (I like Q20)
-1. Run a polyA/T trimmer
 1. Cleanup
-  * Remove any reads that are less then the minimum length parameter
+  * Remove any reads that are less then the minimum length parameter (50bp for DNA, 30bp for RNA)
   * Produce preprocessing statistics
 
 ## HTStream Streamed Preprocessing of Sequence Data
@@ -142,7 +113,7 @@ If you encounter any bugs or have suggestions for improvement, please post them 
 # HTStream tutorial
 
 
-### <font color='red'> Start Group Exercise 1: </font>
+### <font color='red'> Start Exercise 1: </font>
 
 ## Running HTStream
 
@@ -166,8 +137,8 @@ When building a new pipeline, it is almost always a good idea to use a small sub
     Then create a small dataset.
 
     ```bash
-    zcat ../00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz | head -400000 | gzip > mouse_110_WT_C.subset_R1.fastq.gz
-    zcat ../00-RawData/mouse_110_WT_C/mouse_110_WT_C.R2.fastq.gz | head -400000 | gzip > mouse_110_WT_C.subset_R2.fastq.gz
+    zcat ../00-RawData/ANG_301_DNA_1.fastq.gz | head -400000 | gzip > ANG_301_DNA.subset_R1.fastq.gz
+    zcat ../00-RawData/ANG_301_DNA_2.fastq.gz | head -400000 | gzip > ANG_301_DNA.subset_R2.fastq.gz
     ls -l
     ```
 
@@ -189,9 +160,9 @@ When building a new pipeline, it is almost always a good idea to use a small sub
 1. Now lets run ```hts_Stats``` and look at the output.
 
     ```bash
-    hts_Stats -1 mouse_110_WT_C.subset_R1.fastq.gz \
-              -2 mouse_110_WT_C.subset_R2.fastq.gz \
-              -L mouse_110_WT_C.stats.json > out.tab
+    hts_Stats -1 ANG_301_DNA.subset_R1.fastq.gz \
+              -2 ANG_301_DNA.subset_R2.fastq.gz \
+              -L ANG_301_DNA.stats.json > out.tab
     ```
 
     * *What happens if you run hts_Stats without piping output to out.tab?*
@@ -219,9 +190,9 @@ When building a new pipeline, it is almost always a good idea to use a small sub
 
 1. Now lets change the command slightly.
     ```bash
-    hts_Stats -1 mouse_110_WT_C.subset_R1.fastq.gz \
-              -2 mouse_110_WT_C.subset_R2.fastq.gz \
-              -L mouse_110_WT_C.stats.json -f mouse_110_WT_C.stats
+    hts_Stats -1 ANG_301_DNA.subset_R1.fastq.gz \
+              -2 ANG_301_DNA.subset_R2.fastq.gz \
+              -L ANG_301_DNA.stats.json -f ANG_301_DNA.stats
     ```
 
     * *What parameters did we use, what do they do?*
@@ -236,20 +207,20 @@ When building a new pipeline, it is almost always a good idea to use a small sub
     total 20M
     drwxrwsr-x 2 shunter meta_workshop    8 Jul 27 13:44 .
     drwxrwsr-x 8 shunter meta_workshop    9 Jul 27 13:37 ..
-    -rw-rw-r-- 1 shunter meta_workshop  40K Jul 27 13:44 mouse_110_WT_C.stats.json
-    -rw-rw-r-- 1 shunter meta_workshop 4.7M Jul 27 13:44 mouse_110_WT_C.stats_R1.fastq.gz
-    -rw-rw-r-- 1 shunter meta_workshop 5.0M Jul 27 13:44 mouse_110_WT_C.stats_R2.fastq.gz
-    -rw-rw-r-- 1 shunter meta_workshop 4.7M Jul 27 13:39 mouse_110_WT_C.subset_R1.fastq.gz
-    -rw-rw-r-- 1 shunter meta_workshop 5.0M Jul 27 13:39 mouse_110_WT_C.subset_R2.fastq.gz
+    -rw-rw-r-- 1 shunter meta_workshop  40K Jul 27 13:44 ANG_301_DNA.stats.json
+    -rw-rw-r-- 1 shunter meta_workshop 4.7M Jul 27 13:44 ANG_301_DNA.stats_R1.fastq.gz
+    -rw-rw-r-- 1 shunter meta_workshop 5.0M Jul 27 13:44 ANG_301_DNA.stats_R2.fastq.gz
+    -rw-rw-r-- 1 shunter meta_workshop 4.7M Jul 27 13:39 ANG_301_DNA.subset_R1.fastq.gz
+    -rw-rw-r-- 1 shunter meta_workshop 5.0M Jul 27 13:39 ANG_301_DNA.subset_R2.fastq.gz
     </div>
 
     * *Which files were generated from hts\_Stats?*
-    * *Did stats change any of the data (are the contents of mouse_110_WT_C.stats_R1.fastq.gz identical to mouse_110_WT_C.subset_R1.fastq.gz)?*
+    * *Did stats change any of the data (are the contents of ANG_301_DNA.stats_R1.fastq.gz identical to ANG_301_DNA.subset_R1.fastq.gz)?*
 
-1. Lets look at the file **mouse_110_WT_C.stats.json**
+1. Lets look at the file **ANG_301_DNA.stats.json**
 
     ```bash
-    less -S mouse_110_WT_C.stats.json
+    less -S ANG_301_DNA.stats.json
     ```
 
     The logs generated by htstream are in [JSON](https://en.wikipedia.org/wiki/JSON) format, like a database format but meant to be readable.
@@ -325,14 +296,14 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
 1. Run HTStream on the small test set.
 
     ```bash
-    hts_SeqScreener -1 mouse_110_WT_C.subset_R1.fastq.gz \
-                    -2 mouse_110_WT_C.subset_R2.fastq.gz \
-                    -s ../References/mouse_rrna.fasta -r -L mouse_110_WT_C.rrna.json -f mouse_110_WT_C.rrna
+    hts_SeqScreener -1 ANG_301_DNA.subset_R1.fastq.gz \
+                    -2 ANG_301_DNA.subset_R2.fastq.gz \
+                    -s ../References/mouse_rrna.fasta -r -L ANG_301_DNA.rrna.json -f ANG_301_DNA.rrna
     ```
 
     * *Which files were generated from hts\_SeqScreener?*
 
-    * *Take look at the file mouse_110_WT_C.rrna.json*
+    * *Take look at the file ANG_301_DNA.rrna.json*
 
     * *How many reads were identified as rRNA?*
 
@@ -345,11 +316,11 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
     ```bash
     cd /share/workshop/meta_workshop/$USER/meta_example/HTS_testing
 
-    hts_Stats -1 mouse_110_WT_C.subset_R1.fastq.gz \
-              -2 mouse_110_WT_C.subset_R2.fastq.gz \
-              -L mouse_110_WT_C.streamed.json |
-    hts_SeqScreener -A mouse_110_WT_C.streamed.json \
-              -r -s ../References/mouse_rrna.fasta -f mouse_110_WT_C.streamed
+    hts_Stats -1 ANG_301_DNA.subset_R1.fastq.gz \
+              -2 ANG_301_DNA.subset_R2.fastq.gz \
+              -L ANG_301_DNA.streamed.json |
+    hts_SeqScreener -A ANG_301_DNA.streamed.json \
+              -r -s ../References/mouse_rrna.fasta -f ANG_301_DNA.streamed
     ```
 
     Note the pipe, ```|```, between the two applications!
@@ -359,7 +330,7 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
 
     * *What parameter is SeqScreener using that specifies how reads are input?*
 
-    * *Look at the file mouse_110_WT_C.streamed.json*
+    * *Look at the file ANG_301_DNA.streamed.json*
 
         * *Can you find the section for each program?*
 
@@ -473,7 +444,7 @@ This sequence is P7(rc): **ATCTCGTATGCCGTCTTCTGCTTG**. It should present in any 
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example/HTS_testing
-zcat mouse_110_WT_C.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
+zcat ANG_301_DNA.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
 ```
 
 ----
@@ -523,21 +494,21 @@ Note that the very highly expressed transcript is [Lysozyme 2, ENSMUST0000009216
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example/HTS_testing
 
-hts_Stats -L mouse_110_WT_C_htsStats.json -N "initial stats" \
-    -1 mouse_110_WT_C.subset_R1.fastq.gz \
-    -2 mouse_110_WT_C.subset_R2.fastq.gz | \
-hts_SeqScreener -A mouse_110_WT_C_htsStats.json -N "screen phix" | \
-hts_SeqScreener -A mouse_110_WT_C_htsStats.json -N "count the number of rRNA reads"\
+hts_Stats -L ANG_301_DNA_htsStats.json -N "initial stats" \
+    -1 ANG_301_DNA.subset_R1.fastq.gz \
+    -2 ANG_301_DNA.subset_R2.fastq.gz | \
+hts_SeqScreener -A ANG_301_DNA_htsStats.json -N "screen phix" | \
+hts_SeqScreener -A ANG_301_DNA_htsStats.json -N "count the number of rRNA reads"\
      -r -s ../References/mouse_rrna.fasta | \
-hts_SuperDeduper -A mouse_110_WT_C_htsStats.json -N "remove PCR duplicates" | \
-hts_AdapterTrimmer -A mouse_110_WT_C_htsStats.json -N "trim adapters" | \
-hts_PolyATTrim  -A mouse_110_WT_C_htsStats.json -N "trim adapters" | \
-hts_NTrimmer -A mouse_110_WT_C_htsStats.json -N "remove any remaining 'N' characters" | \
-hts_QWindowTrim -A mouse_110_WT_C_htsStats.json -N "quality trim the ends of reads" | \
-hts_LengthFilter -A mouse_110_WT_C_htsStats.json -N "remove reads < 50bp" \
+hts_SuperDeduper -A ANG_301_DNA_htsStats.json -N "remove PCR duplicates" | \
+hts_AdapterTrimmer -A ANG_301_DNA_htsStats.json -N "trim adapters" | \
+hts_PolyATTrim  -A ANG_301_DNA_htsStats.json -N "trim adapters" | \
+hts_NTrimmer -A ANG_301_DNA_htsStats.json -N "remove any remaining 'N' characters" | \
+hts_QWindowTrim -A ANG_301_DNA_htsStats.json -N "quality trim the ends of reads" | \
+hts_LengthFilter -A ANG_301_DNA_htsStats.json -N "remove reads < 50bp" \
     -n -m 50 | \
-hts_Stats -A mouse_110_WT_C_htsStats.json -N "final stats" \
-    -f mouse_110_WT_C.htstream
+hts_Stats -A ANG_301_DNA_htsStats.json -N "final stats" \
+    -f ANG_301_DNA.htstream
 ```
 
 Note the patterns:
@@ -715,7 +686,7 @@ The JSON files output by HTStream provide this type of information.
 
     ```bash
     cd /share/workshop/meta_workshop/$USER/meta_example
-    zless 00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz
+    zless 00-RawData/ANG_301_DNA/ANG_301_DNA.R1.fastq.gz
     ```
 
     Let's search for the adapter sequence. Type '/' (a forward slash), and then type **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** (the first part of the forward adapter). Press Enter. This will search for the sequence in the file and highlight each time it is found. You can now type "n" to cycle through the places where it is found. When you are done, type "q" to exit.
@@ -723,7 +694,7 @@ The JSON files output by HTStream provide this type of information.
     Now look at the output file:
 
     ```bash
-    zless 01-HTS_Preproc/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz
+    zless 01-HTS_Preproc/ANG_301_DNA/ANG_301_DNA_R1.fastq.gz
     ```
 
     If you scroll through the data (using the spacebar), you will see that some of the sequences have been trimmed. Now, try searching for **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** again. You shouldn't find it (adapters were trimmed remember), but rarely is anything perfect. You may need to use Control-C to get out of the search and then "q" to exit the 'less' screen.
@@ -731,21 +702,21 @@ The JSON files output by HTStream provide this type of information.
     Lets grep for the sequence and get an idea of where it occurs in the raw sequences:
 
     ```bash
-    zcat  00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz | grep --color=auto  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
+    zcat  00-RawData/ANG_301_DNA/ANG_301_DNA.R1.fastq.gz | grep --color=auto  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
     ```
 
     * *What do you observe? Are these sequences useful for analysis?*
 
     ```bash
-    zcat  01-HTS_Preproc/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz | grep --color=auto  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
+    zcat  01-HTS_Preproc/ANG_301_DNA/ANG_301_DNA_R1.fastq.gz | grep --color=auto  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
     ```
 
 
     Lets grep for the sequence and count occurrences
 
     ```bash
-    zcat  00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
-    zcat  01-HTS_Preproc/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
+    zcat  00-RawData/ANG_301_DNA/ANG_301_DNA.R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
+    zcat  01-HTS_Preproc/ANG_301_DNA/ANG_301_DNA_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
     ```
 
     * *What is the reduction in adapters found?*
