@@ -410,7 +410,7 @@ Note the patterns:
 We can now run the preprocessing routine across all samples on the real data using a SLURM script, [hts_preproc.slurm](../software_scripts/scripts/hts_preproc.slurm), that we should take a look at now.
 
 ```bash
-cd /share/workshop/meta_workshop/$USER/meta_example  # We'll run this from the main directory
+cd /share/workshop/meta_workshop/$USER/meta_example/scripts  # We'll run this from the main directory
 wget https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/software_scripts/scripts/hts_preproc.slurm
 less hts_preproc.slurm
 ```
@@ -442,7 +442,7 @@ TYPE=$1
 
 echo $SAMPLE
 echo $TYPE
-export outdir=$baseP/01-Cleaned/$TYPE
+export outdir=$baseP/01-HTS_Preproc/$TYPE
 
 if [ ! -e $outdir ]; then
     mkdir -p $outdir
@@ -614,24 +614,6 @@ The JSON files output by HTStream provide this type of information.
     * *What is the reduction in adapters found?*
 
     * *How could you modify the cleaning pipeline in order to remove the remaining sequences?*
-
-
-Primer dimers in this dataset:
-
-<img src="preproc_mm_figures/primer_dimers.png" alt="PrimerDimer" width="80%"/>
-
-
-* The set of "AAAA" bases directly adjacent to the Illumina adapter sequence are due to a spacing sequence on the flow cell. 
-* The "GGGGG" sequences occur because the NovaSeq 6000 uses a 2-channel detection system, where the "G" base is the absence of signal. Once the polymerase reaches the end of the template + spacing sequence it stops, so all subsequent flow cycles produce no signal.
-
-
-<img src="preproc_mm_figures/sbs-redgreen-web-graphic.jpg" alt="PrimerDimer" width="80%"/>
-
-**Figure 2. 2-Channel SBS Imaging.**
-Accelerated detection of all 4 DNA bases is performed using only 2 images to capture red and green filter wavelength bands. A bases will be present in both images (yellow cluster), C bases in red only, T bases in green only, and G bases in neither.
-
-From [Illumina 2-Channel SBS Technology](https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology/2-channel-sbs.html).
-
 
 --------
 ## A MultiQC report for HTStream JSON files
