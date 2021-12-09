@@ -150,7 +150,7 @@ When building a new pipeline, it is almost always a good idea to use a small sub
 
     ```bash
     cd /share/workshop/meta_workshop/$USER/meta_example/HTS_testing
-    module load htstream
+    module load htstream/1.3.2
     hts_Stats --help
     ```
 
@@ -204,14 +204,14 @@ When building a new pipeline, it is almost always a good idea to use a small sub
     ```
 
     <div class="output">
-    total 20M
-    drwxrwsr-x 2 shunter meta_workshop    8 Jul 27 13:44 .
-    drwxrwsr-x 8 shunter meta_workshop    9 Jul 27 13:37 ..
-    -rw-rw-r-- 1 shunter meta_workshop  40K Jul 27 13:44 ANG_301_DNA.stats.json
-    -rw-rw-r-- 1 shunter meta_workshop 4.7M Jul 27 13:44 ANG_301_DNA.stats_R1.fastq.gz
-    -rw-rw-r-- 1 shunter meta_workshop 5.0M Jul 27 13:44 ANG_301_DNA.stats_R2.fastq.gz
-    -rw-rw-r-- 1 shunter meta_workshop 4.7M Jul 27 13:39 ANG_301_DNA.subset_R1.fastq.gz
-    -rw-rw-r-- 1 shunter meta_workshop 5.0M Jul 27 13:39 ANG_301_DNA.subset_R2.fastq.gz
+    total 23M
+    drwxrwsr-x 2 jli workshop    7 Dec  8 20:09 .
+    drwxrwsr-x 7 jli workshop    7 Dec  8 20:07 ..
+    -rw-rw-r-- 1 jli workshop  42K Dec  8 20:09 ANG_301_DNA.stats.json
+    -rw-rw-r-- 1 jli workshop 5.7M Dec  8 20:09 ANG_301_DNA.stats_R1.fastq.gz
+    -rw-rw-r-- 1 jli workshop 5.8M Dec  8 20:09 ANG_301_DNA.stats_R2.fastq.gz
+    -rw-rw-r-- 1 jli workshop 5.7M Dec  8 20:08 ANG_301_DNA.subset_R1.fastq.gz
+    -rw-rw-r-- 1 jli workshop 5.8M Dec  8 20:08 ANG_301_DNA.subset_R2.fastq.gz
     </div>
 
     * *Which files were generated from hts\_Stats?*
