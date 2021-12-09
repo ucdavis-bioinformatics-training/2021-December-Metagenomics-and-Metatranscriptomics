@@ -227,60 +227,17 @@ When building a new pipeline, it is almost always a good idea to use a small sub
 
 
 
-### Next we are going to screen from ribosomal RNA (rRNA).
+### Using HTStream to remove PhiX.
 
-Ribosomal RNA can make up 90% or more of a typical _total RNA_ sample. Most library prep methods attempt to reduce the rRNA representation in a sample, oligoDt binds to polyA tails to enrich a sample for mRNA, where Ribo-Depletion binds rRNA sequences to biotinylated oligo probes that are captured with streptavidin-coated magnetic beads to deplete the sample of rRNA. Newer methods use targeted probes to facilitate degradation of specific sequences (e.g. Tecan/Nugen [AnyDeplete](https://www.nugen.com/products/technology#inda), [DASH](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0904-5), etc). No technique is 100% efficient all of the time, and some can fail spectacularly, so knowing the relative proportion of rRNA in each sample can be helpful.
+[PhiX Control v3](https://www.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html) is a common control in Illumina runs, and facilities may not tell you if/when PhiX has been spiked in. Since it does not have a barcode, in theory should not be in your data.
 
+However:
+* When we know PhiX has been spiked in, we find sequence every time.
+    * [update] When dual matched barcodes are used, then almost zero phiX reads can be identified.
+* When we know that PhiX has not been spiked in, we rarely find matching sequence.
 
-### Before we do so we need to find sequences of ribosomal RNA to screen against.
+For RNAseq and variant analysis (any mapping based technique) it is not critical to remove, but for sequence assembly it is (and will often assemble into a full-length PhiX genome). Unless you are sequencing PhiX, it is noise, so its better safe than sorry to screen for it every time.
 
-We will use these sequences to identify rRNA in our reads, which are from mouse. One way to do that is to go to [NCBI](https://www.ncbi.nlm.nih.gov/) and search for them.
-
-1. First, go to [NCBI](https://www.ncbi.nlm.nih.gov/) and in the Search drop down select "Taxonomy" and search for "mouse".
-
-    <img src="preproc_mm_figures/ncbi_mm_01.png" alt="ncbi1" width="80%" style="border:5px solid #ADD8E6;"/>
-
-1. Click on "Mus musculus".
-
-    <img src="preproc_mm_figures/ncbi_mm_02.png" alt="ncbi2" width="80%" style="border:5px solid #ADD8E6;"/>
-
-1. Click on "Mus musculus" again.
-
-    <img src="preproc_mm_figures/ncbi_mm_03.png" alt="ncbi3" width="80%" style="border:5px solid #ADD8E6;"/>
-
-1. Click on the "Subtree links" for Nucleotide.
-
-    <img src="preproc_mm_figures/ncbi_mm_04.png" alt="ncbi4" width="80%" style="border:5px solid #ADD8E6;"/>
-
-1. Under Molecule Types, click on "rRNA" (left hand side).
-
-    <img src="preproc_mm_figures/ncbi_mm_05.png" alt="ncbi5" width="80%" style="border:5px solid #ADD8E6;"/>
-
-1. Click on "Send", choose "File", choose Format "FASTA", and click on "Create File".
-
-    <img src="preproc_mm_figures/ncbi_mm_06.png" alt="ncbi6" width="80%" style="border:5px solid #ADD8E6;"/>
-
-
-Save this file to your computer, and rename it to 'mouse_rrna.fasta'.
-
-Upload your mouse_rrna.fasta file **to the 'References' directory** in your project folder using either **scp** or FileZilla (or equivalent).
-
-Or if you feel like 'cheating', just copy/paste the contents of mouse_rrna.fa using nano into a file named /share/workshop/meta_workshop/$USER/meta_example/References/mouse_rrna.fasta
-
-```bash
-nano /share/workshop/meta_workshop/$USER/meta_example/References/mouse_rrna.fasta
-```
-
-Paste contents of mouse_rrna.fa and save
-
-
-This is *really* cheating, but if all else fails, download the file as follows:
-```bash
-cd /share/workshop/meta_workshop/$USER/meta_example/References
-wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/raw/master/data_reduction/mouse_rrna.fasta
-```
-
-### Using HTStream to count ribosomal rna (not remove, but just to count the occurrences).
 
 1. First, view the help documentation for hts_SeqScreener
 
@@ -289,25 +246,21 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
     hts_SeqScreener -h
     ```
 
-    * *What parameters are needed to:*
-        1. provide a reference to hts_SeqScreener and
-        1. count but not screen occurrences?
-
 1. Run HTStream on the small test set.
 
     ```bash
     hts_SeqScreener -1 ANG_301_DNA.subset_R1.fastq.gz \
                     -2 ANG_301_DNA.subset_R2.fastq.gz \
-                    -s ../References/mouse_rrna.fasta -r -L ANG_301_DNA.rrna.json -f ANG_301_DNA.rrna
+                    -L ANG_301_DNA.phix.json -f ANG_301_DNA.phix
     ```
 
     * *Which files were generated from hts\_SeqScreener?*
 
-    * *Take look at the file ANG_301_DNA.rrna.json*
+    * *Take look at the file ANG_301_DNA.phix.json*
 
-    * *How many reads were identified as rRNA?*
+    * *How many reads were identified as PhiX?*
 
-    * *What fraction of reads were identified as rRNA, do you think cleanup worked well for this sample?*
+    * *What fraction of reads were identified as PhiX, do you think cleanup worked well for this sample?*
 
 ### Getting more advanced: Streaming multiple applications together
 
@@ -320,7 +273,7 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
               -2 ANG_301_DNA.subset_R2.fastq.gz \
               -L ANG_301_DNA.streamed.json |
     hts_SeqScreener -A ANG_301_DNA.streamed.json \
-              -r -s ../References/mouse_rrna.fasta -f ANG_301_DNA.streamed
+              -f ANG_301_DNA.streamed
     ```
 
     Note the pipe, ```|```, between the two applications!
@@ -336,67 +289,21 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
 
         * *Were the programs run in the order you expected?*
 
-    * *hts_SeqScreener will screen out PhiX reads by default. Try to modify the pipeline as follows:*
-
-        * *hts_Stats --> hts_SeqScreener discard PhiX  --> hts_SeqScreener count rRNA and output*
-
         * *Check the JSON file that is produced. Were any PhiX reads identified?
-
-    * *Try to figure out how to use hts_Stats in combination with grep to search for reads that contain the sequence "CCGTCTTCTGCTTG". How many were there? Do you notice anything strange about them?
 
 ### <font color='red'> Stop Group Exercise 1 </font>
 
 --------
 
-## A RNAseq preprocessing pipeline
+## The preprocessing pipeline
 
 1. hts_Stats: get stats on *input* raw reads
-1. hts_SeqScreener: screen out (remove) phiX
-1. hts_SeqScreener: screen for (count) rRNA
-1. hts_SuperDeduper: identify and remove PCR duplicates
+1. hts_SeqScreener: remove PhiX
 1. hts_AdapterTrimmer: identify and remove adapter sequence
-1. hts_PolyATTrim: remove polyA/T from the end of reads.
-1. hts_NTrimmer: trim to remove any remaining N characters
+1. hts_Overlapper: overlap paired end reads (RNA data only)
 1. hts_QWindowTrim: remove poor quality bases
-1. hts_LengthFilter: use to remove all reads < 50bp
+1. hts_LengthFilter: use to remove all reads < 50bp for DNA data and < 30bp for RNA data
 1. hts_Stats: get stats on *output* cleaned reads
-
-------
-
-### Why screen for phiX?
-
-[PhiX Control v3](https://www.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html) is a common control in Illumina runs, and facilities may not tell you if/when PhiX has been spiked in. Since it does not have a barcode, in theory should not be in your data.
-
-However:
-* When we know PhiX has been spiked in, we find sequence every time.
-    * [update] When dual matched barcodes are used, then almost zero phiX reads can be identified.
-* When we know that PhiX has not been spiked in, we rarely find matching sequence.
-
-For RNAseq and variant analysis (any mapping based technique) it is not critical to remove, but for sequence assembly it is (and will often assemble into a full-length PhiX genome). Unless you are sequencing PhiX, it is noise, so its better safe than sorry to screen for it every time.
-
-------
-
-### Removing PCR duplicates with hts_SuperDeduper.
-
-Removing PCR duplicates can be **controversial** for RNAseq, but there is some argument in favor of it for paired-end data. In particular, duplication rate tells you a lot about the original complexity of each sample and potential impact of sequencing depth.
-
-__**However, it would never be a good idea to do PCR duplicate removal on Single-End reads!**__
-
-Many other read de-duplication algorithms rely on mapping position to identify duplicated reads (although some other reference free methods do exist [https://doi.org/10.1186/s12859-016-1192-5](https://doi.org/10.1186/s12859-016-1192-5)). Reads that are mapped to the same position on the genome probably represent the same original fragment sequenced multiple times as PCR duplicates (think "technical replicates").
-
-However, this approach requires that there be a reference to map reads against and requires that someone maps the reads first!
-
-hts_SuperDeduper does not require a reference or mapped reads. Instead it uses a small portion of each paired read to identify duplicates. If an identical pattern is identified in multiple reads, extra copies are discarded.
-
-
-<img src="preproc_mm_figures/SD_eval.png" alt="SD_eval" width="80%"/>
-
-This table compares the performance of SuperDeduper against some other duplicate removal algorithms. Two data sets were tested, PhiX spike in reads and reads from *Acropora digitifera* (a type of coral). The number of unique reads identified is listed along with the percentage of duplicates not reported by other tools in parentheses. SuperDeduper performance is similar to other mapping based deduplication tools (MarkDuplicates and Rmdup), however it identifies slightly more unique reads (in some cases these were unmapped reads, in other cases reads with sequencing errors in the key region). FastUniq and Fulcrum are two other tools that do not rely on mapping. They identified a much larger set of reads as being unique.
-
-
-<img src="preproc_mm_figures/SD_performance.png" alt="SD_performance" width="80%"/>
-
-We calculated the Youden Index for every combination tested (using results from Picard MarkDuplicates as ground truth). The point that acquired the highest index value occurred at a start position of 5 and a length of 10bp (20bp total over both reads). However in order to avoid the often lower-quality region in the first ~10bp of Illumina Read1, hts_SuperDeduper uses a default start position of basepair 10 and a length of 10bp.
 
 ------
 
@@ -440,24 +347,12 @@ P5---Index-Read1primer-------INSERT-------Read2primer--index--P7(rc)
                      |---R1 starts here-->
 ```
 
-This sequence is P7(rc): **ATCTCGTATGCCGTCTTCTGCTTG**. It should present in any R1 that contains a full-length adapter sequence. It is easy to search for this sequence using zcat and grep:
+This sequence is P7(rc): **AGATCGGAAGAGCACACGTCTGAACTCCAGTCA**. It should present in any R1 that contains a full-length adapter sequence. It is easy to search for this sequence using zcat and grep:
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example/HTS_testing
-zcat ANG_301_DNA.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
+zcat ANG_301_DNA.subset_R1.fastq.gz | grep GATCGGAAGAGCACACGTCTGAA
 ```
-
-----
-
-### PloyATTrimming hts_PolyATTrim: remove polyA/T from the end of reads.
-In eukaryotes, mRNA maturation includes a polyadenylation step in which a poly(A) tail is added to the transcript. These bases (and the complementary poly(T) in some types of libraries) do not actually exist in the genome and are commonly trimmed in RNA-seq preprocessing pipelines.
-
-
-------
-
-### N Trimming
-
-Bases that cannot be called are assigned an "N" by the Illumina base caller. These can be a problem for some applications, but most read mappers and quantification strategies should not be impacted unless N's are frequent. By default, hts_NTrimmer will return the longest sequence that contains no Ns, but can also be configured to discard any reads containing Ns as well.
 
 ----
 
@@ -471,19 +366,6 @@ This is how reads commonly look, they start at "good" quality, increase to "exce
 
 hts_QWindowTrim trims 5' and/or 3' end of the sequence using a windowing (average quality in window) approach.
 
-### What does all this preprocessing get you
-
-Comparing Salmon quant, raw vs preprocessed reads
-
-<img src="preproc_mm_figures/reads_per_gene_raw_hts.png" alt="final" width="50%"/>
-<img src="preproc_mm_figures/reads_per_gene_raw_hts-zoomed.png" alt="final" width="50%"/>
-
-Note that the very highly expressed transcript is [Lysozyme 2, ENSMUST00000092163.8](http://uswest.ensembl.org/Mus_musculus/Transcript/Summary?g=ENSMUSG00000069516;r=10:117277331-117282321;t=ENSMUST00000092163), a [primarily bacteriolytic enzyme](https://www.uniprot.org/uniprot/P08905). Not surprising given that "monocytes are components of the mononuclear phagocyte system that is involved in rapid recognition and clearance of invading pathogens".
-
-
-* The majority of transcripts have similar reads per gene before/after cleanup.
-* Some low expression transcripts had zero reads before cleanup, but hundreds after cleanup (and vice versa).
-* A large number of genes have higher total reads mapped before cleaning.
 
 ### Lets put it all together
 
@@ -498,12 +380,7 @@ hts_Stats -L ANG_301_DNA_htsStats.json -N "initial stats" \
     -1 ANG_301_DNA.subset_R1.fastq.gz \
     -2 ANG_301_DNA.subset_R2.fastq.gz | \
 hts_SeqScreener -A ANG_301_DNA_htsStats.json -N "screen phix" | \
-hts_SeqScreener -A ANG_301_DNA_htsStats.json -N "count the number of rRNA reads"\
-     -r -s ../References/mouse_rrna.fasta | \
-hts_SuperDeduper -A ANG_301_DNA_htsStats.json -N "remove PCR duplicates" | \
 hts_AdapterTrimmer -A ANG_301_DNA_htsStats.json -N "trim adapters" | \
-hts_PolyATTrim  -A ANG_301_DNA_htsStats.json -N "trim adapters" | \
-hts_NTrimmer -A ANG_301_DNA_htsStats.json -N "remove any remaining 'N' characters" | \
 hts_QWindowTrim -A ANG_301_DNA_htsStats.json -N "quality trim the ends of reads" | \
 hts_LengthFilter -A ANG_301_DNA_htsStats.json -N "remove reads < 50bp" \
     -n -m 50 | \
@@ -541,58 +418,71 @@ less hts_preproc.slurm
 When you are done, type "q" to exit.
 
 <div class="script">#!/bin/bash
-
-#SBATCH --job-name=htstream # Job name
 #SBATCH --nodes=1
-#SBATCH --ntasks=9
-#SBATCH --time=60
-#SBATCH --mem=3000 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --partition=production
-#SBATCH --reservation=workshop
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=7
+#SBATCH --time=0-10
+#SBATCH --mem=20000 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --reservation=meta_workshop
 #SBATCH --account=workshop
-#SBATCH --array=1-22
-#SBATCH --output=slurmout/htstream_%A_%a.out # File to which STDOUT will be written
-#SBATCH --error=slurmout/htstream_%A_%a.err # File to which STDERR will be written
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=myemail@email.com
+#SBATCH --partition=production
+#SBATCH --output=slurmout/hts_%A_%a.out # File to which STDOUT will be written
+#SBATCH --error=slurmout/hts_%A_%a.err # File to which STDERR will be written
+
 
 start=`date +%s`
-echo $HOSTNAME
-echo "My SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
+hostname
 
-sample=`sed "${SLURM_ARRAY_TASK_ID}q;d" samples.txt`
+export baseP=/share/workshop/meta_workshop/$USER/meta_example
+export seqP=$baseP/00-RawData
+export cwd=$baseP/scripts
 
-inpath="00-RawData"
-outpath="01-HTS_Preproc"
-[[ -d ${outpath} ]] || mkdir ${outpath}
-[[ -d ${outpath}/${sample} ]] || mkdir ${outpath}/${sample}
+SAMPLE=`head -n ${SLURM_ARRAY_TASK_ID} samples.txt | tail -1 `
+TYPE=$1
 
-echo "SAMPLE: ${sample}"
+echo $SAMPLE
+echo $TYPE
+export outdir=$baseP/01-Cleaned/$TYPE
+
+if [ ! -e $outdir ]; then
+    mkdir -p $outdir
+fi
+
+if [ ! -e "$outdir/$SAMPLE" ]; then
+    mkdir -p $outdir/$SAMPLE
+fi
 
 module load htstream/1.3.2
 
-call="hts_Stats -L ${outpath}/${sample}/${sample}.json -N 'initial stats' \
-          -1 ${inpath}/${sample}/*R1.fastq.gz \
-          -2 ${inpath}/${sample}/*R2.fastq.gz | \
-      hts_SeqScreener -A ${outpath}/${sample}/${sample}.json -N 'screen phix' | \
-      hts_SeqScreener -A ${outpath}/${sample}/${sample}.json -N 'count the number of rRNA reads'\
-          -r -s References/mouse_rrna.fasta | \
-      hts_SuperDeduper -A ${outpath}/${sample}/${sample}.json -N 'remove PCR duplicates' | \
-      hts_AdapterTrimmer -A ${outpath}/${sample}/${sample}.json -N 'trim adapters' | \
-      hts_PolyATTrim --no-left --skip_polyT -A ${outpath}/${sample}/${sample}.json -N 'remove polyAT tails' | \
-      hts_NTrimmer -A ${outpath}/${sample}/${sample}.json -N 'remove any remaining N characters' | \
-      hts_QWindowTrim -A ${outpath}/${sample}/${sample}.json -N 'quality trim the ends of reads' | \
-      hts_LengthFilter -A ${outpath}/${sample}/${sample}.json -N 'remove reads < 50bp' \
-          -n -m 50 | \
-      hts_Stats -A ${outpath}/${sample}/${sample}.json -N 'final stats' \
-          -f ${outpath}/${sample}/${sample}"
+if [ $TYPE == "DNA" ]
+then
+  call="hts_Stats -L $outdir/$SAMPLE/$SAMPLE.stats.log \
+      -1 $seqP/${SAMPLE}_${TYPE}_1.fastq.gz -2 $seqP/${SAMPLE}_${TYPE}_2.fastq.gz | \
+      hts_SeqScreener -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
+      hts_AdapterTrimmer -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
+      hts_QWindowTrim -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
+      hts_LengthFilter -m 50 -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
+      hts_Stats -f $outdir/$SAMPLE/${SAMPLE}_${TYPE}.cleaned -A $outdir/$SAMPLE/$SAMPLE.stats.log"
+else
+  call="hts_Stats -L $outdir/Overlap/$SAMPLE/$SAMPLE.stats.log \
+      -1 $seqP/${SAMPLE}_${TYPE}_1.fastq.gz -2 $seqP/${SAMPLE}_${TYPE}_2.fastq.gz | \
+      hts_SeqScreener -A $outdir/Overlap/$SAMPLE/$SAMPLE.stats.log | \
+      hts_AdapterTrimmer -A $outdir/Overlap/$SAMPLE/$SAMPLE.stats.log | \
+      hts_Overlapper -o 10 -A $outdir/Overlap/$SAMPLE/$SAMPLE.stats.log | \
+      hts_QWindowTrim -A $outdir/Overlap/$SAMPLE/$SAMPLE.stats.log | \
+      hts_LengthFilter -m 30 -A $outdir/Overlap/$SAMPLE/$SAMPLE.stats.log | \
+      hts_Stats -f $outdir/Overlap/$SAMPLE/${SAMPLE}_${TYPE}.cleaned -A $outdir/$SAMPLE/$SAMPLE.stats.log"
+fi
+
 
 echo $call
 eval $call
 
 end=`date +%s`
 runtime=$((end-start))
-echo $runtime
+echo Runtime: $runtime seconds
+
+
 </div>
 
 
