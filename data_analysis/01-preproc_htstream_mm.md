@@ -652,7 +652,7 @@ multiqc -i HTSMultiQC-cleaning-report -o 02-HTS_multiqc_report/mRNA ./01-HTS_Pre
 Transfer the two HTSMultiQC-cleaning-report_multiqc_report.html to your computer and open them in a web browser.
 
 
-Or in case of emergency, download the report we have generated: [HTSMultiQC-cleaning-report_multiqc_report for DNA samples](HTSMultiQC-cleaning-report_multiqc_report.html), and [HTSMultiQC-cleaning-report_multiqc_report for RNA samples](RNA-HTSMultiQC-cleaning-report_multiqc_report.html)
+Or in case of emergency, download the report we have generated: [HTSMultiQC-cleaning-report_multiqc_report for DNA samples](DNA-HTSMultiQC-cleaning-report_multiqc_report.html), and [HTSMultiQC-cleaning-report_multiqc_report for RNA samples](RNA-HTSMultiQC-cleaning-report_multiqc_report.html)
 
 ### <font color='red'> End Group Exercise 3 </font>
 
