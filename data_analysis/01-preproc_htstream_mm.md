@@ -411,7 +411,7 @@ We can now run the preprocessing routine across all samples on the real data usi
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example  # We'll run this from the main directory
-wget https://ucdavis-bioinformatics-training.github.io/2021-September-RNA-Seq-Analysis/software_scripts/scripts/hts_preproc.slurm
+wget https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/software_scripts/scripts/hts_preproc.slurm
 less hts_preproc.slurm
 ```
 
@@ -489,10 +489,12 @@ echo Runtime: $runtime seconds
 Double check to make sure that slurmout and 01-HTS_Preproc directories have been created for output, then after looking at the script, let's run it.
 
 ```bash
-cd /share/workshop/meta_workshop/$USER/meta_example
-mkdir -p slurmout  # -p tells mkdir not to complain if the directory already exists
+cd /share/workshop/meta_workshop/$USER/meta_example/
+mkdir -p scripts/slurmout  # -p tells mkdir not to complain if the directory already exists
 mkdir -p 01-HTS_Preproc
-sbatch hts_preproc.slurm  # moment of truth!
+cd scripts
+sbatch -J ${USER}.dna --array=1-48 hts_preproc.slurm DNA  # DNA samples
+sbatch -J ${USER}.rna --array=1-48 hts_preproc.slurm mRNA  # RNA samples
 ```
 
 We can watch the progress of our task array using the 'squeue' command. Takes about 30 minutes to process each sample.
@@ -520,9 +522,9 @@ A nice run showing fairly random distribution of bases per cycle, > 80% bases ab
 <img src="preproc_mm_figures/bad_run_PDs.png" alt="bad" width="100%"/>
 A poor run showing less base diversity, only 39% bases above Q30, potentially too high cluster density and low pass filter rate, and extreme drop off in read quality after ~100bp of R1, and an even worse profile in R2.  
 
-Results like those above can help inform you of how you might change your protocol/procedures in the future, either sample preparation (RNA extraction), or in library preparation.  
+Results like those above can help inform you of how you might change your protocol/procedures in the future, either sample preparation, or in library preparation.  
 
-The next step is to consider quality metrics for each sample. The key consideration is that **(SAMPLES SHOULD BE CONSISTENT!)**. Plots of the preprocessing summary statistics are a great way to look for technical bias and batch effects within your experiment. Poor quality samples often appear as outliers and can ethically be removed due to identified technical issues.  
+The next step is to consider quality metrics for each sample. The key consideration is that **(SAMPLES SHOULD BE CONSISTENT!)**. Plots of the preprocessing summary statistics are a great way to look for technical bias and/or batch effects (RNA samples are more affected by batch effects) within your experiment. Poor quality samples often appear as outliers and can ethically be removed due to identified technical issues.  
 
 The JSON files output by HTStream provide this type of information.
 
@@ -535,7 +537,7 @@ The JSON files output by HTStream provide this type of information.
     First check all the "htstream_\*.out" and "htstream_\*.err" files:
 
     ```bash
-    cd /share/workshop/meta_workshop/$USER/meta_example
+    cd /share/workshop/meta_workshop/$USER/meta_example/scripts
     cat slurmout/htstream_*.out
     ```
 
@@ -548,7 +550,7 @@ The JSON files output by HTStream provide this type of information.
     Also, check the output files. First check the number of forward and reverse output files (should be 22 each):
 
     ```bash
-    cd 01-HTS_Preproc
+    cd ../01-HTS_Preproc
     ls */*R1* | wc -l
     ls */*R2* | wc -l
     ```
@@ -569,14 +571,14 @@ The JSON files output by HTStream provide this type of information.
     **IF for some reason HTStream didn't finish, the files are corrupted or you missed the session, please let one of us know and we will help. You can also copy over the HTStream output.**
 
     ```bash
-    cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/meta_workshop/$USER/meta_example/.
+    cp -r /share/biocore/workshops/2021-December-Meta/01-HTS_Preproc /share/workshop/meta_workshop/$USER/meta_example/.
     ```
 
 1. Let's take a look at the differences in adapter content between the input and output files. First look at the input file:
 
     ```bash
     cd /share/workshop/meta_workshop/$USER/meta_example
-    zless 00-RawData/ANG_301_DNA/ANG_301_DNA.R1.fastq.gz
+    zless 00-RawData/ANG_301_DNA.R1.fastq.gz
     ```
 
     Let's search for the adapter sequence. Type '/' (a forward slash), and then type **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** (the first part of the forward adapter). Press Enter. This will search for the sequence in the file and highlight each time it is found. You can now type "n" to cycle through the places where it is found. When you are done, type "q" to exit.
@@ -584,7 +586,7 @@ The JSON files output by HTStream provide this type of information.
     Now look at the output file:
 
     ```bash
-    zless 01-HTS_Preproc/ANG_301_DNA/ANG_301_DNA_R1.fastq.gz
+    zless 01-HTS_Preproc/DNA/ANG_301/ANG_301_DNA_R1.fastq.gz
     ```
 
     If you scroll through the data (using the spacebar), you will see that some of the sequences have been trimmed. Now, try searching for **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** again. You shouldn't find it (adapters were trimmed remember), but rarely is anything perfect. You may need to use Control-C to get out of the search and then "q" to exit the 'less' screen.
@@ -592,21 +594,21 @@ The JSON files output by HTStream provide this type of information.
     Lets grep for the sequence and get an idea of where it occurs in the raw sequences:
 
     ```bash
-    zcat  00-RawData/ANG_301_DNA/ANG_301_DNA.R1.fastq.gz | grep --color=auto  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
+    zcat  00-RawData/ANG_301_DNA.R1.fastq.gz | grep --color=auto  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
     ```
 
     * *What do you observe? Are these sequences useful for analysis?*
 
     ```bash
-    zcat  01-HTS_Preproc/ANG_301_DNA/ANG_301_DNA_R1.fastq.gz | grep --color=auto  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
+    zcat  01-HTS_Preproc/DNA/ANG_301/ANG_301_DNA_R1.fastq.gz | grep --color=auto  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
     ```
 
 
     Lets grep for the sequence and count occurrences
 
     ```bash
-    zcat  00-RawData/ANG_301_DNA/ANG_301_DNA.R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
-    zcat  01-HTS_Preproc/ANG_301_DNA/ANG_301_DNA_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
+    zcat  00-RawData/ANG_301_DNA.R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
+    zcat  01-HTS_Preproc/DNA/ANG_301/ANG_301_DNA_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
     ```
 
     * *What is the reduction in adapters found?*
@@ -641,14 +643,16 @@ Finally lets use [MultiQC](https://multiqc.info/) to generate a summary of our o
 ## Run multiqc to collect statistics and create a report:
 cd /share/workshop/meta_workshop/$USER/meta_example
 module load multiqc/htstream.dev0
-mkdir -p 02-HTS_multiqc_report
-multiqc -i HTSMultiQC-cleaning-report -o 02-HTS_multiqc_report ./01-HTS_Preproc
+mkdir -p 02-HTS_multiqc_report/DNA
+mkdir -p 02-HTS_multiqc_report/mRNA
+multiqc -i HTSMultiQC-cleaning-report -o 02-HTS_multiqc_report/DNA ./01-HTS_Preproc/DNA
+multiqc -i HTSMultiQC-cleaning-report -o 02-HTS_multiqc_report/mRNA ./01-HTS_Preproc/mRNA
 ```
 
-Transfer HTSMultiQC-cleaning-report_multiqc_report.html to your computer and open it in a web browser.
+Transfer the two HTSMultiQC-cleaning-report_multiqc_report.html to your computer and open them in a web browser.
 
 
-Or in case of emergency, download this copy: [HTSMultiQC-cleaning-report_multiqc_report.html](HTSMultiQC-cleaning-report_multiqc_report.html)
+Or in case of emergency, download the report we have generated: [HTSMultiQC-cleaning-report_multiqc_report for DNA samples](HTSMultiQC-cleaning-report_multiqc_report.html), and [HTSMultiQC-cleaning-report_multiqc_report for RNA samples](RNA-HTSMultiQC-cleaning-report_multiqc_report.html)
 
 ### <font color='red'> End Group Exercise 3 </font>
 
@@ -657,20 +661,21 @@ Or in case of emergency, download this copy: [HTSMultiQC-cleaning-report_multiqc
 
     ```/bash
     cd /share/workshop/meta_workshop/$USER/meta_example  # We'll run this from the main directory
-    wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/software_scripts/scripts/summarize_stats.R
+    wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2021-December-Metagenomics-and-Metatranscriptomics/software_scripts/scripts/summarize_stats.R
 
     module load R
-    R CMD BATCH summarize_stats.R
-    cat summary_hts.txt
+    R CMD BATCH summarize_stats.R 01-HTS_Preproc/DNA summary_hts_DNA.txt
+    R CMD BATCH summarize_stats.R 01-HTS_Preproc/mRNA summary_hts_mRNA.txt
+    cat summary_hts_DNA.txt
     ```
 
-    Transfer summarize_stats.txt to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work],  
+    Transfer summarize_hts*.txt to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work],  
 
-    For scp try, In a new shell session on your laptop. **NOT logged into tadpole**.
+    For scp try, In a new shell session on your laptop. **NOT logged into tadpole**, and **REMEMBER to change __your_username__ to your own user name on your laptop**.
 
     ```bash
-    mkdir ~/rnaseq_workshop
-    cd ~/rnaseq_workshop
+    mkdir ~/meta_workshop
+    cd ~/meta_workshop
     scp your_username@tadpole.genomecenter.ucdavis.edu:/share/workshop/your_username/meta_example/summary_hts.txt .
     ```
 
