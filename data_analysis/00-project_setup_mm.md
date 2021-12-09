@@ -67,7 +67,7 @@ mkdir -p /share/workshop/meta_workshop/$USER/meta_example
 
     ```bash
     cd 00-RawData
-    ls *_DNA_1.*fastq.gz |awk '{FS="_DNA"}{print $1}' - > ../scripts/allsamples.txt
+    ls *_DNA_1.*fastq.gz |awk '{FS="_DNA"}{print $1}' - > ../scripts/samples.txt
     cat ../scripts/samples.txt
     ```
 
