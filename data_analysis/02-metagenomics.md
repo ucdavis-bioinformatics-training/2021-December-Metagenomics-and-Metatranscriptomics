@@ -37,6 +37,10 @@ For samples that are suppected to have very high levels of host material, it is 
 <img src="metagenome_figures/rmhost.gif" alt="micribial" width="85%"/>
 </p>
 
+<p align = "center">
+<img src="metagenome_figures/rmhost2.gif" alt="micribial" width="85%"/>
+</p>
+
 <p align = "right" style="font-family:Times;font-size:12px;">
 Bush, etc., 2020, Microb. Genom. https://doi.org/10.1099/mgen.0.000393
 </p>
