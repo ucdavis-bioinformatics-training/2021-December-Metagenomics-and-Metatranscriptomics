@@ -22,7 +22,23 @@ Shotgun metagenomics approach has gained popularity over the recent years in stu
 Depending on the sample collection source for microbial studies, there are variable amount of host DNA. For example, bovine rumen samples such as the dataset we are using for this workshop, or fecal samples for gut microbiome studies, or tissue biopsies, all have some leve of host DNA remain. Because host genomes are much larger than the microbiome genomes, the sequencing product will have more host reads than microbial reads. For example, if one sequence the same number of human cells as microbial cells, the sequencing would produce over 99% of human reads. Even when microbiome samples are collected from environment/fields, human contamination happens more than we think. Therefore, removing host/contaminant DNA very important. Especially, when the objective is to produce high quality metagenome assembled genomes. It also reduces biases and minimize false positive associations in downstream analysis.
 
 <p align = "center">
-<img src="metagenome_figures/hostdna.jpeg" alt="micribial" width="70%"/>
+<img src="metagenome_figures/hostdna.jpeg" alt="micribial" width="85%"/>
+</p>
+
+<p align = "right" style="font-family:Times;font-size:12px;">
+Pereira-Marques, etc., 2019, Front. Microbiol. https://doi.org/10.3389/fmicb.2019.01277
+</p>
+
+For samples that are suppected to have very high levels of host material, it is worth considering adding a step in the library prep stage to remove host material. I am not going to talk about it because a couple of our lunch sponsors will talk in detail about it. Even with host depletion at the library prep stage, it is important to remove leftover host reads bioinformatically.
+
+[A publication](https://pubmed.ncbi.nlm.nih.gov/32558637/) has done a very thorough study using different software/approaches to detect/remove human reads in microbial datasets. What they have found are summarized in following figures (extracted from the publication).
+
+<p align = "center">
+<img src="metagenome_figures/rmhost.gif" alt="micribial" width="85%"/>
+</p>
+
+<p align = "right" style="font-family:Times;font-size:12px;">
+Bush, etc., 2020, Microb. Genom. https://doi.org/10.1099/mgen.0.000393
 </p>
 
 ---
