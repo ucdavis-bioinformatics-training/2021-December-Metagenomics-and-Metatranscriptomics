@@ -23,7 +23,7 @@ TYPE=$1
 
 echo $SAMPLE
 echo $TYPE
-export outdir=$baseP/01-Cleaned/$TYPE
+export outdir=$baseP/01-HTS_Preproc/$TYPE
 
 if [ ! -e $outdir ]; then
     mkdir -p $outdir
