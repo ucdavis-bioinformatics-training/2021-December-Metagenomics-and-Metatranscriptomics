@@ -31,7 +31,7 @@ Pereira-Marques, etc., 2019, Front. Microbiol. https://doi.org/10.3389/fmicb.201
 
 For samples that are suppected to have very high levels of host material, it is worth considering adding a step in the library prep stage to remove host material. I am not going to talk about it because a couple of our lunch sponsors will talk in detail about it. Even with host depletion at the library prep stage, it is important to remove leftover host reads bioinformatically.
 
-[A publication](https://pubmed.ncbi.nlm.nih.gov/32558637/) has done a very thorough study using different software/approaches to detect/remove human reads in microbial datasets. What they have found are summarized in following figures (extracted from the publication).
+[A publication](https://pubmed.ncbi.nlm.nih.gov/32558637/) has done a very thorough study using different software/approaches to detect/remove human reads in microbial datasets. If we are to pick one method, Bowtie2 performs the best overall to remove human reads from the microbial datasets. So, we have chosen to use bowtie2 to remove the host DNA from our dataset.
 
 <p align = "center">
 <img src="metagenome_figures/rmhost.gif" alt="micribial" width="85%"/>
@@ -41,9 +41,14 @@ For samples that are suppected to have very high levels of host material, it is 
 <img src="metagenome_figures/rmhost2.gif" alt="micribial" width="85%"/>
 </p>
 
+<p align = "center">
+<img src="metagenome_figures/rmhost3.gif" alt="micribial" width="85%"/>
+</p>
+
 <p align = "right" style="font-family:Times;font-size:12px;">
 Bush, etc., 2020, Microb. Genom. https://doi.org/10.1099/mgen.0.000393
 </p>
+
 
 ---
 
