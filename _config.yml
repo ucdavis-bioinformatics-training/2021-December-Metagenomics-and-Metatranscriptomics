@@ -41,6 +41,8 @@ navigation:
     url: data_analysis/00-project_setup_mm
   - title: Preprocessing raw data
     url: data_analysis/01-preproc_htstream_mm
+  - title: Metagenomics data analysis
+    url: data_analysis/02-metagenomics.md
 
   - heading: ETC
   - title: Closing thoughts
