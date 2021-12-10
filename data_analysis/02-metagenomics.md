@@ -12,11 +12,20 @@ Shotgun metagenomics approach has gained popularity over the recent years in stu
 ---
 
 <p align = "center">
-<img src="overview_figures/P6.jpg" alt="micribial" width="70%"/>
+<img src="overview_figures/P6.png" alt="micribial" width="70%"/>
 </p>
 
 ---
 
+## Remove host DNA
+
+Depending on the sample collection source for microbial studies, there are variable amount of host DNA. For example, bovine rumen samples such as the dataset we are using for this workshop, or fecal samples for gut microbiome studies, or tissue biopsies, all have some leve of host DNA remain. Because host genomes are much larger than the microbiome genomes, the sequencing product will have more host reads than microbial reads. For example, if one sequence the same number of human cells as microbial cells, the sequencing would produce over 99% of human reads. Even when microbiome samples are collected from environment/fields, human contamination happens more than we think. Therefore, removing host/contaminant DNA very important. Especially, when the objective is to produce high quality metagenome assembled genomes. It also reduces biases and minimize false positive associations in downstream analysis.
+
+<p align = "center">
+<img src="metagenome_figures/hostdna.jpeg" alt="micribial" width="70%"/>
+</p>
+
+---
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example
