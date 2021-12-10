@@ -1,6 +1,22 @@
 # Metagenomics data analysis
+-------------------------------------------------------
 
-This document assumes [project_setup](./01-preproc_htstream_mm.md) has been completed.
+This document assumes [preprocessing using HTStream](./01-preproc_htstream_mm.md) has been completed.
+
+The two main objectives in metagenomics data analysis are to answer the questions: who is there and what can they potentially do. The first is what we call taxonomy profiling and the second is function profiling.
+
+Taxonomy profiling has traditionally been done using inexpensive 16S rRNA amplicon sequencing. It has limited resolution because of the conservation of the target gene and the length of the amplicon product. It also limits the ability to profile non-bacterial species of a community. In addition, 16S has very limited ability to provide us with the functional capacity of the microbes. Furthermore, [studies](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4523815/) have shown there might be biases introduced during the amplification step to enrich for rRNA gene and in turn introduces biases in quantification fo taxa.
+
+Shotgun metagenomics approach has gained popularity over the recent years in stuying microbial community. It benefits from the constant decrease in sequencing technology and it allows the study of all microorganisms that are difficult to culture. By sequencing the whole DNA materials from a community, it not only permits the discovery of unknown taxa, but also the ability of predicting the functions of microbial members. We will focus only on the shotgun metagenomics data analysis in this workshop.
+
+---
+
+<p align = "center">
+<img src="overview_figures/P6.jpg" alt="micribial" width="70%"/>
+</p>
+
+---
+
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example
