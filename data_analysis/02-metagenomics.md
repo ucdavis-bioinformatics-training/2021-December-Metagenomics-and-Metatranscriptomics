@@ -3,7 +3,7 @@
 
 This document assumes [preprocessing using HTStream](./01-preproc_htstream_mm.md) has been completed.
 
-The two main objectives in metagenomics data analysis are to answer the questions: who is there and what can they potentially do. The first is what we call taxonomy profiling and the second is function profiling.
+The two main objectives in metagenomics data analysis are to answer the questions: __who is there__ and __what can they potentially do__. The first is what we call taxonomy profiling and the second is function profiling.
 
 Taxonomy profiling has traditionally been done using inexpensive 16S rRNA amplicon sequencing. It has limited resolution because of the conservation of the target gene and the length of the amplicon product. It also limits the ability to profile non-bacterial species of a community. In addition, 16S has very limited ability to provide us with the functional capacity of the microbes. Furthermore, [studies](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4523815/) have shown there might be biases introduced during the amplification step to enrich for rRNA gene and in turn introduces biases in quantification fo taxa.
 
