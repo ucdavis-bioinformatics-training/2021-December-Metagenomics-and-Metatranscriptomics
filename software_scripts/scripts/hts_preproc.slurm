@@ -23,7 +23,7 @@ TYPE=$1
 
 echo $SAMPLE
 echo $TYPE
-export outdir=$baseP/01-Cleaned/$TYPE
+export outdir=$baseP/01-HTS_Preproc/$TYPE
 
 if [ ! -e $outdir ]; then
     mkdir -p $outdir
@@ -45,6 +45,7 @@ then
       hts_LengthFilter -m 50 -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
       hts_Stats -f $outdir/$SAMPLE/${SAMPLE}_${TYPE}.cleaned -A $outdir/$SAMPLE/$SAMPLE.stats.log"
 else
+<<<<<<< HEAD
   call="hts_Stats -L $outdir/SAMPLE/$SAMPLE.stats.log \
       -1 $seqP/${SAMPLE}_${TYPE}_1.fastq.gz -2 $seqP/${SAMPLE}_${TYPE}_2.fastq.gz | \
       hts_SeqScreener -A $outdir/SAMPLE/$SAMPLE.stats.log | \
@@ -53,6 +54,16 @@ else
       hts_QWindowTrim -A $outdir/SAMPLE/$SAMPLE.stats.log | \
       hts_LengthFilter -m 30 -A $outdir/SAMPLE/$SAMPLE.stats.log | \
       hts_Stats -f $outdir/SAMPLE/${SAMPLE}_${TYPE}.cleaned -A $outdir/$SAMPLE/$SAMPLE.stats.log"
+=======
+  call="hts_Stats -L $outdir/$SAMPLE/$SAMPLE.stats.log \
+      -1 $seqP/${SAMPLE}_${TYPE}_1.fastq.gz -2 $seqP/${SAMPLE}_${TYPE}_2.fastq.gz | \
+      hts_SeqScreener -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
+      hts_AdapterTrimmer -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
+      hts_Overlapper -o 10 -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
+      hts_QWindowTrim -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
+      hts_LengthFilter -m 30 -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
+      hts_Stats -f $outdir/$SAMPLE/${SAMPLE}_${TYPE}.cleaned -A $outdir/$SAMPLE/$SAMPLE.stats.log"
+>>>>>>> 007ae11e6385903a5f8cc376747d4c39ccf148f1
 fi
 
 
