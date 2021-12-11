@@ -56,13 +56,21 @@ Based on the findings from the above paper, we are going to use Bowtie2 to remov
 
 Every organism on earth has its own genome sequence, regardless whether we know how it looks like. The main difference between mapping and assembly is whether we know ahead of time the sequence of the genome. When we have the sequence of a genome and we would like to find out from which genomic locations our sequencing data came from, it uses the mapping approach. On the other hand, when we do not have the sequence of a genome and would like to reconstruct it, assembly approach has to be used. Of course, at the very beginning, we have no idea any of the genome sequences look like, so assembly has to be done first, before a regular mapping approach can be used for further research.
 
-**Assembly** seeks to put together the puzzle without knowing what the picture is.
+**Assembly** seeks to put together the pieces of fragments that have been sequenced to recreate the genome
 
-- The focus is on the pieces, how they fit together.
-- The goal is to reconstruct an image based on our understanding of how th pieces fit together.
+- The focus is on the reads, how they can be strung together
+- The goal is to reconstruct the genome as best as we can
+* Large search space to find the overlapping features
+* Regions of similarity (aka repeats)
+* Sequencing errors
+
+<p align = "center">
+<img src="metagenome_figures/assembly.png" alt="micribial" width="65%"/>
+</p>
+
 
 **Mapping** (or alignment to a reference) tries to put together the puzzle pieces directly onto an image of the picture._
-- The focus is on the puzzle, regions of the puzzle that contain certain characteristics (ex. what background) that will help you place the piece onto the puzzle.  
+- The focus is on the puzzle, regions of the puzzle that contain certain characteristics (ex. what feature) that will help you place the piece onto the puzzle.  
 - In mapping the question is more, given a small chunk of sequence, where in the genome did this sequence most likely come from.
 - The goal then is to find the match(es) with either the “best” edit distance (smallest difference), or all matches with edit distance less than max edit distance. Main issues are:
 * Large search space
