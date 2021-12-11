@@ -63,6 +63,7 @@ Every organism on earth has its own genome sequence, regardless whether we know 
 * Large search space to find the overlapping features
 * Regions of similarity (aka repeats)
 * Sequencing errors
+* For metagenomic assemblies, it is furthur complicated by the unequal representation of members of the community, the presence of closely related microorganisms with similar genomes, the presence of several strains of the same microorganism, as well as the insufficient amount of data for minor community members.
 
 <p align = "center">
 <img src="metagenome_figures/assembly.png" alt="micribial" width="65%"/>
