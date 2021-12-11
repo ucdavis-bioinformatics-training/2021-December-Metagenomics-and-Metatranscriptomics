@@ -49,7 +49,102 @@ For samples that are suppected to have very high levels of host material, it is 
 Bush, etc., 2020, Microb. Genom. https://doi.org/10.1099/mgen.0.000393
 </p>
 
+Based on the findings from the above paper, we are going to use Bowtie2 to remove host bovine DNA. The basic idea is to map/align the preprocessed reads to the bovine reference genome. Then we extract the reads that do not align for downstream analysis. Here we are going to sidetrack a little bit to learn two new concepts: __map/align__ vs __assembly__.
 
+
+### Mapping vs Assembly
+
+Every organism on earth has its own genome sequence, regardless whether we know how it looks like. The main difference between mapping and assembly is whether we know ahead of time the sequence of the genome. When we have the sequence of a genome and we would like to find out from which genomic locations our sequencing data came from, it uses the mapping approach. On the other hand, when we do not have the sequence of a genome and would like to reconstruct it, assembly approach has to be used. Of course, at the very beginning, we have no idea any of the genome sequences look like, so assembly has to be done first, before a regular mapping approach can be used for further research.
+
+**Assembly** seeks to put together the puzzle without knowing what the picture is.
+
+- The focus is on the pieces, how they fit together.
+- The goal is to reconstruct an image based on our understanding of how th pieces fit together.
+
+**Mapping** (or alignment to a reference) tries to put together the puzzle pieces directly onto an image of the picture._
+- The focus is on the puzzle, regions of the puzzle that contain certain characteristics (ex. what background) that will help you place the piece onto the puzzle.  
+- In mapping the question is more, given a small chunk of sequence, where in the genome did this sequence most likely come from.
+- The goal then is to find the match(es) with either the “best” edit distance (smallest difference), or all matches with edit distance less than max edit distance. Main issues are:
+* Large search space
+* Regions of similarity (aka repeats)
+* Gaps (INDELS)
+* Complexity (RNA, splicing, transcripts)
+
+### Alignment concepts
+
+* Multimappers:
+  * Reads that align equally well to more than one reference location.
+  * Generally, multimappers are discounted in variant detection, and are often discounted in counting applications (like RNA-Seq ... would “cancel” out anyway).
+  * Note: multimapper “rescue” in some algorithms (RSEM, Express?).
+* Duplicates:
+  * Reads or read pairs arising from the same original library fragment, either during library preparation (PCR duplicates).
+  * Generally, duplicates can only be detected reliably with paired-end sequencing. If PE, they’re discounted in variant detection, and discounted in counting applications (like RNA-Seq).
+* Clipping vs Splicing  
+  * soft-clipped: bases in 5' and 3' of the read are NOT part of the alignment.
+  * hard-clipped: bases in 5' and 3' of the read are NOT part of the alignment AND those bases have been
+  removed from the read sequence in the BAM file. The 'real' sequence length would be length(SEQ)+ count-of-hard-clipped-bases
+  * [From biostars](https://www.biostars.org/p/119537/)
+
+<img style="padding-left:100px" src="alignment_mm_figures/alignment_figure3.png" alt="alignment_figure3" width="60%"/>  
+* Inner length, insert size, fragment length  
+<img src="alignment_mm_figures/alignment_figure4.jpg" alt="alignment_figure4" width="60%"/>  
+*From [This Biostars answer](https://www.biostars.org/p/106291/)*
+
+
+#### Considerations when mapping
+* Placing reads in regions that do not exist in the reference genome (reads extend off the end of linearized fragments) [ mitochondrial, plasmids, structural variants, etc.].
+* Sequencing errors and genetic variation: alignment between read and true source in genome may have more differences than alignment with some other copy of repeat.
+* What if the closest fully sequenced genome is too divergent?
+* Placing reads in repetitive regions: Some algorithms only return 1 mapping; If multiple: map quality = 0
+* Algorithms that use paired-end information => might prefer correct distance over correct alignment.
+
+In RNAseq data, you must also consider effect of splice junctions, reads may span an intron.
+
+<img src="alignment_mm_figures/alignment_figure1.png" alt="alignment_figure1" width="80%"/>
+
+<iframe width="80%" src="https://www.youtube.com/embed/_asGjfCTLNE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+---
+## Aligners/Mappers
+Many [alignment algorithms](https://en.wikipedia.org/wiki/List_of_sequence_alignment_software
+) to choose from. Examples include:
+* Spliced Aligners
+  * STAR
+  * HiSAT2 (formerly Tophat [Bowtie2])
+  * GMAP/GSNAP
+  * SOAPsplice
+  * MapSplice
+* Aligners that can ’clip’
+  * bwa-mem
+  * Bowtie2 in local mode
+
+#### Pseudo-aligners (salmon and kalisto)
+* Quasi-mapping
+* Probabilistic
+* Map to transcripts, not genome
+* Does transcript quantifications (or gene)
+* Blazing FAST and can run on most laptops
+* Experience suggests differences between “traditional” mappers are in the low abundance genes.
+
+---
+## Mapping against the genome vs transcriptome
+
+May seem intuitive to map RNAseq data to transcriptome, but it is not that simple.
+  * Transcriptomes are rarely complete.
+  * Which transcript of a gene should you map to? canonical transcript (which is that)?
+  * Shouldn’t map to all splice variants as these would show up as ‘multi-mappers’.
+
+More so, a aligner will try to map every read, somewhere, provided the alignment meets its minimum requirements.
+  * Need to provide a mapper with all possible places the read could have arisen from, which is best represented by the genome. Otherwise, you get mis-mapping because its close enough.
+
+### Genome and Genome Annotation
+
+Genome sequence fasta files and annotation (gff, gtf) files go together! These should be identified at the beginning of analysis.
+
+* Genome fasta files should include all primary chromosomes, unplaced sequences and un-localized sequences, as well as any organelles. Should bet contain any contigs that represent patches, or alternative haplotypes.
+* If you expect contamination, or the presence of additional sequence/genome, add the sequence(s) to the genome fasta file.
+* Annotation file should be GTF (preferred), and should be the most comprehensive you can find.
+  * Chromosome names in the GTF must match those in the fasta file (they don’t always do).
 ---
 
 ```bash
