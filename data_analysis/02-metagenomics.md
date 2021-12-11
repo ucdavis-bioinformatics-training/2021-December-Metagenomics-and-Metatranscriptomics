@@ -97,11 +97,82 @@ Host/contaminant genome sequence fasta files should be identified at the beginni
 
 * Host genome fasta files should include all primary chromosomes, unplaced sequences and un-localized sequences, as well as any organelles and alternative haplotypes.
 * If you expect contamination, or the presence of additional sequence/genome, add the sequence(s) to the genome fasta file.
----
+
+Now, let's go through the steps to remove host bovine genome. The reference genome we use is the more recent version of the bovine genome: ARS-UCD1.2, assembled using both PacBio and Illumina sequencing reads. It has higher quality in terms of contiguity comparing to UMD3.1 version of the bovine genome, which was assembled using Sanger sequencing reads. Usually, there are two major sources for high quality reference genomes: ensembl and NCBI. One may choose either one to download the reference genomes. We are going to skip the downloading, and link to the reference that I have downloaded.
+
+Ahead of aligning the sequencing reads, most aligners/mappers require the generation of index of the genome. This step may take quite a while, depending on the size of the genome. Bovine genome is 2.7Gb in size, and bowtie2 indexing step can take 20-40 minutes to finish. Therefore, I am providing the [indexing slurm script](../software_scripts/scripts/bowtie2_build.slurm), but we are not going to go through this step in the workshop. In the interest of time, we are going to link the index files that I have generated.
+
 
 ```bash
-cd /share/workshop/meta_workshop/$USER/meta_example
+cd /share/workshop/meta_workshop/$USER/meta_example/References
+ln -s /share/workshop/meta_workshop/jli/meta_example/References/GCF_002263795.1_ARS-UCD1.2_genomic* .
+ls
 ```
 
+The next step, we are going to download the [alignment script](../software_scripts/scripts/bowtie2_rmhost.slurm) to our scripts directory.
+
+```bash
+cd /share/workshop/meta_workshop/$USER/meta_example/scripts
+wget https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/software_scripts/scripts/bowtie2_rmhost.slurm
+```
+
+Let's take a look at this script. Please recall what we are trying to achieve: **remove the reads that originated from the host and obtain the reads that belong to the microbial community for downstream analysis**.
+
+<div class="script">#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=12
+#SBATCH --time=1-12
+#SBATCH --mem=30000 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --partition=production
+#SBATCH --output=slurmout/btr_%A_%a.out # File to which STDOUT will be written
+#SBATCH --error=slurmout/btr_%A_%a.err # File to which STDERR will be written
 
 
+start=`date +%s`
+hostname
+
+export baseP=/share/workshop/meta_workshop/$USER/meta_example
+export refP=$baseP/References
+export outP=$baseP/02-DNA-rmhost
+
+SAMPLE=`head -n ${SLURM_ARRAY_TASK_ID} samples.txt | tail -1 `
+TYPE=$1
+
+echo $SAMPLE
+echo $TYPE
+export seqP=$baseP/01-HTS_Preproc/$TYPE
+
+if [ ! -e $outP ]; then
+    mkdir -p $outP
+fi
+
+if [ ! -e "$outP/$SAMPLE" ]; then
+    mkdir -p $outP/$SAMPLE
+fi
+
+module load bowtie2/2.4.2
+module load bedtools2/2.29.2
+module load samtools/1.11
+
+nbt=$(( ${SLURM_CPUS_PER_TASK} - 4 ))
+echo ${nbt}
+
+## -f 12: extract only alignments with both reads unmapped
+## -F 256: Do not extract alignments which are not primary alignment
+call="bowtie2 -x $refP/GCF_002263795.1_ARS-UCD1.2_genomic \
+	-1 <(zcat $seqP/${SAMPLE}/${SAMPLE}_DNA_R1.fastq.gz) -2 <(zcat $seqP/${SAMPLE}/${SAMPLE}_DNA_R2.fastq.gz) \
+	-q --phred33 --sensitive --end-to-end \
+	-p ${nbt} |samtools view -bh - |samtools view -bh -f 12 -F 256 - |samtools sort -n - | \
+	bedtools bamtofastq -i - -fq $outP/${SAMPLE}/${SAMPLE}_hostrmvd_R1.fastq -fq2 $outP/${SAMPLE}/${SAMPLE}_hostrmvd_R2.fastq"
+
+
+echo $call
+eval $call
+
+end=`date +%s`
+runtime=$((end-start))
+echo Runtime: $runtime seconds
+
+
+</div>
