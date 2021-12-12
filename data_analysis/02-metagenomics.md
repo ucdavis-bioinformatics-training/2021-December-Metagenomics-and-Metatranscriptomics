@@ -309,7 +309,7 @@ Once Kraken2 successfully finishes, we should have two files in each sample subf
 
 ### Bracken abundance estimation
 
-What Kraken2 has produced is the classification of each read to a taxonomic rank. This result needs to be further refined to generate species (genus, phylum) level abundance table for downstream statistical analysis. This process needs to be done properly. Kraken2 only classifies the reads to the Lowest Common Ancestor (LCA) because there are many genomes present in the database have large fractions of their sequences identical to other genomes. This leads to the result that for well-populated clades with low genome diversity, Kraken only reports species-level assignments for reads from unique regions, while for many species the majority of reads might be classified at a higher level of the taxonomy and the number of reads classified directly to a species may be far lower than the actual number present. Therefore, Kraken's raw read assignments cannot be directly translated into species- or strain-level abundance estimates. Bracken has been designed to perform sophisticated estimation based on Kraken classification algorithm.
+What Kraken2 has produced is the classification of each read to a taxonomic rank. This result needs to be further refined to generate species (genus, phylum) level abundance table for downstream statistical analysis. This process needs to be done properly. Kraken2 only classifies the reads to the Lowest Common Ancestor (LCA) because there are many genomes present in the database have large fractions of their sequences identical to other genomes. This leads to the result that for well-populated clades with low genome diversity, Kraken only reports species-level assignments for reads from unique regions, while for many species the majority of reads might be classified at a higher level of the taxonomy and the number of reads classified directly to a species may be far lower than the actual number present. Therefore, Kraken's raw read assignments cannot be directly translated into species- or strain-level abundance estimates. Bracken has been designed to perform sophisticated probabilistically re-distribution of reads to estimate the abundance.
 
 
 <p align = "center">
@@ -397,5 +397,9 @@ python /software/bracken/2.5/lssc0-linux/analysis_scripts/combine_bracken_output
 ```
 
 #### <font color='red'> End Exercise 3: </font>
+
+### Differential abundance analysis
+
+In most experiments, the estimation of abundance is to study the difference between conditions to understand how microbial community profile changes. Many packages that were designed for count-based profiling have been used for this purpose, such as DESeq2, edgeR, which were designed for RNASeq analysis originally, but have been used successfully in studing microbial community.
 
 
