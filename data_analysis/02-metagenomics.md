@@ -221,6 +221,8 @@ At the end of this step, we have successfully removed the host DNA and the resul
 
 The first question to answer in a metagenomics study is _who is there_. It is to identify the members of the microbial community. There are two approaches that could be used to achieve this goal: the first is to utilize the reads and the other is to assemble the metagenomes before using homology search to the database. We will look at the read based approach in this section. There are three main algorithms to classify the reads to taxa: the first isto do homology search (for example, using blast: MEGAN) of the reads against huge reference databases, the second is k-mer based and the third is marker gene based. In this step, we are going to focus on the k-mer based classification.
 
+### Kraken2 classification
+
 K-mer based methods count the k-mer frequency of the reads, and compare it to a model trained with sequences from known genomes. There are a few tools belong to this group of method: Kraken, Centrifuge, [Kraken2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0), [Clark](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-015-1419-2), [Kaiju](https://www.nature.com/articles/ncomms11257).
 
 <p align = "center">
@@ -300,9 +302,22 @@ sbatch -J krk.${USER} --array=1-2 kraken2.slurm
 squeue -u ${USER}
 ```
 
-Once Kraken2 successfully finishes, we should have two files in each sample subfolder inside 03-Kraken: samplename.kraken.out and samplename.kraken_report.out. Please take a look at the two files and see what they contain.
+Once Kraken2 successfully finishes, we should have two files in each sample subfolder inside 03-Kraken: _samplename.kraken.out_ and _samplename.kraken_report.out_. Please take a look at the two files and see what they contain.
 
 
 #### <font color='red'> End Exercise 2: </font>
+
+### Bracken abundance estimation
+
+What Kraken2 has produced is the classification of each read to a taxonomic rank. This result needs to be further refined to generate species (genus, phylum) level abundance table for downstream statistical analysis. This process needs to be done properly. Kraken2 only classifies the reads to the Lowest Common Ancestor (LCA) because there are many genomes present in the database have large fractions of their sequences identical to other genomes. This leads to the result that for well-populated clades with low genome diversity, Kraken only reports species-level assignments for reads from unique regions, while for many species the majority of reads might be classified at a higher level of the taxonomy and the number of reads classified directly to a species may be far lower than the actual number present. Therefore, Kraken's raw read assignments cannot be directly translated into species- or strain-level abundance estimates. Bracken has been designed to perform sophisticated estimation based on Kraken classification algorithm.
+
+
+<p align = "center">
+<img src="metagenome_figures/bracken.png" alt="micribial" width="85%"/>
+</p>
+
+<p align = "right" style="font-family:Times;font-size:12px;">
+Lu, etc., 2017, PeerJ Computer Science 3:e104, https://doi.org/10.7717/peerj-cs.104
+</p>
 
 
