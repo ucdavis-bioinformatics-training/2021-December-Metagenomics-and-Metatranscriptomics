@@ -207,6 +207,17 @@ At the end of this step, we have successfully removed the host DNA and the resul
 
 ## Taxonomy profiling using Kraken2 and Braken
 
-The first question to answer in a metagenomics study is _who is there_. It is to identify the members of the microbial community. 
+The first question to answer in a metagenomics study is _who is there_. It is to identify the members of the microbial community. There are two approaches that could be used to achieve this goal: the first is to utilize the reads and the other is to assemble the metagenomes before using homology search to the database. We will look at the read based approach in this section. There are three main algorithms to classify the reads to taxa: the first isto do homology search (for example, using blast) of the reads against huge reference databases, the second is k-mer based and the third is marker gene based. In this step, we are going to focus on the k-mer based classification.
+
+K-mer based methods count the k-mer frequency of the reads, and compare it to a model trained with sequences from known genomes.
+
+<p align = "center">
+<img src="metagenome_figures/kraken.webp" alt="micribial" width="85%"/>
+</p>
+
+<p align = "right" style="font-family:Times;font-size:12px;">
+Wood & Salzberg, 2014, Genome Biol 15, R46, https://doi.org/10.1186/gb-2014-15-3-r46
+</p>
+
 
 
