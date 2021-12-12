@@ -219,7 +219,7 @@ At the end of this step, we have successfully removed the host DNA and the resul
 
 ## Taxonomy profiling using Kraken2 and Braken
 
-The first question to answer in a metagenomics study is _who is there_. It is to identify the members of the microbial community. There are two approaches that could be used to achieve this goal: the first is to utilize the reads and the other is to assemble the metagenomes before using homology search to the database. We will look at the read based approach in this section. There are three main algorithms to classify the reads to taxa: the first isto do homology search (for example, using blast: MEGAN) of the reads against huge reference databases, the second is k-mer based and the third is marker gene based. In this step, we are going to focus on the k-mer based classification.
+The first question to answer in a metagenomics study is _who is there_. It is to identify the members of the microbial community. There are two approaches that could be used to achieve this goal: the first is to utilize the reads and the other is to assemble the metagenomes before using homology search to the database. We will look at the read based approach in this section. There are three main algorithms to classify the reads to taxa: the first is to do homology search (for example, using blast: MEGAN) of the reads against huge reference databases, the second is k-mer based and the third is marker gene based. In this step, we are going to focus on the k-mer based classification.
 
 ### Kraken2 classification
 
@@ -313,11 +313,89 @@ What Kraken2 has produced is the classification of each read to a taxonomic rank
 
 
 <p align = "center">
-<img src="metagenome_figures/bracken.png" alt="micribial" width="85%"/>
+<img src="metagenome_figures/bracken.png" alt="micribial" width="70%"/>
 </p>
 
 <p align = "right" style="font-family:Times;font-size:12px;">
 Lu, etc., 2017, PeerJ Computer Science 3:e104, https://doi.org/10.7717/peerj-cs.104
 </p>
+
+Bracken takes the output from Kraken and estimate the abundance at user specified level: species, genus, or phylum.
+
+#### <font color='red'> Start Exercise 3: </font>
+
+Let's get ready for this step by linking the results that I have generated and the slurm script.
+
+
+```
+cd /share/workshop/meta_workshop/$USER/meta_example/
+ln -s /share/workshop/meta_workshop/jli/meta_example/03-Kraken .
+cd /share/workshop/meta_workshop/$USER/meta_example/scripts
+wget https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/software_scripts/scripts/bracken.slurm
+```
+
+Let's take a look at the script:
+
+<div class="script">#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=24
+#SBATCH --time=1-12
+#SBATCH --mem=80000 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --partition=production
+#SBATCH --output=slurmout/brk_%A_%a.out # File to which STDOUT will be written
+#SBATCH --error=slurmout/brk_%A_%a.err # File to which STDERR will be written
+
+
+start=`date +%s`
+hostname
+
+export baseP=/share/workshop/meta_workshop/$USER/meta_example
+export seqP=$baseP/02-DNA-rmhost
+export refP=$baseP/References
+export outP=$baseP/03-Kraken
+
+
+SAMPLE=`head -n ${SLURM_ARRAY_TASK_ID} samples.txt | tail -1 `
+
+echo $SAMPLE
+
+if [ ! -e "$outP/$SAMPLE" ]; then
+    mkdir -p $outP/$SAMPLE
+fi
+
+module load kraken2/2.1.2
+module load bracken/2.5
+
+call="bracken -d $refP/krakendb -t 24 -i $outP/${SAMPLE}/${SAMPLE}.kraken_report.out -l S -o $outP/${SAMPLE}/${SAMPLE}_report_species.txt"
+
+echo $call
+eval $call
+
+end=`date +%s`
+runtime=$((end-start))
+echo Runtime: $runtime seconds
+
+</div>
+
+
+Let's submit a couple jobs.
+
+```bash
+cd /share/workshop/meta_workshop/$USER/meta_example/scripts
+sbatch -J brk --array=1-48 bracken.slurm
+squeue -u ${USER}
+```
+
+This step runs very fast, a few seconds. It generates two files for each sample in its corresponding subdirectory inside 03-Kraken: _samplename_report_species.txt_ and _samplename.kraken_report_bracken.out_. Please take a look at both files to understand what they contain.
+
+Finally, we are going to combine the abundance estimation for each sample into an abundance table.
+
+```bash
+cd /share/workshop/meta_workshop/$USER/meta_example/scripts
+python /software/bracken/2.5/lssc0-linux/analysis_scripts/combine_bracken_outputs.py --files ../03-Kraken/*/*_report_species.txt -o ../03-Kraken/merged_abundance_species.txt
+```
+
+#### <font color='red'> End Exercise 3: </font>
 
 
