@@ -407,7 +407,7 @@ Note the patterns:
 
 ## Run HTStream on the Project.
 
-We can now run the preprocessing routine across all samples on the real data using a SLURM script, [hts_preproc.slurm](../software_scripts/scripts/hts_preproc.slurm), that we should take a look at now.
+We can now run the preprocessing routine across all samples on the real data using a SLURM script, [hts_preproc.slurm](../software_scripts/scripts/hts_preproc.slurm.txt), that we should take a look at now.
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example/scripts  # We'll run this from the main directory
