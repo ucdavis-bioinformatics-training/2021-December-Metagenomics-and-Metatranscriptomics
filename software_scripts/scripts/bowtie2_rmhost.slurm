@@ -6,6 +6,8 @@
 #SBATCH --time=1-12
 #SBATCH --mem=30000 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --partition=production
+#SBATCH --reservation=meta_workshop
+#SBATCH --account=workshop
 #SBATCH --output=slurmout/btr_%A_%a.out # File to which STDOUT will be written
 #SBATCH --error=slurmout/btr_%A_%a.err # File to which STDERR will be written
 

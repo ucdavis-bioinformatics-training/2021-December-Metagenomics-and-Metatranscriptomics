@@ -5,6 +5,8 @@
 #SBATCH --time=0-10
 #SBATCH --mem=20000 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --partition=production
+#SBATCH --reservation=meta_workshop
+#SBATCH --account=workshop
 #SBATCH --output=slurmout/btb_%A_%a.out # File to which STDOUT will be written
 #SBATCH --error=slurmout/btb_%A_%a.err # File to which STDERR will be written
 
@@ -12,7 +14,7 @@
 start=`date +%s`
 hostname
 
-export baseP=/share/biocore/projects/Internal_Jessie_UCD/Workshops/Metagenomics_and_Metatranscriptomics
+export baseP=/share/workshop/meta_workshop/$USER/meta_example
 export refP=$baseP/References
 
 module load bowtie2/2.4.2
