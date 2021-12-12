@@ -407,4 +407,18 @@ We are going to use edgeR/limma for this step and will do the analysis on our la
 
 Start RStudio and go to the folder that you have downloaded the three files. Then open the R markdown file (Differential.kraken.Rmd). Now we can generate a report by Knit the Rmd file to HTML. Here is [the report](./results/Differential.kraken.html).
 
+---
+
+## de novo Assembly
+
+The assembly of overlapping reads into continuous or semi-continuous genome fragments offers advantage in sensitive detection of genomic features. It also offers potential of createing complete genomes which could be used as reference for future studies. There are two main categories of assemblers used for de novo assembly, much like for a single organism genome assembly: de Bruijn graph based assemblers and string graph based assemblers. There are many assemblers in each categories.
+
+<p align = "center">
+<img src="metagenome_figures/assemblers.png" alt="micribial" width="85%"/>
+</p>
+
+<p align = "right" style="font-family:Times;font-size:12px;">
+Vollmers, etc., 2017, Plos One, https://doi.org/10.1371/journal.pone.0169662
+</p>
+
 
