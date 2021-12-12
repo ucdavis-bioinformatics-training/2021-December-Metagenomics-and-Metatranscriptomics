@@ -430,7 +430,7 @@ module load megahit/1.2.9
 megahit --hlep
 ```
 
-<div class="script">
+<div class="output">
 MEGAHIT v1.2.9
 
 contact: Dinghua Li <voutcn@gmail.com>
