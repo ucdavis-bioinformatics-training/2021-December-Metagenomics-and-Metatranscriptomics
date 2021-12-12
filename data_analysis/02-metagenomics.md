@@ -403,4 +403,8 @@ python /software/bracken/2.5/lssc0-linux/analysis_scripts/combine_bracken_output
 
 In most experiments, the estimation of abundance is to study the difference between conditions to understand how microbial community profile changes. Many packages that were designed for count-based profiling have been used for this purpose, such as DESeq2, edgeR, which were designed for RNASeq analysis originally, but have been used successfully in studing microbial community.
 
+We are going to use edgeR/limma for this step and will do the analysis on our laptop. First, let's download [the abundance file](./results/merged_abundance_species.txt), [the metadata file](./results/feed.txt) and the [R markdown file](../software_scripts/scripts/Differential.kraken.Rmd) to our laptop.
+
+Start RStudio and go to the folder that you have downloaded the three files. Then open the R markdown file (Differential.kraken.Rmd). Now we can generate a report by Knit the Rmd file to HTML. Here is [the report](./results/Differential.kraken.html).
+
 
