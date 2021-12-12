@@ -207,6 +207,6 @@ At the end of this step, we have successfully removed the host DNA and the resul
 
 ## Taxonomy profiling using Kraken2 and Braken
 
-The first question to answer in a metagenomics study is __who is there__. It is to identify the members of the microbial community. 
+The first question to answer in a metagenomics study is _who is there_. It is to identify the members of the microbial community. 
 
 
