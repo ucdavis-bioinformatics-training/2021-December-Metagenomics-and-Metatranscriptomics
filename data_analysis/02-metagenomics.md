@@ -219,5 +219,5 @@ K-mer based methods count the k-mer frequency of the reads, and compare it to a 
 Wood & Salzberg, 2014, Genome Biol 15, R46, https://doi.org/10.1186/gb-2014-15-3-r46
 </p>
 
-
+Using the algorithm depicted above, the result from Kraken2 is a classification for each read in our fastq files. 
 
