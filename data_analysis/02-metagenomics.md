@@ -114,6 +114,15 @@ ln -s /share/workshop/meta_workshop/jli/meta_example/References/GCF_002263795.1_
 ls
 ```
 
+**In the case that your HTStream preprocessing did not finish, please link my result over so that you can go ahead with the downstream analysis.**
+
+```bash
+cd /share/workshop/meta_workshop/$USER/meta_example
+mv 02-DNA-rmhost 02
+ln -s /share/workshop/meta_workshop/jli/meta_example/02-DNA-rmhost .
+```
+
+
 The next step, we are going to download the [alignment script](../software_scripts/scripts/bowtie2_rmhost.slurm.txt) to our scripts directory.
 
 ```bash

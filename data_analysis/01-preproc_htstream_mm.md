@@ -442,7 +442,7 @@ TYPE=$1
 
 echo $SAMPLE
 echo $TYPE
-export outdir=$baseP/01-HTS_Preproc/$TYPE
+export outdir=$baseP/01-HTS_Preproc-test/$TYPE
 
 if [ ! -e $outdir ]; then
     mkdir -p $outdir
@@ -462,7 +462,7 @@ then
       hts_AdapterTrimmer -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
       hts_QWindowTrim -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
       hts_LengthFilter -m 50 -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
-      hts_Stats -f $outdir/$SAMPLE/${SAMPLE}_${TYPE}.cleaned -A $outdir/$SAMPLE/$SAMPLE.stats.log"
+      hts_Stats -f $outdir/$SAMPLE/${SAMPLE}_${TYPE} -A $outdir/$SAMPLE/$SAMPLE.stats.log"
 else
   call="hts_Stats -L $outdir/$SAMPLE/$SAMPLE.stats.log \
       -1 $seqP/${SAMPLE}_${TYPE}_1.fastq.gz -2 $seqP/${SAMPLE}_${TYPE}_2.fastq.gz | \
@@ -471,7 +471,7 @@ else
       hts_Overlapper -o 10 -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
       hts_QWindowTrim -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
       hts_LengthFilter -m 30 -A $outdir/$SAMPLE/$SAMPLE.stats.log | \
-      hts_Stats -f $outdir/$SAMPLE/${SAMPLE}_${TYPE}.cleaned -A $outdir/$SAMPLE/$SAMPLE.stats.log"
+      hts_Stats -f $outdir/$SAMPLE/${SAMPLE}_${TYPE} -A $outdir/$SAMPLE/$SAMPLE.stats.log"
 fi
 
 
@@ -493,8 +493,8 @@ cd /share/workshop/meta_workshop/$USER/meta_example/
 mkdir -p scripts/slurmout  # -p tells mkdir not to complain if the directory already exists
 mkdir -p 01-HTS_Preproc
 cd scripts
-sbatch -J ${USER}.dna --array=1-48 hts_preproc.slurm DNA  # DNA samples
-sbatch -J ${USER}.rna --array=1-48 hts_preproc.slurm mRNA  # RNA samples
+sbatch -J ${USER}.dna --array=1-8 hts_preproc.slurm DNA  # DNA samples
+sbatch -J ${USER}.rna --array=1-8 hts_preproc.slurm mRNA  # RNA samples
 ```
 
 We can watch the progress of our task array using the 'squeue' command. Takes about 30 minutes to process each sample.
@@ -534,23 +534,23 @@ The JSON files output by HTStream provide this type of information.
 
 1. Let's make sure that all jobs completed successfully.
 
-    First check all the "htstream_\*.out" and "htstream_\*.err" files:
+    First check all the "hts_\*.out" and "hts_\*.err" files:
 
     ```bash
     cd /share/workshop/meta_workshop/$USER/meta_example/scripts
-    cat slurmout/htstream_*.out
+    cat slurmout/hts_*.out
     ```
 
     Look through the output and make sure you don't see any errors. Now do the same for the err files:
 
     ```bash
-    cat slurmout/htstream_*.err
+    cat slurmout/hts_*.err
     ```
 
-    Also, check the output files. First check the number of forward and reverse output files (should be 22 each):
+    Also, check the output files. First check the number of forward and reverse output files (8 each):
 
     ```bash
-    cd ../01-HTS_Preproc
+    cd ../01-HTS_Preproc-test/DNA
     ls */*R1* | wc -l
     ls */*R2* | wc -l
     ```
@@ -568,10 +568,10 @@ The JSON files output by HTStream provide this type of information.
 
     *All of the samples started with the same number of reads. What can you tell from the file sizes about how cleaning went across the samples?*
 
-    **IF for some reason HTStream didn't finish, the files are corrupted or you missed the session, please let one of us know and we will help. You can also copy over the HTStream output.**
+    **In the interest of time, we have run the preprocessing on 8 samples for both the metagenomic data and metatranscriptomic data. We are going to link to the results I have generated for the full dataset.**
 
     ```bash
-    cp -r /share/biocore/workshops/2021-December-Meta/01-HTS_Preproc /share/workshop/meta_workshop/$USER/meta_example/.
+    ln -s /share/workshop/meta_workshop/jli/meta_example/01-HTS_Preproc /share/workshop/meta_workshop/$USER/meta_example/.
     ```
 
 1. Let's take a look at the differences in adapter content between the input and output files. First look at the input file:
