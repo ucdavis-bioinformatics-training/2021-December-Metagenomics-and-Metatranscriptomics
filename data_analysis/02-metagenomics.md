@@ -414,7 +414,7 @@ Start RStudio and go to the folder that you have downloaded the three files. The
 The assembly of overlapping reads into continuous or semi-continuous genome fragments offers advantage in sensitive detection of genomic features. It also offers potential of createing complete genomes which could be used as reference for future studies. There are two main categories of assemblers used for de novo assembly, much like for a single organism genome assembly: de Bruijn graph based assemblers and string graph based assemblers. There are many assemblers in each categories.
 
 <p align = "center">
-<img src="metagenome_figures/assemblers.png" alt="micribial" width="70%"/>
+<img src="metagenome_figures/assemblers.png" alt="micribial" width="45%"/>
 </p>
 
 <p align = "right" style="font-family:Times;font-size:12px;">
