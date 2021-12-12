@@ -114,14 +114,6 @@ ln -s /share/workshop/meta_workshop/jli/meta_example/References/GCF_002263795.1_
 ls
 ```
 
-**In the case that your HTStream preprocessing did not finish, please link my result over so that you can go ahead with the downstream analysis.**
-
-```bash
-cd /share/workshop/meta_workshop/$USER/meta_example
-mv 02-DNA-rmhost 02
-ln -s /share/workshop/meta_workshop/jli/meta_example/02-DNA-rmhost .
-```
-
 
 The next step, we are going to download the [alignment script](../software_scripts/scripts/bowtie2_rmhost.slurm.txt) to our scripts directory.
 
@@ -360,9 +352,9 @@ start=`date +%s`
 hostname
 
 export baseP=/share/workshop/meta_workshop/$USER/meta_example
-export seqP=$baseP/02-DNA-rmhost
 export refP=$baseP/References
-export outP=$baseP/03-Kraken
+export krkP=$baseP/03-Kraken
+export outP=$baseP/04-Bracken
 
 
 SAMPLE=`head -n ${SLURM_ARRAY_TASK_ID} samples.txt | tail -1 `
@@ -376,7 +368,7 @@ fi
 module load kraken2/2.1.2
 module load bracken/2.5
 
-call="bracken -d $refP/krakendb -t 24 -i $outP/${SAMPLE}/${SAMPLE}.kraken_report.out -l S -o $outP/${SAMPLE}/${SAMPLE}_report_species.txt"
+call="bracken -d $refP/krakendb -t 24 -i $krkP/${SAMPLE}/${SAMPLE}.kraken_report.out -l S -o $outP/${SAMPLE}/${SAMPLE}_report_species.txt"
 
 echo $call
 eval $call
@@ -402,7 +394,7 @@ Finally, we are going to combine the abundance estimation for each sample into a
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example/scripts
-python /software/bracken/2.5/lssc0-linux/analysis_scripts/combine_bracken_outputs.py --files ../03-Kraken/*/*_report_species.txt -o ../03-Kraken/merged_abundance_species.txt
+python /software/bracken/2.5/lssc0-linux/analysis_scripts/combine_bracken_outputs.py --files ../04-Bracken/*/*_report_species.txt -o ../04-Bracken/merged_abundance_species.txt
 ```
 
 #### <font color='red'> End Exercise 3: </font>
