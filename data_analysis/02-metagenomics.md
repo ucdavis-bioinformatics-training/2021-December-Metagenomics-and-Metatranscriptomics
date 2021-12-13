@@ -562,7 +562,7 @@ hostname
 export baseP=/share/workshop/meta_workshop/$USER/meta_example
 export seqP=$baseP/02-DNA-rmhost
 export outP=$baseP/03-HUMANN-DNA-test
-export databaseP=$baseP/References/databases
+export databaseP=/software/humann/3.0.1/lssc0-linux/db
 
 SAMPLE=`head -n ${SLURM_ARRAY_TASK_ID} samples.txt | tail -1 `
 
@@ -597,16 +597,6 @@ runtime=$((end-start))
 echo Runtime: $runtime seconds
 
 </div>
-
-We also need to link to the databases that HUMAnN3 requires.
-
-```bash
-cd /share/workshop/meta_workshop/$USER/meta_example/References
-mkdir -p databases
-cd databases
-ln -s /share/biocore/projects/Internal_Jessie_UCD/Workshops/Metagenomics_and_Metatranscriptomics/References/databases/uniref .
-ln -s /share/biocore/projects/Internal_Jessie_UCD/Workshops/Metagenomics_and_Metatranscriptomics/References/databases/chocophlan .
-```
 
 Now let's submit two jobs.
 
