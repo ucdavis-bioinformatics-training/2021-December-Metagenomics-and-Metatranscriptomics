@@ -521,7 +521,7 @@ The methods (SUPER-FOCUS, Woods, MetAnnotate, HUMAnN, ...) aim to reconstruct me
 HUMAnA2 incorporated a tiered approach with nucleotide-level search, accelerated translated search and pathway reconstruction components. 
 
 <p align = "center">
-<img src="metagenome_figures/humann.png" alt="micribial" width="45%"/>
+<img src="metagenome_figures/humann.png" alt="micribial" width="90%"/>
 </p>
 
 <p align = "right" style="font-family:Times;font-size:12px;">
