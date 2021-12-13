@@ -29,7 +29,7 @@ navigation:
     url: software_scripts/scripts_links
 
   - heading: Prerequisites
-  - title: Loggin In
+  - title: Logging In
     url: prerequisites/cli/logging-in
   - title: CLI
     url: prerequisites/cli/command-line-intro
