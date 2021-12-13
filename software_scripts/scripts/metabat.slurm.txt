@@ -1,0 +1,65 @@
+#!/bin/bash
+
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=24
+#SBATCH --time=5-12
+#SBATCH --mem=80000 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --partition=production
+#SBATCH --reservation=meta_workshop
+#SBATCH --account=workshop
+#SBATCH --output=slurmout/mtb_%A_%a.out # File to which STDOUT will be written
+#SBATCH --error=slurmout/mtb_%A_%a.err # File to which STDERR will be written
+
+
+start=`date +%s`
+hostname
+
+export baseP=/share/workshop/meta_workshop/$USER/meta_example
+export seqP=$baseP/02-DNA-rmhost
+export asmP=$baseP/03-Megahit-DNA
+export outP=$baseP/04-MetaBat
+
+SAMPLE=`head -n ${SLURM_ARRAY_TASK_ID} samples.txt | tail -1 `
+
+echo $SAMPLE
+
+if [ ! -e $outP/${SAMPLE} ]; then
+    mkdir -p $outP/${SAMPLE}
+fi
+
+
+module load metabat/2.12.1
+module load bowtie2/2.4.2
+module load samtools/1.11
+
+call="bowtie2-build --threads ${SLURM_CPUS_PER_TASK} $asmP/${SAMPLE}/${SAMPLE}.contigs.fa $asmP/${SAMPLE}/${SAMPLE}.contigs"
+
+echo $call
+eval $call
+
+nbt=$(( ${SLURM_CPUS_PER_TASK} - 6 ))
+
+call="bowtie2 -x $asmP/${SAMPLE}/${SAMPLE}.contigs \
+      -1 $seqP/${SAMPLE}/${SAMPLE}_R1.fastq -2 $seqP/${SAMPLE}/${SAMPLE}_R2.fastq \
+      --end-to-end -p ${nbt} |samtools view -bh - |samtools sort -@ 4 -m2G -o $outP/${SAMPLE}/${SAMPLE}.bam - "
+
+echo $call
+eval $call
+
+call="jgi_summarize_bam_contig_depths --outputDepth $outP/${SAMPLE}/depth.txt $outP/${SAMPLE}/${SAMPLE}.bam"
+
+echo $call
+eval $call
+
+
+call="metabat2 -i $asmP/${SAMPLE}/${SAMPLE}.contigs.fa -a $outP/${SAMPLE}/depth.txt -o $outP/${SAMPLE}/bin -v"
+
+
+echo $call
+eval $call
+
+end=`date +%s`
+runtime=$((end-start))
+echo Runtime: $runtime seconds
+
