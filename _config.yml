@@ -29,8 +29,12 @@ navigation:
     url: software_scripts/scripts_links
 
   - heading: Prerequisites
+  - title: Logging In
+    url: prerequisites/cli/logging-in
   - title: CLI
-    url: base/cli_prerequisites
+    url: prerequisites/cli/command-line-intro
+  - title: Cluster Computing
+    url: prerequisites/cli/cluster
   - title: R
     url: base/r_prerequisites
 
