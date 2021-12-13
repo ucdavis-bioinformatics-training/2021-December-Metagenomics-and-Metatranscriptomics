@@ -5,10 +5,6 @@ This document assumes [preprocessing using HTStream](./01-preproc_htstream_mm.md
 
 The main objectives in metatranscriptomics data analysis is to answer the question:  __what are they doing__. At the same time, it can also answer the question: __who is there__. These two concepts we have seen in the metagenomics data analysis part of this workshop. But we are going to see what is different when we have metatranscriptomics data.
 
-Taxonomy profiling has traditionally been done using inexpensive 16S rRNA amplicon sequencing. It has limited resolution because of the conservation of the target gene and the length of the amplicon product. It also limits the ability to profile non-bacterial species of a community. In addition, 16S has very limited ability to provide us with the functional capacity of the microbes. Furthermore, [studies](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4523815/) have shown there might be biases introduced during the amplification step to enrich for rRNA gene and in turn introduces biases in quantification fo taxa.
-
-Shotgun metagenomics approach has gained popularity over the recent years in stuying microbial community. It benefits from the constant decrease in sequencing technology and it allows the study of all microorganisms that are difficult to culture. By sequencing the whole DNA materials from a community, it not only permits the discovery of unknown taxa, but also the ability of predicting the functions of microbial members. We will focus only on the shotgun metagenomics data analysis in this workshop.
-
 ---
 
 <p align = "center">
@@ -17,16 +13,16 @@ Shotgun metagenomics approach has gained popularity over the recent years in stu
 
 ---
 
-## Remove host DNA
+## Remove/Separate rRNA
 
-Depending on the sample collection source for microbial studies, there are variable amount of host DNA. For example, bovine rumen samples such as the dataset we are using for this workshop, or fecal samples for gut microbiome studies, or tissue biopsies, all have some leve of host DNA remain. Because host genomes are much larger than the microbiome genomes, the sequencing product will have more host reads than microbial reads. For example, if one sequence the same number of human cells as microbial cells, the sequencing would produce over 99% of human reads. Even when microbiome samples are collected from environment/fields, human contamination happens more than we think. Therefore, removing host/contaminant DNA very important. Especially, when the objective is to produce high quality metagenome assembled genomes. It also reduces biases and minimize false positive associations in downstream analysis.
+Ribosomal RNA is by far the most abundant (up to 90%) form of RNA in most cells. They perform essential cellular functions and offer information on a community's structure and have been used in traditional taxonomic profiling of microbial communities. Nonetheless, they do not provide more information on a community. If one is mainly interested in studying the functional units of a microbial community, these rRNA present challenges if they are not depleted. 
 
 <p align = "center">
-<img src="metagenome_figures/hostdna.jpeg" alt="micribial" width="85%"/>
+<img src="metatranscriptome_figures/TvsM.webp" alt="micribial" width="92%"/>
 </p>
 
 <p align = "right" style="font-family:Times;font-size:12px;">
-Pereira-Marques, etc., 2019, Front. Microbiol. https://doi.org/10.3389/fmicb.2019.01277
+Li, etc., Microbiome 7,6 (2019), https://doi.org/10.1186/s40168-019-0618-5
 </p>
 
 For samples that are suppected to have very high levels of host material, it is worth considering adding a step in the library prep stage to remove host material. I am not going to talk about it because a couple of our lunch sponsors will talk in detail about it. Even with host depletion at the library prep stage, it is important to remove leftover host reads bioinformatically.
