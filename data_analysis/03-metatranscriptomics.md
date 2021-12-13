@@ -8,7 +8,7 @@ The main objectives in metatranscriptomics data analysis is to answer the questi
 ---
 
 <p align = "center">
-<img src="overview_figures/P6.png" alt="micribial" width="70%"/>
+<img src="overview_figures/P7.png" alt="micribial" width="70%"/>
 </p>
 
 ---
