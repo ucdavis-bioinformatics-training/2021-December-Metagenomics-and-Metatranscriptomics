@@ -535,7 +535,7 @@ This tool allows us to gain information at function level. However, please keep 
 
 #### <font color='red'> Start Exercise 5: </font>
 
-The help manual for HUMAnN3 is [here](./metagenome_figures/humann.help.txt). Let's get ready to run HUMAnN3. First, download the script and take a look.
+The help manual for HUMAnN3 is [here](./metagenome_figures/humann.help.txt). Let's get ready to run HUMAnN3. First, download the script and take a look. 
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example/scripts
@@ -546,8 +546,8 @@ cat humann.DNA.slurm
 <div class="script">#!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=12
-#SBATCH --time=1-12
+#SBATCH --cpus-per-task=24
+#SBATCH --time=0-12
 #SBATCH --mem=40000 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --partition=production
 #SBATCH --reservation=meta_workshop
@@ -598,6 +598,32 @@ echo Runtime: $runtime seconds
 
 </div>
 
+We also need to link to the databases that HUMAnN3 requires.
 
+```bash
+cd /share/workshop/meta_workshop/$USER/meta_example/References
+mkdir -p databases
+cd databases
+ln -s /share/biocore/projects/Internal_Jessie_UCD/Workshops/Metagenomics_and_Metatranscriptomics/References/databases/uniref .
+ln -s /share/biocore/projects/Internal_Jessie_UCD/Workshops/Metagenomics_and_Metatranscriptomics/References/databases/chocophlan .
+```
+
+Now let's submit two jobs.
+
+```bash
+sbatch -J hmad.${USER} --array=1-2 humann.DNA.slurm
+squeue -u ${USER}
+```
+
+The jobs take about a couple hours to finish. At the same time, you can link to the results I generated and take a look.
+
+```bash
+cd /share/workshop/meta_workshop/$USER/meta_example
+ln -s /share/workshop/meta_workshop/jli/meta_example/03-HUMANN-DNA .
+```
+
+What results have HUMAnN3 generated?
+
+#### <font color='red'> End Exercise 5: </font>
 
 
