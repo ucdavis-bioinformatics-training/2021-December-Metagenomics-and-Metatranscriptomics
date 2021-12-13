@@ -3,7 +3,7 @@
 
 Microbiomes are ubiquitous in the environment and play essential roles in every aspects of nature and life. Despite its importance, the research on the mcirobial community was severely limited because of the difficulty in cell culturing and separation. In recent years, more effort has been put in studying these microorganisms, facilitated by advances in technology, especially the sequencing technologies, and the significant decrease in the cost.
 
-**Who is there?**, **What do they do?**, **How do they change?**
+**Who is there?**  **What do they do?**  **How do they change?**
 
 <p align = "center">
 <img src="overview_figures/P1.jpg" alt="micribial" width="60%"/>
