@@ -36,7 +36,7 @@ navigation:
   - title: Cluster Computing
     url: prerequisites/cli/cluster
   - title: R
-    url: base/r_prerequisites
+    url: prerequisites/Intro2R/Intro2R_main
 
   - heading: Data Analysis
   - title: Files and Filetypes
