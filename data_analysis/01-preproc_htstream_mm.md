@@ -34,7 +34,7 @@ PCA/MDS plots of the preprocessing summary are a great way to look for technical
 <img src="preproc_mm_figures/preproc_flowchart.png" alt="preproc_flowchart" width="80%"/>
 
 
-The amount of attention required in preprocessing highly depends on the study goal. For example, if one is aiming to create a high quality metagenome assembled genomes, then the minimum base quality should not be less than 10 or even 20, at the same time the minimum length of the reads should not be too short. If one is aiming to produce taxonomy profiling, then these criteria could be relaxed.
+The amount of attention required in preprocessing highly depends on the study goal. For example, if one is aiming to create a high quality metagenome assembled genomes, then the minimum base quality should not be less than 10 or even 20, at the same time the minimum length of the reads should not be too short. If one is aiming to produce taxonomic profiling, then these criteria could be relaxed.
 
 
 ### Preprocessing Workflow
