@@ -46,7 +46,7 @@ identical(pdata$samp2, colnames(counts))
 
 ```{r}
 d0 <- DGEList(counts)
-d0 <- calcNormFactors(d0)
+d0 <- calcNormFactors(d0, method = "RLE")
 ```
 
 ```{r, include = F}
