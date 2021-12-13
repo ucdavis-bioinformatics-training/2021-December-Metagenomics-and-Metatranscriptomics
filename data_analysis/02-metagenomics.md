@@ -236,7 +236,7 @@ Wood & Salzberg, 2014, Genome Biol 15, R46, https://doi.org/10.1186/gb-2014-15-3
 
 Using the algorithm depicted above, the result from Kraken2 is a classification for each read in our fastq files. 
 
-In order to run Kraken2, one has to build corresponding database first, the command to build the standard Kraken2 database is _kraken2-build --standard --threads 24 --db kraken.db_. This will download NCBI taxonomic information, as well as the complete genomes in RefSeq for the bacterial, archaeal, and viral domains, along with the human genome and a collection of known vectors (UniVec_Core). The build process is the most time-consuming, so we are not going to perform that in this workshop.
+In order to run Kraken2, one has to build corresponding database first, the command to build the standard Kraken2 database is _kraken2-build --standard --threads 24 --db kraken.db_. This will download NCBI taxonomic information, as well as the complete genomes in RefSeq for the bacterial, archaeal, and viral domains, along with the human genome and a collection of known vectors (UniVec_Core). The build process is the most time-consuming, so we are not going to perform it in this workshop. We will link to the Kraken database Nik has created.
 
 #### <font color='red'> Start Exercise 2: </font>
 
@@ -245,6 +245,7 @@ First, let's get ready for this step. We will link to the results that I generat
 
 ```
 cd /share/workshop/meta_workshop/$USER/meta_example/
+ln -s /share/biocore/joshi/projects/workshops/metagenomics_example/ref/krakendb References/.
 ln -s /share/workshop/meta_workshop/jli/meta_example/02-DNA-rmhost .
 cd /share/workshop/meta_workshop/$USER/meta_example/scripts
 wget https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/software_scripts/scripts/kraken2.slurm
@@ -516,15 +517,87 @@ The end result of this process are a set of metagenome-assembled genomes (MAGs).
 
 The ability to perform functional profiling using shotgun metagenomic sequencing data is a big advantage comparing to 16S approach. Functional profiling aims to quantify the gene and metabolic pathway content contributed by known and unknown community members. It requires to consider all reads, not just a subset of informative reads used for taxonomic profiling. This adds considerable analytical complexity.
 
-The methods (SUPER-FOCUS, Woods, MetAnnotate, HUMAnN, ...) aim to reconstruct metabolic functions through traslated search of metagenomic sequencing reads. The limitation of this approach is its speed, comparing to nucleotide-level analysis, even with the more advanced translated search algorithms.
+The methods (SUPER-FOCUS, Woods, MetAnnotate, HUMAnN, ...) aim to reconstruct metabolic functions through traslated search of metagenomic sequencing reads. Comparing to nucleotide-level analysis, the limitation of this approach is its speed, even with the more advanced translated search algorithms.
 
 HUMAnA2 incorporated a tiered approach with nucleotide-level search, accelerated translated search and pathway reconstruction components. 
 
 <p align = "center">
-<img src="metagenome_figures/humann.png" alt="micribial" width="90%"/>
+<img src="metagenome_figures/humann.png" alt="micribial" width="98%"/>
 </p>
 
 <p align = "right" style="font-family:Times;font-size:12px;">
 Franzosa, etc., 2018, Nat Methods, 15, 962-968, https://doi.org/10.1038/s41592-018-0176-y 
 </p>
+
+HUMAnN3 is the most recent version of HUMAnN pipeline. It uses UniProt/UniRef 2019_01 sequences and annotations, contains twice more species pangenomes and three time more gene families, comparing to HUMAnN2.
+
+This tool allows us to gain information at function level. However, please keep in mind that this analysis provides the potential functions the community members possess. They should be interpreted differently from the same analysis using metatranscriptomics data.
+
+#### <font color='red'> Start Exercise 5: </font>
+
+The help manual for HUMAnN3 is [here](./metagenome_figures/humann.help.txt). Let's get ready to run HUMAnN3. First, download the script and take a look.
+
+```bash
+cd /share/workshop/meta_workshop/$USER/meta_example/scripts
+wget https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/software_scripts/scripts/humann.DNA.slurm
+cat humann.DNA.slurm
+```
+
+<div class="script">#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=12
+#SBATCH --time=1-12
+#SBATCH --mem=40000 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --partition=production
+#SBATCH --reservation=meta_workshop
+#SBATCH --account=workshop
+#SBATCH --output=slurmout/hmad_%A_%a.out # File to which STDOUT will be written
+#SBATCH --error=slurmout/hmad_%A_%a.err # File to which STDERR will be written
+
+
+start=`date +%s`
+hostname
+
+export baseP=/share/workshop/meta_workshop/$USER/meta_example
+export seqP=$baseP/02-DNA-rmhost
+export outP=$baseP/03-HUMANN-DNA-test
+export databaseP=$baseP/References/databases
+
+SAMPLE=`head -n ${SLURM_ARRAY_TASK_ID} samples.txt | tail -1 `
+
+echo $SAMPLE
+
+if [ ! -e $outP/$SAMPLE ]; then
+    mkdir -p $outP/$SAMPLE
+fi
+
+
+module load humann/3.0.1
+
+source activate metaphlan-3.0.13
+
+call="cat $seqP/${SAMPLE}/${SAMPLE}_hostrmvd_R1.fastq $seqP/${SAMPLE}/${SAMPLE}_hostrmvd_R2.fastq |gzip - > $outP/${SAMPLE}/${SAMPLE}.fastq.gz"
+
+echo $call
+eval $call
+
+
+call="humann --threads ${SLURM_CPUS_PER_TASK} \
+      --input $outP/${SAMPLE}/${SAMPLE}.fastq.gz \
+      --pathways metacyc --protein-database $databaseP/uniref --nucleotide-database $databaseP/chocophlan \
+      --output $outP/${SAMPLE} --output-basename ${SAMPLE} --o-log  $outP/${SAMPLE}/${SAMPLE}.log"
+
+
+echo $call
+eval $call
+
+end=`date +%s`
+runtime=$((end-start))
+echo Runtime: $runtime seconds
+
+</div>
+
+
+
 
