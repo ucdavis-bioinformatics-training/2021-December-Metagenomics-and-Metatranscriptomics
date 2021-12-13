@@ -431,7 +431,7 @@ megahit --hlep
 ```
 
 <p align = "center">
-<img src="metagenome_figures/megahit.png" alt="micribial" width="45%"/>
+<img src="metagenome_figures/megahit.png" alt="micribial" width="80%"/>
 </p>
 
 
