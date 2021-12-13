@@ -75,7 +75,7 @@ ggplot(plotdat, aes(x = `Leading logFC dim1`, y = `Leading logFC dim2`, col = Br
 Differential abundance analyses were conducted using [limma-voom](https://academic.oup.com/nar/article/43/7/e47/2414268). 
 
 
-### Compare abundance within each Breed and across Breed with each Feed.Efficiency
+### Compare across breeds adjusting for feed efficiency and across feed efficiencies adjusting for breed.
 ```{r}
 form <- "~Breed + Feed.Efficiency"
 ```
