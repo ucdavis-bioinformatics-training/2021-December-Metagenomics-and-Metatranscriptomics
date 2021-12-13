@@ -514,4 +514,17 @@ The end result of this process are a set of metagenome-assembled genomes (MAGs).
 
 ## Functional profiling
 
-The ability to perform functional profiling using shotgun metagenomic sequencing data is a big advantage comparing to 16S approach. Functional profiling aims to quantify the gene and metabolic pathway content contributed by known and unknown community members. It requires to consider all reads, not just a subset of informative reads used for taxonomic profiling
+The ability to perform functional profiling using shotgun metagenomic sequencing data is a big advantage comparing to 16S approach. Functional profiling aims to quantify the gene and metabolic pathway content contributed by known and unknown community members. It requires to consider all reads, not just a subset of informative reads used for taxonomic profiling. This adds considerable analytical complexity.
+
+The methods (SUPER-FOCUS, Woods, MetAnnotate, HUMAnN, ...) aim to reconstruct metabolic functions through traslated search of metagenomic sequencing reads. The limitation of this approach is its speed, comparing to nucleotide-level analysis, even with the more advanced translated search algorithms.
+
+HUMAnA2 incorporated a tiered approach with nucleotide-level search, accelerated translated search and pathway reconstruction components. 
+
+<p align = "center">
+<img src="metagenome_figures/humann.png" alt="micribial" width="45%"/>
+</p>
+
+<p align = "right" style="font-family:Times;font-size:12px;">
+Franzosa, etc., 2018, Nat Methods, 15, 962-968, https://doi.org/10.1038/s41592-018-0176-y 
+</p>
+
