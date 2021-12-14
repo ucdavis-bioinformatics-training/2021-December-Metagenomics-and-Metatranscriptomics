@@ -140,7 +140,7 @@ Now, we are ready to submit a few jobs. The jobs will take about 2 hours to run.
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example/
-ln -s /share/workshop/meta_workshop/jli/meta_example/02-mRNA-rRNArmvd .
+cp -r /share/workshop/meta_workshop/jli/meta_example/02-mRNA-rRNArmvd .
 ```
 
 Using the following commands, we can generate a [summary file](./results/sortmerna.stats.txt) for the result of SortMeRNA.
@@ -185,7 +185,34 @@ sbatch -J mtp.${USER} --array=1-8
 squeue -u ${USER}
 ```
 
-Please take a look at the output directory of MetaPhlAn and the output files.
+Please take a look at the output directory of MetaPhlAn and the output files. What type of quantification MetaPhlAn produces?
+
+We are going to use two packages to generate some visualization using the output from MetaPhlAn. First we are going to merge the output files from individual samples into one file. There is a python script in MetaPhlAn package to do that. So, we are going to load the module MetaPhlAn3 first. Always remember to read the message printed out after loading the module, as it may contain additional instructions to complete the process (such as required _source activate_ for python packages).
+
+```bash
+module load metaphlan/3.0.13
+source activate metaphlan-3.0.13
+```
+
+We are going to copy the MetaPhlAn results I generated on the full dataset. These are small files. Then we are going to run the merge script.
+
+```bash
+cd /share/workshop/meta_workshop/$USER/meta_example
+cp -r /share/workshop/meta_workshop/jli/meta_example/03-Metaphlan-RNA .
+cd /share/workshop/meta_workshop/$USER/meta_example/03-Metaphlan-RNA
+python /share/biocore/projects/Internal_Jessie_UCD/software/miniconda-metaphlan/miniconda3/lib/python3.7/site-packages/metaphlan/utils/merge_metaphlan_tables.py */*_profile.txt > merged_abundance_profile.txt
+```
+
+Once we have this combined abundance file, we can create some visualization to inspect and see whether it matches with our expectations. First, we will generate a heatmap.
+
+```bash
+module load hclust2/1.0.0
+source activate hclust2-1.0.0
+cd /share/workshop/meta_workshop/$USER/meta_example/03-Metaphlan-RNA
+hclust2.py -i merged_abundance_profile.txt --f_dist_f braycurtis --s_dist_f braycurtis -o heatmap_species.png
+```
+
+The above commands has produced a [heatmap](./results/heatmap_abundance.png).
 
 #### <font color='red'> End Exercise 2: </font>
 

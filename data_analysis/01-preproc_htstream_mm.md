@@ -491,7 +491,7 @@ Double check to make sure that slurmout and 01-HTS_Preproc directories have been
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example/
 mkdir -p scripts/slurmout  # -p tells mkdir not to complain if the directory already exists
-mkdir -p 01-HTS_Preproc
+mkdir -p 01-HTS_Preproc-test
 cd scripts
 sbatch -J ${USER}.dna --array=1-8 hts_preproc.slurm DNA  # DNA samples
 sbatch -J ${USER}.rna --array=1-8 hts_preproc.slurm mRNA  # RNA samples
