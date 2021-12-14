@@ -607,7 +607,7 @@ The JSON files output by HTStream provide this type of information.
     Lets grep for the sequence and count occurrences
 
     ```bash
-    zcat  00-RawData/ANG_301_DNA_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
+    zcat  00-RawData/ANG_301_DNA_1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
     zcat  01-HTS_Preproc/DNA/ANG_301/ANG_301_DNA_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
     ```
 
