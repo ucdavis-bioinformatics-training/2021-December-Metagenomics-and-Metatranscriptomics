@@ -32,7 +32,7 @@ fi
 module load kraken2/2.1.2
 module load bracken/2.5
 
-call="bracken -d $refP/krakendb -t 24 -i $outP/${SAMPLE}/${SAMPLE}.kraken_report.out -l S -o $outP/${SAMPLE}/${SAMPLE}_report_species.txt"
+call="bracken -d $refP/krakendb -t 24 -i $krkP/${SAMPLE}/${SAMPLE}.kraken_report.out -l S -o $outP/${SAMPLE}/${SAMPLE}_report_species.txt"
 
 echo $call
 eval $call
