@@ -66,7 +66,7 @@ mkdir -p /share/workshop/meta_workshop/$USER/meta_example
 1. Let's create a sample sheet for the project and store sample names in a file called samples.txt
 
     ```bash
-    cd 00-RawData
+    cd /share/workshop/meta_workshop/$USER/meta_example/00-RawData
     ls *_DNA_1.*fastq.gz |awk '{FS="_DNA"}{print $1}' - > ../scripts/samples.txt
     cat ../scripts/samples.txt
     ```
