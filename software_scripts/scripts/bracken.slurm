@@ -16,7 +16,9 @@ hostname
 export baseP=/share/workshop/meta_workshop/$USER/meta_example
 export seqP=$baseP/02-DNA-rmhost
 export refP=$baseP/References
-export outP=$baseP/03-Kraken
+export krkP=$baseP/03-Kraken
+export outP=$baseP/04-Bracken
+
 
 
 SAMPLE=`head -n ${SLURM_ARRAY_TASK_ID} samples.txt | tail -1 `
