@@ -428,7 +428,7 @@ First, let's take a look at the help manual of the package.
 
 ```bash
 module load megahit/1.2.9
-megahit --hlep
+megahit --help
 ```
 
 <p align = "center">
