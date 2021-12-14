@@ -33,9 +33,7 @@ There are many packages created to perform this task. They all attempt to match 
 <img src="metatranscriptome_figures/depleterrna.png" alt="micribial" width="80%"/>
 </p>
 
-<p align = "left" style="font-family:Times;font-size:48px;">
 **SortMeRNA algorithm:**
-</p>
 
 <p align = "center">
 <img src="metatranscriptome_figures/sortmerna.png" alt="micribial" width="90%"/>
