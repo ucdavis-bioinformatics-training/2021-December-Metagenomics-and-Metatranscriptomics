@@ -646,8 +646,8 @@ Or in case of emergency, download the report we have generated: [HTSMultiQC-clea
     wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2021-December-Metagenomics-and-Metatranscriptomics/software_scripts/scripts/summarize_stats.R
 
     module load R
-    R CMD BATCH summarize_stats.R 01-HTS_Preproc/DNA summary_hts_DNA.txt
-    R CMD BATCH summarize_stats.R 01-HTS_Preproc/mRNA summary_hts_mRNA.txt
+    R CMD BATCH summarize_stats.R 01-HTS_Preproc_test/DNA summary_hts_DNA.txt
+    R CMD BATCH summarize_stats.R 01-HTS_Preproc_test/mRNA summary_hts_mRNA.txt
     cat summary_hts_DNA.txt
     ```
 
