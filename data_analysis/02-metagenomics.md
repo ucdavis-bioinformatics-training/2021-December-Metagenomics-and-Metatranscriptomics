@@ -188,7 +188,7 @@ echo Runtime: $runtime seconds
 To submit the jobs. In the interest of time, we are only going to run this step for 4 samples. But do not worry, we will use the results I have generated for later analysis.
 
 ```bash
-sbatch -J btr.${USER} --array=1-4 bowtie2_rmhost.slurm
+sbatch -J btr.${USER} --array=1-4 bowtie2_rmhost.slurm DNA
 squeue -u ${USER}
 ```
 
