@@ -31,7 +31,7 @@ Relevant sections of the paper
 
 # Project Setup
 
-Let's set up a project directory for the week, and talk a bit about project philosophy..
+First login to tadpole.genomecenter.ucdavis.edu using your computing account the way you did yesterday for the Intro to command line section. Then let's set up a project directory for the week, and talk a bit about project philosophy..
 
 ##  Creating a Project Directory
 

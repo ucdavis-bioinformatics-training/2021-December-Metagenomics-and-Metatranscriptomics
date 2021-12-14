@@ -30,7 +30,7 @@ There are many packages created to perform this task. They all attempt to match 
 **Performance comparison among methods:**
 
 <p align = "center">
-<img src="metatranscriptome_figures/depleterrna.png" alt="micribial" width="80%"/>
+<img src="metatranscriptome_figures/depleterrna.png" alt="micribial" width="65%"/>
 </p>
 
 **SortMeRNA algorithm:**
@@ -162,6 +162,34 @@ done
 ```
 
 #### <font color='red'> End Exercise 1: </font>
+
+At this stage, we are ready to perform downstream analysis.
+
+---
+
+## Taxonomic profiling
+
+We have seen how to do taxonomic profiling using metagenomics data and k-mer based approach. As I have mentioned, there is a different method, which is to use marker genes for taxonomic profiling. MetaPhlAn uses clade-specific marker genes, which are the set of genes that are shared among the strains in a clade, at the same time no other clades contains homologs close enough to incorrectly map reads. MetaPhlAn3 uses a set of 1.1M marker genes selected from a set of 16.8K species pangenomes.
+
+#### <font color='red'> Start Exercise 2: </font>
+
+Let's take a look at the [help manual of MetaPhlAn3](./metatranscriptome_figures/metaphlan.help.txt).
+
+This package runs quite fast, taking ~4-5 minutes for each job using 24 CPUs. Let's submit some jobs.
+
+```bash
+cd /share/workshop/meta_workshop/$USER/meta_example/scripts
+wget https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/software_scripts/scripts/metaphlan.slurm
+cat metaphlan.slurm
+sbatch -J mtp.${USER} --array=1-8
+squeue -u ${USER}
+```
+
+Please take a look at the output directory of MetaPhlAn and the output files.
+
+#### <font color='red'> End Exercise 2: </font>
+
+
 
 
 
