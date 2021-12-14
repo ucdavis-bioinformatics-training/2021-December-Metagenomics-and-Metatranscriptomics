@@ -586,7 +586,7 @@ The JSON files output by HTStream provide this type of information.
     Now look at the output file:
 
     ```bash
-    zless 01-HTS_Preproc_test/DNA/ANG_301/ANG_301_DNA_R1.fastq.gz
+    zless 01-HTS_Preproc_test/DNA/ANG_301/ANG_301_DNA_1.fastq.gz
     ```
 
     If you scroll through the data (using the spacebar), you will see that some of the sequences have been trimmed. Now, try searching for **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** again. You shouldn't find it (adapters were trimmed remember), but rarely is anything perfect. You may need to use Control-C to get out of the search and then "q" to exit the 'less' screen.
@@ -600,20 +600,15 @@ The JSON files output by HTStream provide this type of information.
     * *What do you observe? Are these sequences useful for analysis?*
 
     ```bash
-    zcat  01-HTS_Preproc_test/DNA/ANG_301/ANG_301_DNA_R1.fastq.gz | grep --color=auto  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
+    zcat  01-HTS_Preproc_test/DNA/ANG_301/ANG_301_DNA_1.fastq.gz | grep --color=auto  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
     ```
 
 
     Lets grep for the sequence and count occurrences
 
     ```bash
-<<<<<<< HEAD
     zcat  00-RawData/ANG_301_DNA_1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
-    zcat  01-HTS_Preproc/DNA/ANG_301/ANG_301_DNA_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
-=======
-    zcat  00-RawData/ANG_301_DNA_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
-    zcat  01-HTS_Preproc_test/DNA/ANG_301/ANG_301_DNA_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
->>>>>>> 420a89a08582d030157ffc9c963a0d876ddfabfa
+    zcat  01-HTS_Preproc_test/DNA/ANG_301/ANG_301_DNA_1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
     ```
 
     * *What is the reduction in adapters found?*
