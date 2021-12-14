@@ -17,13 +17,9 @@ The main objectives in metatranscriptomics data analysis is to answer the questi
 
 Ribosomal RNA is by far the most abundant form of RNA in most cells and can make up to 90% of the sequencing data. They perform essential cellular functions and offer information on a community's structure and have been used in traditional taxonomic profiling of microbial communities. Nonetheless, they do not provide more information on a community. If one is mainly interested in studying the functional units of a microbial community, these rRNA provides little information and takes up the majority of computing resources if not removed.
 
-**Performance comparison among methods:**
-
 <p align = "center">
-<img src="metatranscriptome_figures/TvsM.webp" alt="micribial" width="92%"/>
+<img src="metatranscriptome_figures/TvsM.webp" alt="micribial" width="80%"/>
 </p>
-
-**SortMeRNA algorithm:**
 
 <p align = "right" style="font-family:Times;font-size:12px;">
 Li, etc., Microbiome 7,6 (2019), https://doi.org/10.1186/s40168-019-0618-5
@@ -31,8 +27,14 @@ Li, etc., Microbiome 7,6 (2019), https://doi.org/10.1186/s40168-019-0618-5
 
 There are many packages created to perform this task. They all attempt to match the sequencing reads to sequences in rRNA databases. They vary wildly in the requirement for computing resources, but have similar accuracy. We are going to use the more popular package that I have seen: [SortMeRNA](https://academic.oup.com/bioinformatics/article/28/24/3211/246053#83403637).
 
+**Performance comparison among methods:**
+
 <p align = "center">
 <img src="metatranscriptome_figures/depleterrna.png" alt="micribial" width="80%"/>
+</p>
+
+<p align = "left" style="font-family:Times;font-size:48px;">
+**SortMeRNA algorithm:**
 </p>
 
 <p align = "center">
