@@ -395,7 +395,8 @@ Finally, we are going to combine the abundance estimation for each sample into a
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example/scripts
-python /software/bracken/2.5/lssc0-linux/analysis_scripts/combine_bracken_outputs.py --files ../04-Bracken/*/*_report_species.txt -o ../04-Bracken/merged_abundance_species.txt
+mkdir ../04-Bracken
+python /software/bracken/2.5/lssc0-linux/analysis_scripts/combine_bracken_outputs.py --files ../03-Kraken/*/*_report_species.txt -o ../04-Bracken/merged_abundance_species.txt
 ```
 
 #### <font color='red'> End Exercise 3: </font>
