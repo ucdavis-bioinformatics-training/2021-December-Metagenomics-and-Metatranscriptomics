@@ -645,7 +645,7 @@ The jobs take about a couple hours to finish. At the same time, you can link to 
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example
-ln -s /share/workshop/meta_workshop/jli/meta_example/03-HUMANN-DNA .
+cp -r /share/workshop/meta_workshop/jli/meta_example/03-HUMANN-DNA .
 ```
 
 What results have HUMAnN3 generated?
@@ -662,7 +662,6 @@ First, those RPKs need to be furthur normalized with respect to the sequencing d
 
 ```bash
 cd /share/workshop/meta_workshop/${USER}/meta_example
-cp -r /share/workshop/meta_workshop/jli/meta_example/03-HUMANN-DNA .
 wget https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/software_scripts/scripts/humann.DNA.norm.slurm
 cat humann.DNA.norm.slurm
 ```
