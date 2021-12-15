@@ -667,14 +667,14 @@ wget https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomic
 cat humann.DNA.norm.slurm
 ```
 
-This step runs very fast, so we should all be ablet to have the normalized results soon. Then we are going to merge all samples into one abundance table and download it to our local laptop.
+This step runs very fast, so we should all be ablet to have the normalized results soon. Then we are going to merge all samples into one abundance table and download it to our local laptop. If you prefer, you can download this merged abundance table [here](./results/merged_genefamilies.cpm.tsv)
 
 ```bash
 cd /share/workshop/meta_workshop/jli/meta_example/03-HUMANN-DNA
-ln -s */*_genefamilies.tsv .
+ln -s */*_genefamilies.cpm.tsv .
 module load humann/3.0.1
 source activate metapholan-3.0.13
-humann_join_tables -i ./ -o merged_genefamilies.tsv --file_name genefamilies
+humann_join_tables -i ./ -o merged_genefamilies.tsv --file_name genefamilies.cpm
 ```
 
 Please download the [R markdown file](../software_scripts/scripts/Differential.humann.Rmd) and generate the report.
