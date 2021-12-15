@@ -1,0 +1,153 @@
+---
+title: "Metagenomics differential abundance analysis - HUMAnN3"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F)
+```
+
+
+```{r}
+library(dplyr)
+library(edgeR)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+```
+
+```{r}
+project.dir <- "./"
+counts <- read.delim(file.path(project.dir, "merged_genefamilies.cpm.tsv"), row.names = 1, check.names = F)
+tmp <- strsplit(readLines(file.path(project.dir, "merged_genefamilies.cpm.tsv"), n=1), "\t")[[1]]
+nms <- tmp[2:length(tmp)]
+colnames(counts) <- gsub("_Abundance-RPKs", "", nms)
+```
+
+
+
+```{r, include = F}
+pdata <- read.table(file=file.path(project.dir, "feed.txt"), header=F, sep="\t", stringsAsFactors=F)
+colnames(pdata) <- c("Samples", "Feed.Efficiency")
+pdata$Breed <- sapply(pdata$Samples, function(x){strsplit(x, "_", fixed=T)[[1]][1]})
+pdata$Breed <- factor(pdata$Breed, levels=c("ANG", "CHAR", "HYB"))
+pdata$Feed.Efficiency <- factor(pdata$Feed.Efficiency, levels=c("L", "H"))
+
+pdata$samp2 <- pdata$Samples
+
+# Reorder pdata to match colnames of counts
+pdata <- left_join(data.frame(samp2 = colnames(counts)), pdata)
+identical(pdata$samp2, colnames(counts))
+```
+
+```{r}
+d0 <- log2(counts + 1)
+```
+
+```{r, include = F}
+cutoff <- 1 
+ntokeep <- 8
+# include things above cutoff in ntokeep or more samples
+keep <- rowSums(d0 > cutoff) >= ntokeep
+d <- d0[keep,]
+dim(d)
+```
+
+
+## Multidimensional Scaling (MDS) Plots
+```{r}
+coords <- plotMDS(d, plot = F)
+plotdat <- pdata
+plotdat$`Leading logFC dim1` <- coords$x
+plotdat$`Leading logFC dim2` <- coords$y
+```
+
+#### MDS plot by Breed and Feed.Efficiency
+```{r}
+ggplot(plotdat, aes(x = `Leading logFC dim1`, y = `Leading logFC dim2`, col = Breed, shape = Feed.Efficiency)) + geom_point(size = 3) 
+```
+
+## Differential abundance modelling in limma using limma-trend
+
+Differential abundance analyses were conducted using [limma-trend](https://rdrr.io/bioc/limma/man/ebayes.html). 
+
+
+### Compare across breeds adjusting for feed efficiency and across feed efficiencies adjusting for breed.
+```{r}
+form <- "~Breed + Feed.Efficiency"
+```
+
+Analyses of abundance used the formula `r form` in limma.
+
+
+```{r, include = F}
+mm <- model.matrix(as.formula(form), data = pdata)
+fit <- lmFit(d, mm)
+```
+
+
+###Output includes the columns:
+
+* logFC: log2 fold change, with the group listed first in the comparison or file name being the numerator of the fold change
+* AveExpr: Average expression across all samples
+* P.Value: Raw p-value from the test that the log fold change differs from 0
+* adj.P.Val: Benjamini-Hochberg false discovery rate adjusted p-value
+
+
+```{r}
+tmp <- contrasts.fit(fit, coef=4)
+tmp <- eBayes(tmp, trend = TRUE)
+tmp2 <- topTable(tmp, n=Inf, sort.by="P")
+write.table(tmp2, file="FeedEfficiency_main_effect.txt", sep="\t", quote=F, row.names=F)
+tab <- kable(head(tmp2, 200), digits = 5, row.names = T)
+header1 <- 7
+names(header1) <- "Top 200 genes for Feed Efficiency main effect"
+header2 <- 7
+names(header2) <- paste0("Number of genes with adjusted P < 0.05 = ", length(which(tmp2$adj.P.Val < 0.05)))
+header3 <- 7
+names(header3) <- paste0("Output file is ", "FeedEfficiency_main_effect.txt")
+tab <- tab %>% add_header_above(header3, align = 'l') %>% add_header_above(header2, align = 'l') %>% add_header_above(header1, align = 'l', font_size = "larger", bold = T)
+tab %>% kable_styling() %>% scroll_box(height = "500px")
+
+```
+
+```{r}
+tmp <- contrasts.fit(fit, coef=2)
+tmp <- eBayes(tmp, trend = TRUE)
+tmp2 <- topTable(tmp, n=Inf, sort.by="P")
+write.table(tmp2, file="CHAR_main_effect.txt", sep="\t", quote=F, row.names=F)
+tab <- kable(head(tmp2, 200), digits = 5, row.names = T)
+header1 <- 7
+names(header1) <- "Top 200 genes for CHAR Breed main effect"
+header2 <- 7
+names(header2) <- paste0("Number of genes with adjusted P < 0.05 = ", length(which(tmp2$adj.P.Val < 0.05)))
+header3 <- 7
+names(header3) <- paste0("Output file is ", "CHAR_main_effect.txt")
+tab <- tab %>% add_header_above(header3, align = 'l') %>% add_header_above(header2, align = 'l') %>% add_header_above(header1, align = 'l', font_size = "larger", bold = T)
+tab %>% kable_styling() %>% scroll_box(height = "500px")
+
+```
+
+```{r}
+tmp <- contrasts.fit(fit, coef=3)
+tmp <- eBayes(tmp, trend = TRUE)
+tmp2 <- topTable(tmp, n=Inf, sort.by="P")
+write.table(tmp2, file="HYB_main_effect.txt", sep="\t", quote=F, row.names=F)
+tab <- kable(head(tmp2, 200), digits = 5, row.names = T)
+header1 <- 7
+names(header1) <- "Top 200 genes for HYB main effect"
+header2 <- 7
+names(header2) <- paste0("Number of genes with adjusted P < 0.05 = ", length(which(tmp2$adj.P.Val < 0.05)))
+header3 <- 7
+names(header3) <- paste0("Output file is ", "HYB_main_effect.txt")
+tab <- tab %>% add_header_above(header3, align = 'l') %>% add_header_above(header2, align = 'l') %>% add_header_above(header1, align = 'l', font_size = "larger", bold = T)
+tab %>% kable_styling() %>% scroll_box(height = "500px")
+
+```
+
+
+### R session information
+```{r}
+sessionInfo()
+```
+

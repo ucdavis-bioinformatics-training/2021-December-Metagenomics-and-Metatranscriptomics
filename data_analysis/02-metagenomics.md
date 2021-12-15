@@ -652,4 +652,25 @@ What results have HUMAnN3 generated?
 
 #### <font color='red'> End Exercise 5: </font>
 
+This analysis offers a new angle of looking at our community. One may perform differential analysis on these abundance estimates to understand the functional differences between conditions.
 
+The quantification is RPKs, which are reads-per-kilobase, normalized using gene length. These data are not suitable for differential analysis using edgeR. However, the senior author of edgeR has mentioned that they are working with the HUMAnN team to extract data from HUMAnN pipeline that will be suitable for edgeR/limma-voom. He suggested that the work around in the meantime can be to use log trnasfomed data with limma-trend analysis. We are going to see how it's done.
+
+#### <font color='red'> Start Exercise 6: </font>
+
+First, those RPKs need to be furthur normalized with respect to the sequencing depth. This can be done using a utility script from HUMAnN and then merge all samples to one abundance table.
+
+```bash
+cd /share/workshop/meta_workshop/${USER}/meta_example
+cp -r /share/workshop/meta_workshop/jli/meta_example/03-HUMANN-DNA .
+wget https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/software_scripts/scripts/humann.DNA.norm.slurm
+cat humann.DNA.norm.slurm
+```
+
+This step runs very fast, so we should all be ablet to have the normalized results soon. Then we are going to merge all samples into one abundance table and download it to our local laptop.
+
+```bash
+cd /share/workshop/meta_workshop/jli/meta_example/03-HUMANN-DNA
+ln -s */*_genefamilies.tsv .
+module load humann/3.0.1
+source activate metapholan-3.0.13

@@ -17,7 +17,7 @@ hostname
 
 export baseP=/share/workshop/meta_workshop/$USER/meta_example
 export seqP=$baseP/02-DNA-rmhost
-export outP=$baseP/03-HUMANN-DNA
+export outP=$baseP/03-HUMANN-DNA-test
 export databaseP=/software/humann/3.0.1/lssc0-linux/db
 
 SAMPLE=`head -n ${SLURM_ARRAY_TASK_ID} samples.txt | tail -1 `
