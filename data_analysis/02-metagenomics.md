@@ -674,3 +674,11 @@ cd /share/workshop/meta_workshop/jli/meta_example/03-HUMANN-DNA
 ln -s */*_genefamilies.tsv .
 module load humann/3.0.1
 source activate metapholan-3.0.13
+humann_join_tables -i ./ -o merged_genefamilies.tsv --file_name genefamilies
+```
+
+Please download the [R markdown file](../software_scripts/scripts/Differential.humann.Rmd) and generate the report.
+
+#### <font color='red'> End Exercise 6: </font>
+
+
