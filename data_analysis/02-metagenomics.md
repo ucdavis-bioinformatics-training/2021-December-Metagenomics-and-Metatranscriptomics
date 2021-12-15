@@ -645,6 +645,7 @@ The jobs take about a couple hours to finish. At the same time, you can link to 
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example
+rm -rf 03-HUMANN-DNA
 mkdir 03-HUMANN-DNA
 cd 03-HUMANN-DNA
 cp /share/workshop/meta_workshop/jli/meta_example/03-HUMANN-DNA/*/*_genefamilies.tsv .
