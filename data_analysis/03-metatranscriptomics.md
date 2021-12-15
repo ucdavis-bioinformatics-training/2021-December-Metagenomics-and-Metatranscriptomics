@@ -209,7 +209,7 @@ Once we have this combined abundance file, we can create some visualization to i
 module load hclust2/1.0.0
 source activate hclust2-1.0.0
 cd /share/workshop/meta_workshop/$USER/meta_example/03-Metaphlan-RNA
-hclust2.py -i merged_abundance_profile.txt --f_dist_f braycurtis --s_dist_f braycurtis -o heatmap_species.png
+hclust2.py -i merged_abundance_profile.txt --f_dist_f braycurtis --s_dist_f braycurtis -o heatmap_abundance.png
 ```
 
 The above commands has produced a [heatmap](./results/heatmap_abundance.png).
