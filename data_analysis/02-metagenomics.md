@@ -667,7 +667,7 @@ wget https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomic
 cat humann.DNA.norm.slurm
 ```
 
-This step runs very fast, so we should all be ablet to have the normalized results soon. Then we are going to merge all samples into one abundance table and download it to our local laptop. If you prefer, you can download this merged abundance table [here](./results/merged_genefamilies.cpm.tsv)
+This step runs very fast, so we should all be ablet to have the normalized results soon. Then we are going to merge all samples into one abundance table and download it to our local laptop. If you prefer, you can download this merged abundance table [here](https://bioshare.bioinformatics.ucdavis.edu/bioshare/view/qb0gl7pq21fql4v/).
 
 ```bash
 cd /share/workshop/meta_workshop/jli/meta_example/03-HUMANN-DNA
