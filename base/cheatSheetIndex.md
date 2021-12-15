@@ -28,5 +28,5 @@
 
 * [rmarkdown-cheatsheets](https://rmarkdown.rstudio.com/lesson-15.HTML)
 
-* [rmarkdown-reference.pdf](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+* [rmarkdown-reference.pdf](https://github.com/rstudio/cheatsheets/blob/main/rmarkdown-2.0.pdf)
 
