@@ -673,7 +673,6 @@ This step runs very fast, so we should all be ablet to have the normalized resul
 
 ```bash
 cd /share/workshop/meta_workshop/jli/meta_example/03-HUMANN-DNA
-ln -s */*_genefamilies.cpm.tsv .
 module load humann/3.0.1
 source activate metaphlan-3.0.13
 humann_join_tables -i ./ -o merged_genefamilies.tsv --file_name genefamilies.cpm
