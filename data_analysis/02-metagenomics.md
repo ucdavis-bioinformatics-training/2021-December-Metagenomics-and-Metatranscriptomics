@@ -402,7 +402,7 @@ python /software/bracken/2.5/lssc0-linux/analysis_scripts/combine_bracken_output
 
 ### Differential abundance analysis
 
-In most experiments, the estimation of abundance is to study the difference between conditions to understand how microbial community profile changes. Many packages that were designed for count-based profiling have been used for this purpose, such as DESeq2, edgeR, which were designed for RNASeq analysis originally, but have been used successfully in studing microbial community.
+In most experiments, the estimation of abundance is to study the difference between conditions to understand how microbial community profile changes. Many packages that were designed for count-based profiling have been used for this purpose, such as DESeq2, edgeR, which were designed for RNASeq analysis originally, but have been used successfully in studing microbial community. There are also some packages developed specifically for meta-omics, such as [MaAsLin2](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1009442).
 
 We are going to use edgeR/limma for this step and will do the analysis on our laptop. First, let's download [the abundance file](./results/merged_abundance_species.txt), [the metadata file](./results/feed.txt) and the [R markdown file](../software_scripts/scripts/Differential.kraken.Rmd) to our laptop.
 
