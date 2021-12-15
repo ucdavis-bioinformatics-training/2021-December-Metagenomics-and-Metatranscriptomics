@@ -430,6 +430,7 @@ if (!any(rownames(installed.packages()) == "kableExtra")){
   install.packages("kableExtra")
 }
 library(kableExtra)
+```
 
 
 Now we can generate a report by Knit the Rmd file to HTML. Here is [the report](./results/Differential.kraken.html).
