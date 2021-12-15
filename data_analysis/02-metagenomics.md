@@ -406,7 +406,33 @@ In most experiments, the estimation of abundance is to study the difference betw
 
 We are going to use edgeR/limma for this step and will do the analysis on our laptop. First, let's download [the abundance file](./results/merged_abundance_species.txt), [the metadata file](./results/feed.txt) and the [R markdown file](../software_scripts/scripts/Differential.kraken.Rmd) to our laptop.
 
-Start RStudio and go to the folder that you have downloaded the three files. Then open the R markdown file (Differential.kraken.Rmd). Now we can generate a report by Knit the Rmd file to HTML. Here is [the report](./results/Differential.kraken.html).
+Start RStudio and go to the folder that you have downloaded the three files. Then open the R markdown file (Differential.kraken.Rmd). If RStudio has not prompted you to install packages, then please follow the instructions below for installing the packages we need.
+
+In the RStudio console run the following commands
+```r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+if (!any(rownames(installed.packages()) == "edgeR")){
+  BiocManager::install("edgeR")
+}
+library(edgeR)
+
+if (!any(rownames(installed.packages()) == "dplyr")){
+  install.packages("dplyr")
+}
+library(dplyr)
+if (!any(rownames(installed.packages()) == "ggplot2")){
+  install.packages("ggplot2")
+}
+library(ggplot2)
+if (!any(rownames(installed.packages()) == "kableExtra")){
+  install.packages("kableExtra")
+}
+library(kableExtra)
+
+
+Now we can generate a report by Knit the Rmd file to HTML. Here is [the report](./results/Differential.kraken.html).
 
 ---
 
