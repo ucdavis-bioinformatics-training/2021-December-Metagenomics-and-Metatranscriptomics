@@ -667,6 +667,7 @@ First, those RPKs need to be furthur normalized with respect to the sequencing d
 cd /share/workshop/meta_workshop/${USER}/meta_example
 wget https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/software_scripts/scripts/humann.DNA.norm.slurm
 cat humann.DNA.norm.slurm
+sbatch -J nm.${USER} --array=1-48 humann.DNA.norm.slurm
 ```
 
 This step runs very fast, so we should all be ablet to have the normalized results soon. Then we are going to merge all samples into one abundance table and download it to our local laptop. If you prefer, you can download this merged abundance table [here](https://bioshare.bioinformatics.ucdavis.edu/bioshare/view/qb0gl7pq21fql4v/).
