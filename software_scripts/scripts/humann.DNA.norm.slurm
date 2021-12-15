@@ -34,8 +34,8 @@ module load humann/3.0.1
 source activate metaphlan-3.0.13
 
 
-call="humann_renorm_table -i $outP/${SAMPLE}/${SAMPLE}_genefamilies.tsv 
-      -o $outP/${SAMPLE}/${SAMPLE}_genefamilies.cpm.tsv -u cpm"
+call="humann_renorm_table -i $outP/${SAMPLE}_genefamilies.tsv 
+      -o $outP/${SAMPLE}_genefamilies.cpm.tsv -u cpm"
 
 
 echo $call
