@@ -450,6 +450,15 @@ Vollmers, etc., 2017, Plos One, https://doi.org/10.1371/journal.pone.0169662
 
 We are going to use [Megahit](https://pubmed.ncbi.nlm.nih.gov/25609793/) as the assembler. It is ultra-fast and produces good quality assemblies, in particular, it has high flexibility in dealing with different complexity of metagenomics reads.
 
+<p align = "center">
+<img src="metagenome_figures/megahit.gif" alt="micribial" width="55%"/>
+</p>
+
+<p align = "right" style="font-family:Times;font-size:12px;">
+Li, etc., 2015, Bioinformatics, https://doi.org/10.1093/bioinformatics/btv033
+</p>
+
+
 First, let's take a look at the help manual of the package.
 
 ```bash
