@@ -203,7 +203,7 @@ cd /share/workshop/meta_workshop/$USER/meta_example/03-Metaphlan-RNA
 python /share/biocore/projects/Internal_Jessie_UCD/software/miniconda-metaphlan/miniconda3/lib/python3.7/site-packages/metaphlan/utils/merge_metaphlan_tables.py */*_profile.txt > merged_abundance_profile.txt
 ```
 
-Once we have this combined abundance file, we can create some visualization to inspect and see whether it matches with our expectations. First, we will generate a heatmap.
+Once we have this combined abundance file, we can create some visualization to inspect and see whether it matches with our expectations. First, we are going to filter the file to create an abundance table for species level, then we will generate a heatmap. (Because of the small dataset, the 
 
 ```bash
 module load hclust2/1.0.0
