@@ -232,7 +232,7 @@ hclust2.py -i merged_abundance_species.txt --f_dist_f braycurtis --s_dist_f bray
 
 The above commands has produced a [heatmap](./results/heatmap_species.png).
 
-The following commands will generate a [cladogram](./metatranscriptome_figures/cladogram.png) using the abundance table.
+The following commands will generate a [cladogram](./metatranscriptome_figures/cladogram2.png) using the abundance table.
 
 ```bash
 module load graphlan/1.1.3
