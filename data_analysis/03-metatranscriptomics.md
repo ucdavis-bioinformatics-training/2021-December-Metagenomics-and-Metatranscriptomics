@@ -180,7 +180,7 @@ At this stage, we are ready to perform downstream analysis.
 ## Assemble or Not?
 
 <p align = "center">
-<img src="metatranscriptome_figures/assemble.jpg" alt="micribial" width="70%"/>
+<img src="metatranscriptome_figures/assemble.jpg" alt="micribial" width="45%"/>
 </p>
 
 <p align = "center">
