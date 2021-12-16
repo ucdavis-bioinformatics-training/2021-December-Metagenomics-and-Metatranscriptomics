@@ -177,9 +177,22 @@ At this stage, we are ready to perform downstream analysis.
 
 ---
 
+## Introduction to Biobakery3
+
+Biobakery3 is a suite of packages develped by a team of scientists from US and Italy (Harvard, US; Univ. of Trento, Italy; Broad Institute, US; Edmund Mach Foundation, Italy; IEO, Italy). It has integrated tools with improved methods for taxonomic, strain-level, functional, and phylogenetic profiling of metagenomes. All tools have extensive documentation [on github](https://github.com/biobakery). You can also find many tools developed for meta-omics data analysis on [The Huttenhower Lab](https://huttenhower.sph.harvard.edu/tools/) page.
+
+<p align = "center">
+<img src="metatranscriptome_figures/biobakery3.jpg" alt="micribial" width="85%"/>
+</p>
+
+<p align = "right" style="font-family:Times;font-size:12px;">
+Beghini, etc., eLife 2021;10:e65088 DOI: 10.7554/eLife.65088
+</p>
+
+
 ## Taxonomic profiling
 
-We have seen how to do taxonomic profiling using metagenomics data and k-mer based approach. As I have mentioned, there is a different method, which is to use marker genes for taxonomic profiling. MetaPhlAn uses clade-specific marker genes, which are the set of genes that are shared among the strains in a clade, at the same time no other clades contains homologs close enough to incorrectly map reads. MetaPhlAn3 uses a set of 1.1M marker genes selected from a set of 16.8K species pangenomes.
+We have seen how to do taxonomic profiling using metagenomics data and k-mer based approach. Here we are going to take a look at MetaPhlAn3 (one of Biobakery's tool set). It uses clade-specific marker genes, which are the set of genes that are shared among the strains in a clade, at the same time no other clades contains homologs close enough to incorrectly map reads. MetaPhlAn3 uses a set of 1.1M marker genes (including 61.8K viral markers) selected from a set of 16.8K species pangenomes.
 
 #### <font color='red'> Start Exercise 2: </font>
 
@@ -208,7 +221,7 @@ We are going to copy the MetaPhlAn results I generated on the full dataset. Thes
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example
-cp -r /share/workshop/meta_workshop/jli/meta_example/original-03-Metaphlan-RNA .
+cp -r /share/workshop/meta_workshop/jli/meta_example/original-03-Metaphlan-RNA ./03-Metaphlan-RNA
 cd /share/workshop/meta_workshop/$USER/meta_example/03-Metaphlan-RNA
 python /share/biocore/projects/Internal_Jessie_UCD/software/miniconda-metaphlan/miniconda3/lib/python3.7/site-packages/metaphlan/utils/merge_metaphlan_tables.py */*_profile.txt > merged_abundance_profile.txt
 ```
