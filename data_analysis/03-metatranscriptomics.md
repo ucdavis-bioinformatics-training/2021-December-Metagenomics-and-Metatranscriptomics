@@ -330,39 +330,12 @@ We are going to perform functional profiling a second time using HUMAnN. This ti
 
 Using another package from the Biobakery project, we are going to prodict metabolites using the result from the previous step (HUMAnN3). This package uses machine learning technique to achieve good prediction results. The module available in the package was trained on human gut microbial data, but the package offers the option to train your own model if you have data available for your specific microbial community. We are going to simply use the model from the package and do some predictions.
 
-First, copy the merged relative abundance table I have generated for all samples. It is located at _/share/workshop/meta_workshop/jli/meta_example/03-HUMANN-RNA/merged_genefamilies.relab.tsv_. Then we are going to have an experience in running run on the cluster.
+First, download [the merged relative abundance table]("./results/human.RNA.merged_abundance.relab.tsv) I have generated for all samples. Then we are going to install the package in RStudio.
 
+---
 
-```bash
-cd /share/workshop/meta_workshop/$USER/meta_example
-mkdir -p 03-HUMANN-RNA; cd 03-HUMANN-RNA
-cp /share/workshop/meta_workshop/jli/meta_example/03-HUMANN-RNA/merged_genefamilies.relab.tsv .
-module load R/4.1.0
-R --no-restore --no-save
-```
+The instructions are provided here. Just one way to do things. But please look through the github page and try to follow those instructions first.
 
-
-```r
-if (!requireNamespace("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
-
-if (!any(rownames(installed.packages()) == "devtools")){
-  install::packages("devtools")
-}
-library(devtools)
-
-install.packages(c('devtools', 'glmnet', 'foreach', 'getopt', 'doParallel', 'vegan', 'data.table', 'AssocTests', 'optparse', 'tibble'), repos='http://cran.r-project.org')
-devtools::install_version("GenABEL.data", version = "1.0.0", repos = "http://cran.us.r-project.org")
-devtools::install_version("GenABEL", version = "1.8-0", repos = "http://cran.us.r-project.org")
-
-q()
-```
-
-Then we will install the package MelonnPan itself.
-
-```bash
-R CMD INSTALL melonnpan
-```
-
+[Tada](./metatranscriptome_figues/solution.txt)
 
 

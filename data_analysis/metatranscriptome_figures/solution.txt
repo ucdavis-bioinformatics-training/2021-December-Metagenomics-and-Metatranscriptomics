@@ -1,0 +1,29 @@
+# Instructions on MelonnPan
+-------------------------------------------------------
+
+```r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+if (!any(rownames(installed.packages()) == "devtools")){
+  install::packages("devtools")
+}
+library(devtools)
+
+devtools::install_version("GenABEL.data", version = "1.0.0", repos = "http://cran.us.r-project.org")
+devtools::install_version("GenABEL", version = "1.8-0", repos = "http://cran.us.r-project.org")
+devtools::install_github("biobakery/melonnpan")
+library(melonnpan)
+```
+Let's have some prediction!
+
+```r
+tmp <- read.table(file="./human.RNA.merged_abundance.relab.tsv", header=T, stringsAsFactors=F)
+samples <- gsub("_Abundance.RPKs", "", colnames(tmp))
+features <- rownames(tmp)
+data <- transpose(tmp)
+colnames(data) <- features
+rownames(data) <- samples
+melonnpan.predict(data, output="./")
+```
+
