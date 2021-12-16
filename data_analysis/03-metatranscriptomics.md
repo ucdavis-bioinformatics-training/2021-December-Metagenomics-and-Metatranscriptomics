@@ -246,7 +246,7 @@ We can filter MetaPhlAn output for species specific abundance using the followin
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example/03-Metaphlan-RNA
-grep -E "s__|clade" merged_abundance_profile.txt |sed 's/^.*s__//g' |cut -f1,3- |sed -e 's/clade_name/samples/g' |sed -e 's/_profile//g' > merged_abundance_speies.txt
+grep -E "s__|clade" merged_abundance_profile.txt |sed 's/^.*s__//g' |cut -f1,3- |sed -e 's/clade_name/samples/g' |sed -e 's/_profile//g' > merged_abundance_species.txt
 ```
 
 
