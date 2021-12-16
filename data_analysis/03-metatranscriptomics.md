@@ -267,9 +267,13 @@ The following commands will generate a [cladogram](./metatranscriptome_figures/c
 module load graphlan/1.1.3
 source activate graphlan-1.1.3
 cd /share/workshop/meta_workshop/$USER/meta_example/03-Metaphlan-RNA
+
 tail -n +2 merged_abundance_profile.txt |cut -f1,3- > merged_abundance_reformated.txt
+
 export2graphlan.py --skip_rows 1 -i merged_abundance_reformated.txt --tree merged_abundance.tree.txt --annotation merged_abundance.anno.txt --most_abundant 100 --abundance_threshold 1 --least_biomarkers 10 --annotations 5,6 --external_annotations 7 --min_clade_size 1
+
 graphlan_annotate.py --annot merged_abundance.anno.txt merged_abundance.tree.txt merged_abundance.xml
+
 graphlan.py --dpi 300 merged_abundance.xml merged_abundance.png --external_legends
 ```
 
