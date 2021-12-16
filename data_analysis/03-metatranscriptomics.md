@@ -328,7 +328,7 @@ We are going to perform functional profiling a second time using HUMAnN. This ti
 
 ## Functional profiling II
 
-Using another package from the Biobakery project, we are going to prodict metabolites using the result from the previous step (HUMAnN3). This package uses machine learning technique to achieve good prediction results. The module available in the package was trained on human gut microbial data, but the package offers the option to train your own model if you have data available for your specific microbial community. We are going to simply use the model from the package and do some predictions.
+Using another package from the Biobakery project, we are going to prodict metabolites using the result from the previous step (HUMAnN3). This [MelonnPan](https://github.com/biobakery/melonnpan) package uses machine learning technique to achieve good prediction results. The module available in the package was trained on human gut microbial data, but the package offers the option to train your own model if you have data available for your specific microbial community. We are going to simply use the model from the package and do some predictions.
 
 First, download [the merged relative abundance table](https://bioshare.bioinformatics.ucdavis.edu/bioshare/view/qb0gl7pq21fql4v/) I have generated for all samples. Then we are going to install the package in RStudio.
 
