@@ -146,7 +146,7 @@ sbatch -J srna.${USER} --array=1-2 sortmerna.slurm mRNA
 cd /share/workshop/meta_workshop/$USER/meta_example/
 for i in {1..48}
 do
-  sample=$(sed "${i}q;d" samples.txt)
+  sample=$(sed "${i}q;d" scripts/samples.txt)
   mkdir -p 02-mRNA-rRNArmvd/${sample}
   ln -s /share/workshop/meta_workshop/jli/meta_example/02-mRNA-rRNArmvd/${sample}/${sample}.fq.gz 02-mRNA-rRNArmvd/${sample}/.
   ln -s /share/workshop/meta_workshop/jli/meta_example/02-mRNA-rRNArmvd/${sample}/out 02-mRNA-rRNArmvd/${sample}/.
