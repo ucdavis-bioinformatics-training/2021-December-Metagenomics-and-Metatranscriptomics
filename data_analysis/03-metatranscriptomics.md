@@ -18,7 +18,7 @@ The main objectives in metatranscriptomics data analysis is to answer the questi
 Ribosomal RNA is by far the most abundant form of RNA in most cells and can make up to 90% of the sequencing data. They perform essential cellular functions and offer information on a community's structure and have been used in traditional taxonomic profiling of microbial communities. Nonetheless, they do not provide more information on a community. If one is mainly interested in studying the functional units of a microbial community, these rRNA provides little information and takes up the majority of computing resources if not removed.
 
 <p align = "center">
-<img src="metatranscriptome_figures/TvsM.webp" alt="micribial" width="80%"/>
+<img src="metatranscriptome_figures/" alt="micribial" width="80%"/>
 </p>
 
 <p align = "right" style="font-family:Times;font-size:12px;">
@@ -177,6 +177,22 @@ At this stage, we are ready to perform downstream analysis.
 
 ---
 
+## Assemble or Not?
+
+<p align = "center">
+<img src="metatranscriptome_figures/assemble.jpg" alt="micribial" width="70%"/>
+</p>
+
+<p align = "center">
+<img src="metatranscriptome_figures/assemble.compare.jpg" alt="micribial" width="75%"/>
+</p>
+
+<p align = "right" style="font-family:Times;font-size:12px;">
+Anwar, etc., GigaScience, 8(8), 2019, https://doi.org/10.1093/gigascience/giz096
+</p>
+
+
+
 ## Introduction to Biobakery3
 
 Biobakery3 is a suite of packages develped by a team of scientists from US and Italy (Harvard, US; Univ. of Trento, Italy; Broad Institute, US; Edmund Mach Foundation, Italy; IEO, Italy). It has integrated tools with improved methods for taxonomic, strain-level, functional, and phylogenetic profiling of metagenomes. All tools have extensive documentation [on github](https://github.com/biobakery). You can also find many tools developed for meta-omics data analysis on [The Huttenhower Lab](https://huttenhower.sph.harvard.edu/tools/) page.
@@ -259,6 +275,55 @@ graphlan.py --dpi 300 merged_abundance.xml merged_abundance.png --external_legen
 
 #### <font color='red'> End Exercise 2: </font>
 
+We are going to use [MaAsLin2](https://github.com/biobakery/Maaslin2) to perform some differential abundance analysis. This time, we are using the relative abundance produced by MetaPhlAn3. We will download [the merged abundance table at species level](./results/mRNA_merged_abundance_species.txt) to our laptop. Open RStudio and install MaAsLin2 if you haven't done so.
+
+#### <font color='red'> Start Exercise 3: </font>
+
+
+```r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+if (!any(rownames(installed.packages()) == "Maaslin2")){
+  BiocManager::install("Maaslin2")
+}
+library(Maaslin2)
+
+abundance <- read.table(file="./merged_abundance_species.txt", sep="\t", header=T, stringsAsFactors=F)
+rownames(abundance) <- abundance$samples
+abundance <- abundance[,-1]
+colnames(abundance) <- gsub("_profile", "", colnames(abundance))
+
+pdata <- read.table(file="./feed.txt", sep="\t", header=F, stringsAsFactors=F)
+colnames(pdata) <- c("Samples", "Feed.Efficiency")
+pdata$Breed <- sapply(pdata$Samples, function(x){strsplit(x, "_", fixed=T)[[1]][1]})
+pdata$Breed <- factor(pdata$Breed, levels=c("ANG", "CHAR", "HYB"))
+pdata$Feed.Efficiency <- factor(pdata$Feed.Efficiency, levels=c("L", "H"))
+
+pdata$samp2 <- pdata$Samples
+
+# Reorder pdata to match colnames of counts
+pdata <- left_join(data.frame(samp2 = colnames(counts)), pdata)
+identical(pdata$samp2, colnames(counts))
+rownames(pdata) <- pdata$Samples
+
+Maaslin2(input_data=abundance, input_metadata=pdata, output="maaslin", fixed_effects=c("Breed", "Feed.Efficiency"), reference=c("Breed, ANG", "Feed.Efficiency, L"), min_prevalence=0.001)
+```
+
+#### <font color='red'> End Exercise 3: </font>
+
+
+## Functional profiling I
+
+#### <font color='red'> Start Exercise 4: </font>
+
+We are going to perform functional profiling a second time using HUMAnN. This time you will write your own slurm script, using the one we have used for metagenomics data as a template. Please submit maximum 2 jobs once your script is ready.
+
+#### <font color='red'> End Exercise 4: </font>
+
+## Functional profiling II
+
+Using another package from the Biobakery project, we are going to prodict metabolites using the result from the previous step (HUMAnN3). This package uses machine learning technique to achieve good prediction results. The module available in the package was trained on human gut microbial data, but the package offers the option to train your own model if you have data available for your specific microbial community. We are going to simply use the model from the package and do some predictions.
 
 
 
