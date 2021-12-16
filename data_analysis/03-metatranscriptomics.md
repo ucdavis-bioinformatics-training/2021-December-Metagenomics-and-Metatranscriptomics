@@ -149,6 +149,7 @@ do
   sample=$(sed "${i}q;d" samples.txt)
   mkdir -p 02-mRNA-rRNArmvd/${sample}
   ln -s /share/workshop/meta_workshop/jli/meta_example/02-mRNA-rRNArmvd/${sample}/${sample}.fq.gz 02-mRNA-rRNArmvd/${sample}/.
+  ln -s /share/workshop/meta_workshop/jli/meta_example/02-mRNA-rRNArmvd/${sample}/out 02-mRNA-rRNArmvd/${sample}/.
 done
 ```
 
