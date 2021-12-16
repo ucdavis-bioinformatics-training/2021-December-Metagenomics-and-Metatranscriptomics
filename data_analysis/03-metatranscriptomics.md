@@ -208,10 +208,18 @@ We are going to copy the MetaPhlAn results I generated on the full dataset. Thes
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example
-cp -r /share/workshop/meta_workshop/jli/meta_example/03-Metaphlan-RNA .
+cp -r /share/workshop/meta_workshop/jli/meta_example/original-03-Metaphlan-RNA .
 cd /share/workshop/meta_workshop/$USER/meta_example/03-Metaphlan-RNA
 python /share/biocore/projects/Internal_Jessie_UCD/software/miniconda-metaphlan/miniconda3/lib/python3.7/site-packages/metaphlan/utils/merge_metaphlan_tables.py */*_profile.txt > merged_abundance_profile.txt
 ```
+
+We can filter MetaPhlAn output for species specific abundance using the following commands.
+
+```bash
+cd /share/workshop/meta_workshop/$USER/meta_example/03-Metaphlan-RNA
+grep -E "s__|clade" merged_abundance_profile.txt |sed 's/^.*s__//g' |cut -f1,3- |sed -e 's/clade_name/samples/g' |sed -e '/_profile//g' > merged_abundance_speies.txt
+```
+
 
 Once we have this combined abundance file, we can create some visualization to inspect and see whether it matches with our expectations. First, we are going to filter the file to create an abundance table for species level, then we will generate a heatmap. (Because of the small dataset, the 
 
@@ -219,10 +227,22 @@ Once we have this combined abundance file, we can create some visualization to i
 module load hclust2/1.0.0
 source activate hclust2-1.0.0
 cd /share/workshop/meta_workshop/$USER/meta_example/03-Metaphlan-RNA
-hclust2.py -i merged_abundance_profile.txt --f_dist_f braycurtis --s_dist_f braycurtis -o heatmap_abundance.png
+hclust2.py -i merged_abundance_species.txt --f_dist_f braycurtis --s_dist_f braycurtis -o heatmap_species.png
 ```
 
-The above commands has produced a [heatmap](./results/heatmap_abundance.png).
+The above commands has produced a [heatmap](./results/heatmap_species.png).
+
+The following commands will generate a [cladogram](./metatranscriptome_figures/cladogram.png) using the abundance table.
+
+```bash
+module load graphlan/1.1.3
+source activate graphlan-1.1.3
+cd /share/workshop/meta_workshop/$USER/meta_example/03-Metaphlan-RNA
+tail -n +2 merged_abundance_profile.txt |cut -f1,3- > merged_abundance_reformated.txt
+export2graphlan.py --skip_rows 1 -i merged_abundance_reformated.txt --tree merged_abundance.tree.txt --annotation merged_abundance.anno.txt --most_abundant 100 --abundance_threshold 1 --least_biomarkers 10 --annotations 5,6 --external_annotations 7 --min_clade_size 1
+graphlan_annotate.py --annot merged_abundance.anno.txt merged_abundance.tree.txt merged_abundance.xml
+graphlan.py --dpi 300 merged_abundance.xml merged_abundance.png --external_legends
+```
 
 #### <font color='red'> End Exercise 2: </font>
 
