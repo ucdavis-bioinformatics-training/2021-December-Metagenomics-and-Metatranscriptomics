@@ -220,7 +220,7 @@ This package runs quite fast, taking ~4-5 minutes for each job using 24 CPUs. Le
 cd /share/workshop/meta_workshop/$USER/meta_example/scripts
 wget https://ucdavis-bioinformatics-training.github.io/2021-December-Metagenomics-and-Metatranscriptomics/software_scripts/scripts/metaphlan.slurm
 cat metaphlan.slurm
-sbatch -J mtp.${USER} --array=1-8
+sbatch -J mtp.${USER} --array=1-8 metaphlan.slurm
 squeue -u ${USER}
 ```
 
