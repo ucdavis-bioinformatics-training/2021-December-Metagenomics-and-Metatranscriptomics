@@ -184,7 +184,7 @@ At this stage, we are ready to perform downstream analysis.
 </p>
 
 <p align = "center">
-<img src="metatranscriptome_figures/assemble.compare.jpg" alt="micribial" width="75%"/>
+<img src="metatranscriptome_figures/assemble.compare.png" alt="micribial" width="75%"/>
 </p>
 
 <p align = "right" style="font-family:Times;font-size:12px;">
