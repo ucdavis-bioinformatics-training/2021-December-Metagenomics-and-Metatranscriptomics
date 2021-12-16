@@ -144,7 +144,12 @@ sbatch -J srna.${USER} --array=1-2 sortmerna.slurm mRNA
 
 ```bash
 cd /share/workshop/meta_workshop/$USER/meta_example/
-cp -r /share/workshop/meta_workshop/jli/meta_example/02-mRNA-rRNArmvd .
+for i in {1..48}
+do
+  sample=$(sed "${i}q;d" samples.txt)
+  mkdir -p 02-mRNA-rRNArmvd/${sample}
+  ln -s /share/workshop/meta_workshop/jli/meta_example/02-mRNA-rRNArmvd/${sample}/${sample}.fq.gz 02-mRNA-rRNArmvd/${sample}/.
+done
 ```
 
 Using the following commands, we can generate a [summary file](./results/sortmerna.stats.txt) for the result of SortMeRNA.
