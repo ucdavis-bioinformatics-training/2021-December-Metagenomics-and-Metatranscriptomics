@@ -17,6 +17,11 @@ In order to truly study the expression regulation the integration of metagenomic
 <img src="metatranscriptome_figures/mtx2.jpg" alt="micribial" width="80%"/>
 </p>
 
+<p align = "right" style="font-family:Times;font-size:12px;">
+
+
+</p>
+
 <p align = "center">
 <img src="metatranscriptome_figures/mtx.jpg" alt="micribial" width="80%"/>
 </p>
