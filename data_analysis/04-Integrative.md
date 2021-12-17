@@ -34,7 +34,7 @@ The second approach to integrate the two data types is to map metatranscriptomic
 
 #### <font color='red'> Start Exercise 2: </font>
 
-Use the bowtie slurm script that we have used to remove host DNA as a starting point, create the script to align the rRNA removed RNA reads to the assembled contigs (the bowtie2 index have prefix of "/share/biocore/projects/Internal_Jessie_UCD/Workshops/Metagenomics_and_Metatranscriptomics/03-Megahit-DNA/${SAMPLE}/${SAMPLE}.contigs"). After the mapping is finished, please take a look at the mapping rate.
+Use the bowtie slurm script that we have used to remove host DNA as a starting point, create the script to align the rRNA removed RNA reads to the assembled contigs (the bowtie2 index have prefix of "/share/biocore/projects/Internal_Jessie_UCD/Workshops/Metagenomics_and_Metatranscriptomics/03-Megahit-DNA/${SAMPLE}/${SAMPLE}.contigs"). Bowtie2 manual is [here](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml). After the mapping is finished, please take a look at the mapping rate.
 
 #### <font color='red'> End Exercise 2: </font>
 
