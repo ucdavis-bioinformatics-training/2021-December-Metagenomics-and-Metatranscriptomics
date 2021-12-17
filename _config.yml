@@ -49,6 +49,8 @@ navigation:
     url: data_analysis/02-metagenomics
   - title: Metatranscriptomics data analysis
     url: data_analysis/03-metatranscriptomics
+  - title: Integrate two data types
+    url: data_analysis/04-Integrative
 
   - heading: ETC
   - title: Closing thoughts
