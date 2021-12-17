@@ -11,7 +11,11 @@
 
 As we have noticed that the quantification with HUMAnN3 using metagenomics data and metatranscriptomics show significant differences. Why? First, let's take a step back and think about what we are measuring using these two techniques. Metagenomics is to sequencing DNA material, which most cells only have one copy of. Therefore, what we measurement using metagenomics data is actually the number of microorganism cells we see in our samples. On the contrary, gene expression levels could be wildly different from gene to gene and most of the genes have multiple copies of RNA expressed in one cell. This means that what metatranscriptomics is measuring is the total number of RNA expressed from the same species. The contributing factors to the measured expression level come from two sources: the number of microorganism cells and the expression levels of the gene from each cell. So, we should be very careful in interpreting the differential abundance results when only using metatranscriptomics data, especially at the classification to microorganism level.
 
-In order to truly study the expression regulation the integration of metagenomic data is essential.
+In order to truly study the expression regulation the integration of metagenomic data is essential. The [publication](https://academic.oup.com/bioinformatics/article/37/Supplement_1/i34/6319701) that has presented the tool we are going to use has done a great job in comparing different approaches:
+
+<p align = "center">
+<img src="metatranscriptome_figures/mtx2.jpg" alt="micribial" width="80%"/>
+</p>
 
 <p align = "center">
 <img src="metatranscriptome_figures/mtx.jpg" alt="micribial" width="80%"/>
