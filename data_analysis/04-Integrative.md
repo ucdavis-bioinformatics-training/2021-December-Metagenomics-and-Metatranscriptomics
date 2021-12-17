@@ -43,7 +43,10 @@ The second approach to integrate the two data types is to map metatranscriptomic
 
 #### <font color='red'> Start Exercise 2: </font>
 
-Use the bowtie slurm script that we have used to remove host DNA as a starting point, create the script to align the rRNA removed RNA reads to the assembled contigs (the bowtie2 index have prefix of "/share/biocore/projects/Internal_Jessie_UCD/Workshops/Metagenomics_and_Metatranscriptomics/03-Megahit-DNA/${SAMPLE}/${SAMPLE}.contigs"). Bowtie2 manual is [here](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml). After the mapping is finished, please take a look at the mapping rate.
+Use the bowtie slurm script that we have used to remove host DNA as a starting point, create the script to align the rRNA removed RNA reads to the assembled contigs (the bowtie2 index have prefix of "/share/biocore/projects/Internal_Jessie_UCD/Workshops/Metagenomics_and_Metatranscriptomics/03-Megahit-DNA/${SAMPLE}/${SAMPLE}.contigs"). Bowtie2 manual is [here](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml). After the mapping is finished, please take a look at [the mapping rate](./results/rna2contigs.txt).
+
+We clearly see the low mapping rate. We can try to investigate on the reads that have not mapped to our assemblies. This time we are going to use [Kaiju](https://github.com/bioinformatics-centre/kaiju). The comparison we can do is to compare the unmapped classification to the metagenomic read classification and see whether the unmapped reads belong to low abundance members. Each one of you can choose a random sample to run. Then we will come back and see what we can tell from the results.
+
 
 #### <font color='red'> End Exercise 2: </font>
 
